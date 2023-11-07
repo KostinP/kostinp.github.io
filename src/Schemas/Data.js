@@ -62,7 +62,7 @@ export const Data = {
         label: "Pavel Kostin",
         name: "telegram",
         url: "https://t.me/PashaKostin",
-        className: "bxl-twitter",
+        className: "bxl-telegram",
       },
     ],
   },
