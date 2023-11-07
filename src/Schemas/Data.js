@@ -101,7 +101,7 @@ export const Data = {
     projects: [
       {
         name: "University Helper",
-        company: "-",
+        company: "Student project",
         period: "Mar. 2023 - Now",
         description: [
           "Student assistant consisting of a server, website, mobile application, computer application, integrated with the Herzen University system",
@@ -112,7 +112,7 @@ export const Data = {
       },
       {
         name: "Digital Office",
-        company: "LANIT-TERCOM",
+        company: "LANIT-TERCOM, student project",
         period: "Jun. 2020 - Jul. 2020",
         description: [
           "Developing a ASP.Net Core REST API Web Services for managing company structure: departments, projects, tasks, employers, roles, rights, vacations, files, images.",
@@ -121,7 +121,7 @@ export const Data = {
       },
       {
         name: "Office Map",
-        company: "LANIT-TERCOM",
+        company: "LANIT-TERCOM, student project",
         period: "Jul. 2019 - Aug. 2019",
         description: [
           "Developing a ASP.Net Core REST API Web Services for managing company structure: departments, projects, tasks, employers.",
