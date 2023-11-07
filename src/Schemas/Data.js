@@ -113,7 +113,7 @@ export const Data = {
       {
         name: "Digital Office",
         company: "LANIT-TERCOM, student project",
-        period: "Jun. 2020 - Jul. 2020",
+        period: "Jul. 2020 - Jun. 2021",
         description: [
           "Developing a ASP.Net Core REST API Web Services for managing company structure: departments, projects, tasks, employers, roles, rights, vacations, files, images.",
           "Stack: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, RabbitMQ (MassTransit), ImageSharp, NuGet, GitHub Actions",
@@ -122,7 +122,7 @@ export const Data = {
       {
         name: "Office Map",
         company: "LANIT-TERCOM, student project",
-        period: "Jul. 2019 - Aug. 2019",
+        period: "Jul. 2019 - May. 2020",
         description: [
           "Developing a ASP.Net Core REST API Web Services for managing company structure: departments, projects, tasks, employers.",
           "Stack: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, AutoMappers, Identity Server 4, GitHub Actions",
