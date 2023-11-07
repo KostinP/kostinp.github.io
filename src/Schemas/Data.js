@@ -1,6 +1,6 @@
 export const Data = {
   profile: {
-    name: "Matias Lagos",
+    name: "Test Lagos",
     ocupation: "FullStack Software Developer",
     location: "Santiago, Chile",
     email: "lagos.matias25@gmail.com",
