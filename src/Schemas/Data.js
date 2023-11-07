@@ -2,7 +2,7 @@ export const Data = {
   profile: {
     name: "Pavel Kostin",
     ocupation: "FullStack Software Developer",
-    location: "Russia, St.Petersburg",
+    location: "Russia, St. Petersburg",
     email: "kopavalex@yandex.ru",
     telephone: "+7 (981) 761-76-46",
     image: "images/IMG_5023.png",
