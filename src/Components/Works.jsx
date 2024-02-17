@@ -1,14 +1,20 @@
 import React from "react";
 import { Description } from "./Description";
-export const Works = ({ works }) => {
+import { Language } from "./Language";
+import { useLanguage } from "../Hooks/useLanguage";
+export const Works = ({ works, language, setLanguage }) => {
+
   return (
-    <section className="work-experience section" id="experience">
-      <h2 className="section-title">Experience</h2>
-      <div className="experience__container bd-grid">
-        {works.map((work) => (
-          <Work key={work.company} {...work} />
-        ))}
-      </div>
+    <section className="home" id="home">
+      <section className="work-experience section" id="experience">
+        <h2 className="section-title">Experience</h2>
+        <div className="experience__container bd-grid">
+          {works.map((work) => (
+            <Work key={work.company} {...work} />
+          ))}
+        </div>
+      </section>
+      <Language language={language} setLanguage={setLanguage}/>
     </section>
   );
 };
