@@ -7,7 +7,7 @@ export const Projects = ({ projects }) => {
       <h2 className="section-title">Projects</h2>
       <div className="experience__container bd-grid">
         {projects.map((project) => (
-          <Project key={project.company} {...project} />
+          <Project key={project.name} {...project} />
         ))}
       </div>
     </section>

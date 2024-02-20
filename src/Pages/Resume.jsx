@@ -10,8 +10,11 @@ import { AboutMe } from "../Components/AboutMe";
 import { Menu } from "../Components/Menu";
 import { SEO } from "../Components/SEO";
 
-import { Data as dataSchema } from "../Schemas/Data";
-import { Menu as menuSchema } from "../Schemas/Menu";
+import { Data as dataSchema_EN } from "../Schemas/Data";
+import { Data as dataSchema_RU } from "../Schemas/DataRU";
+import { Menu as menuSchema_EN } from "../Schemas/Menu";
+import { Menu as menuSchema_RU } from "../Schemas/MenuRU";
+import { useLanguage } from "../Hooks/useLanguage";
 
 export const Resume = () => {
   const query = "(min-width: 968px)";
@@ -24,27 +27,44 @@ export const Resume = () => {
     return () => media.removeEventListener("change", listener);
   }, [matches]);
 
-  const { profile, aboutMe, skills, socialMedia, experience } = dataSchema;
+  const { language, setLanguage } = useLanguage()
+  const [ dataSchema, setDataSchema ] = useState(dataSchema_EN)
+  const [ menuSchema, setMenuSchema ] = useState(menuSchema_EN)
+
+  //let { profile, aboutMe, skills, socialMedia, experience } = dataSchema_RU;
+
+  useEffect(() => {
+    if (language === 'EN')
+    {
+      setDataSchema(dataSchema_EN)
+      setMenuSchema(menuSchema_EN)
+    }
+    else
+    {
+      setDataSchema(dataSchema_RU)
+      setMenuSchema(menuSchema_RU)
+    }
+  }, [language])
 
   return (
     <>
-      <SEO  {...profile} {...aboutMe} />
-      {!matches && <Menu {...menuSchema} />}
-      <main className="l-main bd-container" id="bd-container">
-        <div className="resume" id="area-cv">
-          <div className="resume__left">
-            <Profile {...profile} />
-            <AboutMe {...aboutMe} />
-            <Skills {...skills} />
-            <SocialMedia {...socialMedia} />
-          </div>
-          <div className="resume__right">
-            <Works {...experience} />
-            <Academic {...experience} />
-            <Projects {...experience} />
-          </div>
+    <SEO name={dataSchema.profile.name} ocupation={dataSchema.profile.ocupation} description={dataSchema.aboutMe.description} />
+    {!matches && <Menu {...menuSchema} />}
+    <main className="l-main bd-container" id="bd-container">
+      <div className="resume" id="area-cv">
+        <div className="resume__left">
+          <Profile {...dataSchema.profile} />
+          <AboutMe {...dataSchema.aboutMe} />
+          <Skills {...dataSchema.skills} />
+          <SocialMedia {...dataSchema.socialMedia} />
         </div>
-      </main>
-    </>
+        <div className="resume__right">
+          <Works works={dataSchema.experience.works} language={language} setLanguage={setLanguage} />
+          <Academic {...dataSchema.experience} />
+          <Projects {...dataSchema.experience} />
+        </div>
+      </div>
+    </main>
+  </>    
   );
 };

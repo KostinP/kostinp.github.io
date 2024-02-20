@@ -86,13 +86,29 @@ img {
 }
 
 /*========== Variables Dark theme ==========*/
-body.dark-theme {
+body {
   --title-color: #eceff4;
   --text-color: #b5c4db;
   --container-color: #2e3440;
   --container-color-alt: #3b4252;
   --body-color: #242933;
 }
+
+/*========== language button ==========*/
+.change-language {
+  position: absolute;
+  right: 0;
+  top: 1.5rem;
+  display: flex;
+  color: var(--text-color);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.change-language:hover {
+  color: var(--title-color);
+}
+
 
 /*========== Options button ==========*/
 .change-theme {
@@ -227,6 +243,10 @@ body.dark-theme {
 
 .active-link {
   color: var(--title-color);
+}
+
+.work {
+  position: relative;
 }
 
 .home {

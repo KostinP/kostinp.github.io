@@ -8,7 +8,7 @@ export const Data = {
     image: "images/IMG_5023.png",
   },
   aboutMe: {
-    label: "About me",
+    label: "Abut moe",
     description:
       "Fullstack programmer and designer proficient in many development tools.",
   },
@@ -69,11 +69,13 @@ export const Data = {
   experience: {
     works: [
       {
-        title: "REACT-NATIVE DEVELOPER",
+        title: "FULLSTACK DEVELOPER",
         period: "Oct. 2023 - Now",
         company: "Herzen University",
         description: [
-          "Adapting the React-native application for new tasks.",
+          "Adapting the legacy React-native application for new tasks.", 
+          "Frontend (React, Storybook, Three.js, Material UI) developer.",
+          "Backend (C#, Entity Framework, SQL Server, NUnit, Swagger, RabbitMQ (MassTransit), ImageSharp, NuGet, GitHub Actions, Docker) developer.",
           "Maintaining technical documentation.",
         ],
       },
@@ -102,7 +104,7 @@ export const Data = {
       {
         name: "University Helper",
         company: "Student project",
-        period: "Mar. 2023 - Now",
+        period: "Mar. 2023 - Dec. 2023",
         description: [
           "Student assistant consisting of a server, website, mobile application, computer application, integrated with the Herzen University system",
           "Server stack: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, RabbitMQ (MassTransit), ImageSharp, NuGet, GitHub Actions",
@@ -115,7 +117,7 @@ export const Data = {
         company: "LANIT-TERCOM, student project",
         period: "Jul. 2020 - Jun. 2021",
         description: [
-          "Developing a ASP.Net Core REST API Web Services for managing company structure: departments, projects, tasks, employers, roles, rights, vacations, files, images.",
+          "Second iteration of project. Developing a ASP.Net Core REST API Web Services for managing company structure: departments, projects, tasks, employers, roles, rights, vacations, files, images.",
           "Stack: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, RabbitMQ (MassTransit), ImageSharp, NuGet, GitHub Actions",
         ],
       },
