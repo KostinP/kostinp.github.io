@@ -6,27 +6,27 @@ export const Menu = {
       className: "bx-home",
     },
     {
-      label: "About",
+      label: "Обо мне",
       section: "#about",
       className: "bx-user",
     },
     {
-      label: "Skills",
+      label: "Навыки",
       section: "#skills",
       className: "bx-receipt",
     },
     {
-      label: "Experience",
+      label: "Коммерческий опыт",
       section: "#experience",
       className: "bx-briefcase-alt",
     },
     {
-      label: "Education",
+      label: "Образование",
       section: "#education",
       className: "bx-book",
     },
     {
-      label: "Projects",
+      label: "Проекты",
       section: "#projects",
       className: "bx-award",
     },

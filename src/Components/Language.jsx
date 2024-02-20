@@ -4,7 +4,6 @@ import { useLanguage } from "../Hooks/useLanguage";
 export const Language = ({ language, setLanguage } ) => {
   const _toggleLanguage = () => {
     language === "EN" ? setLanguage("RU") : setLanguage("EN");
-    window.location.reload(false); //TODO
   };
 
   return (

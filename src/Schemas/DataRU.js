@@ -8,9 +8,9 @@ export const Data = {
     image: "images/IMG_5023.png",
   },
   aboutMe: {
-    label: "About me",
+    label: "Обо мне",
     description:
-      "Fullstack programmer and designer proficient in many development tools.",
+      "Получил смешанное образование, поэтому могу и программировать и заниматься дизайном интерфейсов.",
   },
   skills: {
     technicalLabel: "Hard skills",
@@ -36,11 +36,11 @@ export const Data = {
       "Git",
     ],
     softSkills: [
-      "Communicable",
-      "Systems approach",
-      "Proactive",
-      "Creative",
-      "Mentoring",
+      "Коммуникабельный",
+      "Системное мышление",
+      "Проактивный",
+      "Креативный",
+      "Готов обучать других людей",
     ],
   },
   socialMedia: {
@@ -69,63 +69,64 @@ export const Data = {
   experience: {
     works: [
       {
-        title: "REACT-NATIVE DEVELOPER",
+        title: "FULLSTACK DEVELOPER",
         period: "Oct. 2023 - Now",
         company: "Herzen University",
         description: [
-          "Adapting the React-native application for new tasks.",
-          "Maintaining technical documentation.",
+          "Адаптировал легаси React-native проект под новые задачи.", 
+          "Frontend (React, Storybook, Three.js, Material UI) developer.",
+          "Backend (C#, Entity Framework, SQL Server, NUnit, Swagger, RabbitMQ (MassTransit), ImageSharp, NuGet, GitHub Actions, Docker) developer.",
+          "Занимался написанием технической документации.",
         ],
       },
       {
-        title: "CHILDREN'S PROGRAMMING TEACHER",
+        title: "УЧИТЕЛЬ ПРОГРАММИРОВАНИЯ У ДЕТЕЙ",
         period: "Feb. 2023 - Now",
         company: "uchi.ru",
         description: [
-          "Trained Unity, Blender, Unreal Engine, Html, CSS, JavaScript, Java, Python, Scratch, ScratchJr, Kodu Game Lab.",
+          "Учил детей Unity, Blender, Unreal Engine, Html, CSS, JavaScript, Java, Python, Scratch, ScratchJr, Kodu Game Lab.",
         ],
       },
     ],
     academic: [
       {
-        career: "Herzen University, incomplete higher education",
+        career: "РГПУ им А.И. Герцена",
         date: "2022-Now",
-        institution: "Institute of Information Technology and Technology Education",
+        institution: "Институт информационных технологий и технологического образования",
       },
       {
-        career: "Saint Petersburg State University, incomplete higher education",
+        career: "Санкт-Петербургский государственный университет, неполное высшее образование",
         date: "2019-2021",
-        institution: "Faculty of Mathematics and Mechanics",
+        institution: "Математико-механический факультет",
       },
     ],
     projects: [
       {
-        name: "University Helper",
-        company: "Student project",
-        period: "Mar. 2023 - Now",
+        name: "University Helper (backend, mobile)",
+        company: "Студенческий проект",
+        period: "Mar. 2023 - Dec. 2023",
         description: [
-          "Student assistant consisting of a server, website, mobile application, computer application, integrated with the Herzen University system",
-          "Server stack: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, RabbitMQ (MassTransit), ImageSharp, NuGet, GitHub Actions",
-          "Website stack: React, i18next, storybook",
-          "Mobile/computer application stack: C#, Unity",
+          "Помошник для студента, который состоит из backend и мобильного приложения, интегрирован с системой университета",
+          "Backend: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, RabbitMQ (MassTransit), ImageSharp, NuGet, GitHub Actions",
+          "Мобильное приложение: C#, Unity, UI Toolkit",
         ],
       },
       {
-        name: "Digital Office",
-        company: "LANIT-TERCOM, student project",
+        name: "Digital Office (backend)",
+        company: "LANIT-TERCOM, студенческий проект",
         period: "Jul. 2020 - Jun. 2021",
         description: [
-          "Developing a ASP.Net Core REST API Web Services for managing company structure: departments, projects, tasks, employers, roles, rights, vacations, files, images.",
-          "Stack: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, RabbitMQ (MassTransit), ImageSharp, NuGet, GitHub Actions",
+          "Вторая итерация проекта. Разрабатывал backend при помощи ASP.Net Core REST API Web Services для оптимизации процессов компании: департаменты, проекты, задачи, сотрудники, роли, права, отпуска, файллы, картинки...",
+          "Backend: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, RabbitMQ (MassTransit), ImageSharp, NuGet, GitHub Actions",
         ],
       },
       {
-        name: "Office Map",
-        company: "LANIT-TERCOM, student project",
+        name: "Office Map (backend)",
+        company: "LANIT-TERCOM, студенческий проект",
         period: "Jul. 2019 - May. 2020",
         description: [
-          "Developing a ASP.Net Core REST API Web Services for managing company structure: departments, projects, tasks, employers.",
-          "Stack: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, AutoMappers, Identity Server 4, GitHub Actions",
+          "Разрабатывал backend при помощи ASP.Net Core REST API Web Services для оптимизации процессов компании: департаменты, проекты, задачи, сотрудники.",
+          "Backend: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, AutoMappers, Identity Server 4, GitHub Actions",
         ],
       },
     ],
