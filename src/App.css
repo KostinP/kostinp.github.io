@@ -86,7 +86,7 @@ img {
 }
 
 /*========== Variables Dark theme ==========*/
-body {
+body.dark-theme {
   --title-color: #eceff4;
   --text-color: #b5c4db;
   --container-color: #2e3440;
