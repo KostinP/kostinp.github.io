@@ -6,13 +6,12 @@
   --header-height: 3rem;
 
   /*========== Colors ==========*/
-  --title-color: #eceff4;
-  --text-color: #b5c4db;
-  --container-color: #2e3440;
-  --container-color-alt: #3b4252;
-  --body-color: #242933;
-
+  --title-color: #434c5e;
+  --text-color: #4c566a;
   --text-color-light: #7b88a1;
+  --container-color: #ffffff;
+  --container-color-alt: #f7f9fb;
+  --body-color: #f2f4f8;
 
   /*========== Font and typography ==========*/
   --body-font: "Poppins", sans-serif;
