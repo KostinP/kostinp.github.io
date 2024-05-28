@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from 'react'
 
 export const useLanguage = () => {
   const [language, setLanguage] = useState(
-    localStorage.getItem('language') || 'EN'
+    localStorage.getItem('language') || 'RU'
   )
 
   useLayoutEffect(() => {
