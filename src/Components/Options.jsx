@@ -32,6 +32,8 @@ export const Options = () => {
     icon === "bx-sun" ? setIcon("bx-moon") : setIcon("bx-sun");
   };
 
+  _toggleTheme();
+
   return (
     <div className="home__options">
       {theme === "dark" && (
