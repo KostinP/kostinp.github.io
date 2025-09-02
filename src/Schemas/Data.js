@@ -106,6 +106,7 @@ export const Data = {
         company: "Student project",
         period: "Mar. 2023 - Dec. 2023",
         description: [
+          "Microservice architecture",
           "Student assistant consisting of a server, website, mobile application, computer application, integrated with the Herzen University system",
           "Server stack: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, RabbitMQ (MassTransit), ImageSharp, NuGet, GitHub Actions",
           "Website stack: React, i18next, storybook",
@@ -114,18 +115,20 @@ export const Data = {
       },
       {
         name: "Digital Office",
-        company: "LANIT-TERCOM, student project",
+        company: "LANIT-TERCOM",
         period: "Jul. 2020 - Jun. 2021",
         description: [
+          "Microservice architecture",
           "Second iteration of project. Developing a ASP.Net Core REST API Web Services for managing company structure: departments, projects, tasks, employers, roles, rights, vacations, files, images.",
           "Stack: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, RabbitMQ (MassTransit), ImageSharp, NuGet, GitHub Actions",
         ],
       },
       {
         name: "Office Map",
-        company: "LANIT-TERCOM, student project",
+        company: "LANIT-TERCOM",
         period: "Jul. 2019 - May. 2020",
         description: [
+          "Monolite architecture",
           "Developing a ASP.Net Core REST API Web Services for managing company structure: departments, projects, tasks, employers.",
           "Stack: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, AutoMappers, Identity Server 4, GitHub Actions",
         ],
