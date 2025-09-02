@@ -90,12 +90,12 @@ export const Data = {
     ],
     academic: [
       {
-        career: "Herzen University, incomplete higher education",
+        career: "Herzen University",
         date: "2022-Now",
         institution: "Institute of Information Technology and Technology Education",
       },
       {
-        career: "Saint Petersburg State University, incomplete higher education",
+        career: "Saint Petersburg State University",
         date: "2019-2021",
         institution: "Faculty of Mathematics and Mechanics",
       },
