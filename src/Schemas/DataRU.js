@@ -95,7 +95,7 @@ export const Data = {
         institution: "Институт информационных технологий и технологического образования",
       },
       {
-        career: "Санкт-Петербургский государственный университет, неполное высшее образование",
+        career: "Санкт-Петербургский государственный университет",
         date: "2019-2021",
         institution: "Математико-механический факультет",
       },
@@ -106,6 +106,7 @@ export const Data = {
         company: "Студенческий проект",
         period: "Mar. 2023 - Dec. 2023",
         description: [
+          "Микросервисная архитектура",
           "Помошник для студента, который состоит из backend и мобильного приложения, интегрирован с системой университета",
           "Backend: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, RabbitMQ (MassTransit), ImageSharp, NuGet, GitHub Actions",
           "Мобильное приложение: C#, Unity, UI Toolkit",
@@ -116,6 +117,7 @@ export const Data = {
         company: "LANIT-TERCOM, студенческий проект",
         period: "Jul. 2020 - Jun. 2021",
         description: [
+          "Микросервисная архитектура",
           "Вторая итерация проекта. Разрабатывал backend при помощи ASP.Net Core REST API Web Services для оптимизации процессов компании: департаменты, проекты, задачи, сотрудники, роли, права, отпуска, файллы, картинки...",
           "Backend: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, RabbitMQ (MassTransit), ImageSharp, NuGet, GitHub Actions",
         ],
@@ -125,6 +127,7 @@ export const Data = {
         company: "LANIT-TERCOM, студенческий проект",
         period: "Jul. 2019 - May. 2020",
         description: [
+          "Монолитная архитектура",
           "Разрабатывал backend при помощи ASP.Net Core REST API Web Services для оптимизации процессов компании: департаменты, проекты, задачи, сотрудники.",
           "Backend: C#, Entity Framework, SQL Server, NUnit, Postman, Swagger, AutoMappers, Identity Server 4, GitHub Actions",
         ],
