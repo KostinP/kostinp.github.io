@@ -20,13 +20,14 @@ const Work = ({ title, period, company, description }) => (
   </div>
 );
 
-export const Works = async () => {
+export const Works = async ({ showControls = true }) => {
   const t = await getTranslations();
   const works = t.raw("experience.works");
 
   return (
     <div className="work">
       <section className="work-experience section" id="experience">
+        <p className="eyebrow">{t("sections.experienceEyebrow")}</p>
         <h2 className="section-title">{t("sections.experience")}</h2>
         <div className="experience__container bd-grid">
           {works.map((work) => (
@@ -34,7 +35,7 @@ export const Works = async () => {
           ))}
         </div>
       </section>
-      <LanguageSwitcher />
+      {showControls && <LanguageSwitcher />}
     </div>
   );
 };

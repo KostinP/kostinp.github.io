@@ -20,6 +20,7 @@ export const Academic = async () => {
 
   return (
     <section className="academic-experience section" id="education">
+      <p className="eyebrow">{t("sections.educationEyebrow")}</p>
       <h2 className="section-title">{t("sections.education")}</h2>
       <div className="education__container bd-grid">
         {academic.map((academy) => (

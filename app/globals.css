@@ -1,20 +1,26 @@
 /*===== GOOGLE FONTS =====*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 
 /*===== VARIABLES CSS =====*/
 :root {
   --header-height: 3rem;
 
   /*========== Colors ==========*/
-  --title-color: #434c5e;
-  --text-color: #4c566a;
-  --text-color-light: #7b88a1;
+  /* Cool "blueprint paper" palette: schema/ER-diagram identity for a
+     backend engineer, deliberately not warm-cream/serif or near-black/neon. */
+  --title-color: #12181b;
+  --text-color: #3b4652;
+  --text-color-light: #7c8a90;
   --container-color: #ffffff;
-  --container-color-alt: #f7f9fb;
-  --body-color: #f2f4f8;
+  --container-color-alt: #e9edeb;
+  --body-color: #eef1ef;
+  --accent-color: #2a5cdb;
+  --grid-dot: rgba(18, 24, 27, 0.09);
 
   /*========== Font and typography ==========*/
-  --body-font: "Poppins", sans-serif;
+  --body-font: "IBM Plex Sans", sans-serif;
+  --display-font: "IBM Plex Sans Condensed", sans-serif;
+  --mono-font: "IBM Plex Mono", monospace;
   --h1-font-size: 1.5rem;
   --h2-font-size: 1.25rem;
   --h3-font-size: 1rem;
@@ -53,6 +59,8 @@ body {
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
   background-color: var(--body-color);
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+  background-size: 22px 22px;
   color: var(--text-color);
 }
 
@@ -68,7 +76,8 @@ h1,
 h2,
 h3 {
   color: var(--title-color);
-  font-weight: var(--font-medium);
+  font-family: var(--display-font);
+  font-weight: var(--font-semi-bold);
 }
 
 ul {
@@ -87,11 +96,14 @@ img {
 
 /*========== Variables Dark theme ==========*/
 body.dark-theme {
-  --title-color: #eceff4;
-  --text-color: #b5c4db;
-  --container-color: #2e3440;
-  --container-color-alt: #3b4252;
-  --body-color: #242933;
+  --title-color: #e7ecea;
+  --text-color: #b7c2c6;
+  --text-color-light: #7e8c91;
+  --container-color: #171f24;
+  --container-color-alt: #121a1e;
+  --body-color: #0e1417;
+  --accent-color: #6c93ff;
+  --grid-dot: rgba(231, 236, 234, 0.06);
 }
 
 /*========== language button ==========*/
@@ -100,13 +112,21 @@ body.dark-theme {
   right: 0;
   top: 1.5rem;
   display: flex;
+  align-items: center;
+  font-family: var(--mono-font);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   color: var(--text-color);
-  font-size: 1.2rem;
+  border: 1px solid var(--text-color-light);
+  border-radius: 3px;
+  padding: 0.1rem 0.4rem;
   cursor: pointer;
 }
 
 .change-language:hover {
-  color: var(--title-color);
+  color: var(--accent-color);
+  border-color: var(--accent-color);
 }
 
 /*========== Options button ==========*/
@@ -121,7 +141,7 @@ body.dark-theme {
 }
 
 .change-theme:hover {
-  color: var(--title-color);
+  color: var(--accent-color);
 }
 
 .enable-snow {
@@ -134,7 +154,20 @@ body.dark-theme {
 }
 
 .enable-snow:hover {
-  color: var(--title-color);
+  color: var(--accent-color);
+}
+
+/*========== eyebrow (section route label) ==========*/
+.eyebrow {
+  display: block;
+  font-family: var(--mono-font);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--accent-color);
+  margin-bottom: 0.35rem;
+  text-align: center;
+  break-after: avoid;
 }
 
 /*========== CSS CLASS ==========*/
@@ -147,9 +180,10 @@ body.dark-theme {
   color: var(--title-color);
   font-weight: var(--font-semi-bold);
   text-transform: uppercase;
-  letter-spacing: 0.35rem;
+  letter-spacing: 0.15em;
   text-align: center;
   margin-bottom: var(--mb-3);
+  break-after: avoid;
 }
 
 .bd-container {
@@ -197,7 +231,14 @@ body.dark-theme {
   }
 }
 
-.nav__logo,
+.nav__logo {
+  font-family: var(--mono-font);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-color-light);
+}
+
 .nav__toggle {
   color: var(--title-color);
   font-weight: var(--font-medium);
@@ -227,7 +268,7 @@ body.dark-theme {
 }
 
 .nav__link:hover {
-  color: var(--title-color);
+  color: var(--accent-color);
 }
 
 .nav__icon {
@@ -241,7 +282,7 @@ body.dark-theme {
 }
 
 .active-link {
-  color: var(--title-color);
+  color: var(--accent-color);
 }
 
 .work {
@@ -254,6 +295,7 @@ body.dark-theme {
 
 .home__container {
   gap: 3rem;
+  break-inside: avoid;
 }
 
 .home__data {
@@ -265,17 +307,24 @@ body.dark-theme {
   width: 120px;
   height: 120px;
   border-radius: 50%;
+  border: 2px solid var(--accent-color);
+  box-sizing: border-box;
   justify-self: center;
   margin-bottom: var(--mb-1);
   object-fit: cover;
 }
 
 .home__title {
-  font-size: var(--h1-font-size);
+  font-size: clamp(1.5rem, 4vw, 2rem);
 }
 
 .home__profession {
-  font-size: var(--normal-font-size);
+  font-family: var(--mono-font);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accent-color);
   margin-bottom: var(--mb-1);
 }
 
@@ -294,19 +343,28 @@ body.dark-theme {
   margin-right: 0.25rem;
 }
 
-.home__button-movil {
-  display: inline-block;
-  border: 2px solid var(--text-color);
-  color: var(--title-color);
-  padding: 1rem 2rem;
-  border-radius: 0.25rem;
-  transition: 0.3s;
-  font-weight: var(--font-medium);
-  margin-top: var(--mb-3);
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+  font-family: var(--mono-font);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.5rem 0.9rem;
+  border-radius: 3px;
+  transition: 0.2s;
+  margin-top: var(--mb-1);
 }
 
-.home__button-movil:hover {
-  background-color: var(--text-color);
+.download-btn i {
+  font-size: 1rem;
+}
+
+.download-btn:hover {
+  background-color: var(--accent-color);
   color: var(--container-color);
 }
 
@@ -338,6 +396,7 @@ body.dark-theme {
 .education__content,
 .experience__content {
   display: flex;
+  break-inside: avoid;
 }
 
 .education__time,
@@ -351,8 +410,8 @@ body.dark-theme {
   display: block;
   width: 16px;
   height: 16px;
-  background-color: var(--text-color-light);
-  border-radius: 50%;
+  background-color: var(--accent-color);
+  border-radius: 3px;
   margin-top: 0.25rem;
 }
 
@@ -382,6 +441,12 @@ body.dark-theme {
   color: var(--title-color);
 }
 
+.education__year,
+.experience__company,
+.experience__project {
+  font-family: var(--mono-font);
+}
+
 .education__year {
   font-size: var(--smaller-font-size);
 }
@@ -398,10 +463,10 @@ body.dark-theme {
 
 .skills__circle {
   display: inline-block;
-  width: 5px;
-  height: 5px;
-  background-color: var(--text-color);
-  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent-color);
+  border-radius: 1px;
   margin-right: 0.75rem;
 }
 
@@ -479,6 +544,7 @@ body.dark-theme {
   }
 
   .section-title,
+  .eyebrow,
   .profile__description {
     text-align: initial;
   }

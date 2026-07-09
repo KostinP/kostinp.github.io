@@ -25,6 +25,7 @@ export const Projects = async () => {
 
   return (
     <section className="projects-experience section" id="projects">
+      <p className="eyebrow">{t("sections.projectsEyebrow")}</p>
       <h2 className="section-title">{t("sections.projects")}</h2>
       <div className="experience__container bd-grid">
         {projects.map((project) => (

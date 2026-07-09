@@ -12,6 +12,7 @@ export const SocialMedia = async () => {
 
   return (
     <section className="social section">
+      <p className="eyebrow">{t("eyebrow")}</p>
       <h2 className="section-title">{t("label")}</h2>
       <div className="social__container bd-grid">
         {social.map((item) => (

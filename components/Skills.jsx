@@ -14,6 +14,7 @@ export const Skills = async () => {
   return (
     <>
       <section className="technical-skills section" id="skills">
+        <p className="eyebrow">{t("eyebrowHard")}</p>
         <h2 className="section-title">{t("technicalLabel")}</h2>
         <div className="skills__content bd-grid">
           <ul className="skills__data">
@@ -24,6 +25,7 @@ export const Skills = async () => {
         </div>
       </section>
       <section className="soft-skills section">
+        <p className="eyebrow">{t("eyebrowSoft")}</p>
         <h2 className="section-title">{t("softLabel")}</h2>
         <div className="skills__content bd-grid">
           <ul className="skills__data">

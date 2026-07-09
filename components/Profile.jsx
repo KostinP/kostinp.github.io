@@ -2,7 +2,7 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { ThemeOptions } from "./ThemeOptions";
 
-export const Profile = async () => {
+export const Profile = async ({ showControls = true }) => {
   const t = await getTranslations("profile");
 
   return (
@@ -34,7 +34,7 @@ export const Profile = async () => {
           </span>
         </div>
       </div>
-      <ThemeOptions />
+      {showControls && <ThemeOptions />}
     </section>
   );
 };

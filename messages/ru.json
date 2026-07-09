@@ -24,19 +24,23 @@
     "ru": "русский"
   },
   "profile": {
-    "name": "Pavel Kostin",
+    "name": "Павел Костин",
     "ocupation": "FullStack Software Developer",
     "location": "Россия, Санкт-Петербург",
     "email": "kopavalex@yandex.ru",
     "telephone": "+7 (981) 761-76-46",
     "image": "/images/IMG_5023.png",
-    "imageAlt": "Павел Костин"
+    "imageAlt": "Павел Костин",
+    "downloadCta": "Скачать резюме"
   },
   "aboutMe": {
+    "eyebrow": "// about",
     "label": "Обо мне",
     "description": "Получил смешанное образование, поэтому могу и программировать и заниматься дизайном интерфейсов."
   },
   "skills": {
+    "eyebrowHard": "$ stack --hard",
+    "eyebrowSoft": "$ stack --soft",
     "technicalLabel": "Hard skills",
     "softLabel": "Soft skills",
     "technicalSkills": [
@@ -68,10 +72,11 @@
     ]
   },
   "socialMedia": {
+    "eyebrow": "$ contact --all",
     "label": "Контакты",
     "social": [
       {
-        "label": "Pavel Kostin",
+        "label": "Павел Костин",
         "name": "linkedin",
         "url": "https://www.linkedin.com/in/pavel-kostin",
         "icon": "bxl-linkedin-square"
@@ -83,7 +88,7 @@
         "icon": "bxl-github"
       },
       {
-        "label": "Pavel Kostin",
+        "label": "Павел Костин",
         "name": "telegram",
         "url": "https://t.me/PashaKostin",
         "icon": "bxl-telegram"
@@ -92,14 +97,17 @@
   },
   "sections": {
     "experience": "Опыт работы",
+    "experienceEyebrow": "GET /experience",
     "education": "Образование",
-    "projects": "Проекты"
+    "educationEyebrow": "GET /education",
+    "projects": "Проекты",
+    "projectsEyebrow": "GET /projects"
   },
   "experience": {
     "works": [
       {
         "title": "FULLSTACK DEVELOPER",
-        "period": "Oct. 2023 - Now",
+        "period": "Окт. 2023 - наст. время",
         "company": "Herzen University",
         "description": [
           "Адаптировал легаси React-native проект под новые задачи.",
@@ -110,7 +118,7 @@
       },
       {
         "title": "УЧИТЕЛЬ ПРОГРАММИРОВАНИЯ У ДЕТЕЙ",
-        "period": "Feb. 2023 - Now",
+        "period": "Фев. 2023 - наст. время",
         "company": "uchi.ru",
         "description": [
           "Учил детей Unity, Blender, Unreal Engine, Html, CSS, JavaScript, Java, Python, Scratch, ScratchJr, Kodu Game Lab."
@@ -120,7 +128,7 @@
     "academic": [
       {
         "career": "РГПУ им А.И. Герцена",
-        "date": "2022-Now",
+        "date": "2022 - наст. время",
         "institution": "Институт информационных технологий и технологического образования"
       },
       {
@@ -133,7 +141,7 @@
       {
         "name": "University Helper (backend, mobile)",
         "company": "Студенческий проект",
-        "period": "Mar. 2023 - Dec. 2023",
+        "period": "Мар. 2023 - Дек. 2023",
         "description": [
           "Микросервисная архитектура",
           "Помощник для студента, который состоит из backend и мобильного приложения, интегрирован с системой университета",
@@ -144,7 +152,7 @@
       {
         "name": "Digital Office (backend)",
         "company": "LANIT-TERCOM, студенческий проект",
-        "period": "Jul. 2020 - Jun. 2021",
+        "period": "Июл. 2020 - Июн. 2021",
         "description": [
           "Микросервисная архитектура",
           "Вторая итерация проекта. Разрабатывал backend при помощи ASP.Net Core REST API Web Services для оптимизации процессов компании: департаменты, проекты, задачи, сотрудники, роли, права, отпуска, файлы, картинки...",
@@ -154,7 +162,7 @@
       {
         "name": "Office Map (backend)",
         "company": "LANIT-TERCOM, студенческий проект",
-        "period": "Jul. 2019 - May. 2020",
+        "period": "Июл. 2019 - Май 2020",
         "description": [
           "Монолитная архитектура",
           "Разрабатывал backend при помощи ASP.Net Core REST API Web Services для оптимизации процессов компании: департаменты, проекты, задачи, сотрудники.",

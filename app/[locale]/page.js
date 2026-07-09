@@ -4,6 +4,7 @@ import { Profile } from "@/components/Profile";
 import { AboutMe } from "@/components/AboutMe";
 import { Skills } from "@/components/Skills";
 import { SocialMedia } from "@/components/SocialMedia";
+import { DownloadResume } from "@/components/DownloadResume";
 import { Works } from "@/components/Works";
 import { Academic } from "@/components/Academic";
 import { Projects } from "@/components/Projects";
@@ -25,6 +26,7 @@ export default async function ResumePage({ params }) {
             <AboutMe />
             <Skills />
             <SocialMedia />
+            <DownloadResume />
           </div>
           <div className="resume__right">
             <Works />
