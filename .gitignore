@@ -1,5 +1,6 @@
-dist
-dist-ssr
+# Next.js
+.next/
+out/
 *.local
 .vercel
 
@@ -23,18 +24,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
-
 # Dependency directories
 node_modules/
 jspm_packages/
-
-# Distribution directories
-dist/
-
-# Typescript v1 declaration files
-typings/
 
 # Optional npm cache directory
 .npm
