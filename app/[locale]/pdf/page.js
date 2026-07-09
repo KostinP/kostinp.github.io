@@ -12,7 +12,7 @@ export default async function ResumePdfPage({ params }) {
   setRequestLocale(locale);
 
   return (
-    <main className="l-main bd-container" id="bd-container">
+    <main className="l-main bd-container pdf-layout" id="bd-container">
       <div className="resume" id="area-cv">
         <div className="resume__left">
           <Profile showControls={false} />

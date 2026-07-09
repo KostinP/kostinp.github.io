@@ -12,7 +12,7 @@ export const LanguageSwitcher = () => {
 
   return (
     <Link
-      className="change-language"
+      className="badge-btn"
       href={pathname}
       locale={otherLocale}
       id="language-button"

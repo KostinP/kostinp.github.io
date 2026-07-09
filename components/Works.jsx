@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Description } from "./Description";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { DownloadResume } from "./DownloadResume";
 
 const Work = ({ title, period, company, description }) => (
   <div className="experience__content">
@@ -35,7 +36,12 @@ export const Works = async ({ showControls = true }) => {
           ))}
         </div>
       </section>
-      {showControls && <LanguageSwitcher />}
+      {showControls && (
+        <div className="header-actions">
+          <DownloadResume />
+          <LanguageSwitcher />
+        </div>
+      )}
     </div>
   );
 };

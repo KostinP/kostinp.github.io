@@ -106,13 +106,23 @@ body.dark-theme {
   --grid-dot: rgba(231, 236, 234, 0.06);
 }
 
-/*========== language button ==========*/
-.change-language {
+/*========== header action badges (language, download) ==========*/
+.header-actions {
   position: absolute;
   right: 0;
   top: 1.5rem;
   display: flex;
   align-items: center;
+  gap: 0.5rem;
+}
+
+.badge-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  height: 1.6rem;
+  box-sizing: border-box;
   font-family: var(--mono-font);
   font-size: 0.8rem;
   font-weight: 600;
@@ -120,11 +130,15 @@ body.dark-theme {
   color: var(--text-color);
   border: 1px solid var(--text-color-light);
   border-radius: 3px;
-  padding: 0.1rem 0.4rem;
+  padding: 0 0.4rem;
   cursor: pointer;
 }
 
-.change-language:hover {
+.badge-btn i {
+  font-size: 0.95rem;
+}
+
+.badge-btn:hover {
   color: var(--accent-color);
   border-color: var(--accent-color);
 }
@@ -343,31 +357,6 @@ body.dark-theme {
   margin-right: 0.25rem;
 }
 
-.download-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  border: 1px solid var(--accent-color);
-  color: var(--accent-color);
-  font-family: var(--mono-font);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  padding: 0.5rem 0.9rem;
-  border-radius: 3px;
-  transition: 0.2s;
-  margin-top: var(--mb-1);
-}
-
-.download-btn i {
-  font-size: 1rem;
-}
-
-.download-btn:hover {
-  background-color: var(--accent-color);
-  color: var(--container-color);
-}
-
 .social__container {
   grid-template-columns: max-content;
   gap: 1rem;
@@ -552,4 +541,43 @@ body.dark-theme {
   .home__container {
     gap: 1.5rem;
   }
+}
+
+/*========== /pdf export: force the desktop two-column layout ==========
+   Chromium's PDF pagination lays out CSS against the paper size (A4 is
+   narrower than 968px), not the emulated viewport, so the min-width media
+   query above never matches during PDF generation. These rules mirror it
+   unconditionally, scoped to the /pdf route only. */
+.pdf-layout.bd-container {
+  max-width: none;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.pdf-layout .resume {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+  background-color: var(--container-color);
+  box-shadow: none;
+  min-height: 100vh;
+}
+
+.pdf-layout .resume__left {
+  background-color: var(--container-color-alt);
+}
+
+.pdf-layout .resume__left,
+.pdf-layout .resume__right {
+  padding: 0 1.5rem;
+}
+
+.pdf-layout .section-title,
+.pdf-layout .eyebrow,
+.pdf-layout .profile__description {
+  text-align: initial;
+}
+
+.pdf-layout .home__container {
+  gap: 1.5rem;
 }

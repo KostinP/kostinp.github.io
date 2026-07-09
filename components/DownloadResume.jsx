@@ -5,8 +5,14 @@ export const DownloadResume = async () => {
   const t = await getTranslations("profile");
 
   return (
-    <a className="download-btn" href={`/pavel-kostin-cv-${locale}.pdf`} download>
-      <i className="bx bx-download" /> {t("downloadCta")}
+    <a
+      className="badge-btn"
+      href={`/pavel-kostin-cv-${locale}.pdf`}
+      download
+      title={t("downloadCta")}
+      aria-label={t("downloadCta")}
+    >
+      <i className="bx bx-download" />
     </a>
   );
 };
