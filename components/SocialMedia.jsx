@@ -1,4 +1,5 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale } from "next-intl/server";
+import { getResume } from "@/lib/content";
 
 const Social = ({ label, url, icon }) => (
   <a href={url} target="_blank" rel="noreferrer" className="social__link">
@@ -7,15 +8,15 @@ const Social = ({ label, url, icon }) => (
 );
 
 export const SocialMedia = async () => {
-  const t = await getTranslations("socialMedia");
-  const social = t.raw("social");
+  const locale = await getLocale();
+  const { socialMedia } = await getResume(locale);
 
   return (
     <section className="social section">
-      <p className="eyebrow">{t("eyebrow")}</p>
-      <h2 className="section-title">{t("label")}</h2>
+      <p className="eyebrow">{socialMedia.eyebrow}</p>
+      <h2 className="section-title">{socialMedia.label}</h2>
       <div className="social__container bd-grid">
-        {social.map((item) => (
+        {socialMedia.social.map((item) => (
           <Social key={item.name} {...item} />
         ))}
       </div>

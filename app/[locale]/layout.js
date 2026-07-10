@@ -1,8 +1,9 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/src/i18n/routing";
 import { SetHtmlLang } from "@/components/SetHtmlLang";
+import { getResume } from "@/lib/content";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -12,11 +13,11 @@ export async function generateMetadata({ params }) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
 
-  const t = await getTranslations({ locale, namespace: "meta" });
+  const { meta } = await getResume(locale);
 
   return {
-    title: t("title"),
-    description: t("description"),
+    title: meta.title,
+    description: meta.description,
     icons: { icon: "/favicon.png" },
   };
 }

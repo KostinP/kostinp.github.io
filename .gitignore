@@ -8,6 +8,12 @@ out/
 # only so "next dev" has something real to serve; not committed)
 public/pavel-kostin-cv-*.pdf
 
+# Keystatic admin routes: copied in from keystatic-admin/ for local dev
+# only (see scripts/keystatic-link.mjs), removed before every build since
+# they're incompatible with output: 'export'.
+/app/keystatic/
+/app/api/keystatic/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

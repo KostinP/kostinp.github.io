@@ -1,5 +1,7 @@
-import { getTranslations } from "next-intl/server";
-import { Description } from "./Description";
+import { getLocale } from "next-intl/server";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { getResume, getWorks } from "@/lib/content";
+import { bulletListComponents } from "@/lib/mdx-components";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { DownloadResume } from "./DownloadResume";
 
@@ -14,25 +16,23 @@ const Work = ({ title, period, company, description }) => (
       <span className="experience__company">
         {period} | {company}
       </span>
-      {description.map((desc, i) => (
-        <Description key={i} desc={desc} />
-      ))}
+      <MDXRemote source={description} components={bulletListComponents} />
     </div>
   </div>
 );
 
 export const Works = async ({ showControls = true }) => {
-  const t = await getTranslations();
-  const works = t.raw("experience.works");
+  const locale = await getLocale();
+  const [{ sections }, works] = await Promise.all([getResume(locale), getWorks(locale)]);
 
   return (
     <div className="work">
       <section className="work-experience section" id="experience">
-        <p className="eyebrow">{t("sections.experienceEyebrow")}</p>
-        <h2 className="section-title">{t("sections.experience")}</h2>
+        <p className="eyebrow">{sections.experienceEyebrow}</p>
+        <h2 className="section-title">{sections.experience}</h2>
         <div className="experience__container bd-grid">
           {works.map((work) => (
-            <Work key={work.company} {...work} />
+            <Work key={work.title} {...work} />
           ))}
         </div>
       </section>

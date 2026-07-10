@@ -4,15 +4,20 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node scripts/keystatic-link.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/keystatic-unlink.mjs",
     "build": "next build",
     "postbuild": "node scripts/generate-pdfs.mjs",
     "start": "npx serve out",
     "lint": "eslint ."
   },
   "dependencies": {
+    "@keystatic/core": "^0.5.51",
+    "@keystatic/next": "^5.0.4",
     "next": "^16.2.10",
     "next-intl": "^4.13.1",
+    "next-mdx-remote": "^6.0.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },
@@ -21,6 +26,7 @@
     "eslint-config-next": "^16.2.10",
     "playwright": "^1.61.1",
     "serve": "^14.2.6",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "yaml": "^2.9.0"
   }
 }
