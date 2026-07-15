@@ -1,50 +1,322 @@
-meta:
-  title: Павел Костин - FullStack Software Developer
-  description: Получил смешанное образование, поэтому могу и программировать и
-    заниматься дизайном интерфейсов.
 profile:
   name: Павел Костин
-  ocupation: FullStack Software Developer
   location: Россия, Санкт-Петербург
   email: kopavalex@yandex.ru
   telephone: +7 (981) 761-76-46
   image: /images/IMG_5023.png
   downloadCta: Скачать резюме
-aboutMe:
-  eyebrow: // about
-  label: Обо мне
-  description: Получил смешанное образование, поэтому могу и программировать и
-    заниматься дизайном интерфейсов.
 skills:
   eyebrowHard: $ stack --hard
   eyebrowSoft: $ stack --soft
   technicalLabel: Hard skills
   softLabel: Soft skills
   technicalSkills:
-    - C#
-    - Unity
-    - EntityFramework
-    - LINQ
-    - RabbitMQ
-    - NUnit
-    - Swagger
-    - Postman
-    - React
-    - React-native
-    - Blender
-    - Photoshop
-    - Illustrator
-    - InDesign
-    - SQL
-    - Docker
-    - Linux
-    - Git
+    - name: C#
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+    - name: Unity
+      focuses:
+        - fullstack
+        - teacher
+      category: programming
+    - name: EntityFramework
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+    - name: LINQ
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+    - name: RabbitMQ
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+    - name: NUnit
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+    - name: Swagger
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+    - name: Postman
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+    - name: React
+      focuses:
+        - fullstack
+        - frontend
+      category: programming
+    - name: React-native
+      focuses:
+        - fullstack
+        - frontend
+      category: programming
+    - name: Blender
+      focuses:
+        - fullstack
+        - teacher
+      category: design
+    - name: Photoshop
+      focuses:
+        - fullstack
+        - frontend
+      category: design
+    - name: Illustrator
+      focuses:
+        - fullstack
+        - frontend
+      category: design
+    - name: InDesign
+      focuses:
+        - fullstack
+        - frontend
+      category: design
+    - name: SQL
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+    - name: Docker
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+    - name: Linux
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+    - name: Git
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+      category: programming
+    - name: Unreal Engine
+      focuses:
+        - teacher
+      category: programming
+    - name: Scratch
+      focuses:
+        - teacher
+      category: programming
+    - name: Kodu Game Lab
+      focuses:
+        - teacher
+      category: programming
+    - name: Figma
+      category: design
+      focuses:
+        - fullstack
+        - frontend
+    - name: Инфографика
+      category: design
+      focuses:
+        - fullstack
+    - name: Типографика
+      category: design
+      focuses:
+        - fullstack
+    - name: Композиция
+      category: design
+      focuses:
+        - fullstack
+    - name: Нейросети
+      category: design
+      focuses:
+        - fullstack
+    - name: After Effects
+      category: design
+      focuses:
+        - fullstack
+    - name: Основы SEO
+      category: design
+      focuses:
+        - fullstack
+        - frontend
+    - name: HTML
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+    - name: CSS
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+    - name: JavaScript
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+    - name: Go
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+    - name: .NET
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+    - name: Next.js
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+    - name: Tailwind
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+    - name: TypeScript
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+    - name: Адаптивная верстка
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+    - name: Кроссбраузерная верстка
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+    - name: GitLab
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+    - name: GitHub
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+    - name: Kubernetes
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+    - name: nginx
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+    - name: REST
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+    - name: CI/CD
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+    - name: SOLID
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+    - name: KISS
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+    - name: DRY
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+    - name: Нормализация
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+    - name: Flexbox
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+    - name: Grid
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+    - name: Разработка ФОС
+      category: teaching
+      focuses:
+        - teacher
+    - name: Руководство ВКР
+      category: teaching
+      focuses:
+        - teacher
+    - name: Публичные выступления
+      category: teaching
+      focuses:
+        - teacher
+    - name: Менторинг студентов
+      category: teaching
+      focuses:
+        - teacher
+    - name: Рабочие программы
+      category: teaching
+      focuses:
+        - teacher
+    - name: Moodle
+      category: teaching
+      focuses:
+        - teacher
   softSkills:
-    - Коммуникабельный
-    - Системное мышление
-    - Проактивный
-    - Креативный
-    - Готов обучать других людей
+    - name: Коммуникабельный
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name: Системное мышление
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name: Проактивный
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name: Креативный
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name: Готов обучать других людей
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+  categoryLabels:
+    design: Дизайнерские
+    programming: Программистские
+    teaching: Преподавательские
 socialMedia:
   eyebrow: $ contact --all
   label: Контакты
@@ -68,3 +340,82 @@ sections:
   educationEyebrow: GET /education
   projects: Проекты
   projectsEyebrow: GET /projects
+  courses: Курсы
+  coursesEyebrow: GET /courses
+  hobbies: Хобби
+  hobbiesEyebrow: // hobbies
+  achievementsLabel: Достижения
+pitchFullstack:
+  meta:
+    title: Павел Костин - FullStack Software Developer
+    description: Получил смешанное образование, поэтому могу и программировать и
+      заниматься дизайном интерфейсов.
+  ocupation: FullStack Software Developer
+  aboutMe:
+    eyebrow: // about
+    label: Обо мне
+    description: Получил смешанное образование, поэтому могу и программировать и
+      заниматься дизайном интерфейсов.
+pitchBackend:
+  meta:
+    title: Павел Костин - Backend Developer
+    description: "Backend-разработчик: API, сервисы и инфраструктура вокруг них."
+  ocupation: Backend Software Developer
+  aboutMe:
+    eyebrow: // about
+    label: Обо мне
+    description: "Бэкенд-разработчик: пишу надёжные API и сервисы на C#, Entity
+      Framework, SQL Server, работаю с очередями сообщений и инфраструктурой
+      вокруг них."
+pitchFrontend:
+  meta:
+    title: Павел Костин - Frontend Developer
+    description: "Frontend-разработчик: интерфейсы на React и дизайнерский бэкграунд."
+  ocupation: Frontend Software Developer
+  aboutMe:
+    eyebrow: // about
+    label: Обо мне
+    description: "Frontend-разработчик: собираю интерфейсы на React — от библиотек
+      компонентов до 3D-визуализаций, — а дизайнерский бэкграунд помогает не
+      терять детали."
+pitchTeacher:
+  meta:
+    title: Павел Костин - Учитель программирования
+    description: "Учитель программирования для детей: Unity, Blender, Unreal Engine,
+      Scratch и настоящий код."
+  ocupation: Учитель программирования
+  aboutMe:
+    eyebrow: // about
+    label: Обо мне
+    description: Учу детей программировать и создавать игры — Unity, Blender, Unreal
+      Engine, Scratch и настоящий код, — превращая сложные инструменты в
+      понятные и увлекательные задачи.
+languages:
+  eyebrow: $ lang --list
+  label: Языки
+  items:
+    - name: Русский
+      level: Native
+      dots: 7
+      totalDots: 7
+    - name: Английский
+      level: B1 Intermediate
+      dots: 4
+      totalDots: 7
+hobbies:
+  items:
+    - Гитара
+    - Пение
+    - Выращивание цветов
+courses:
+  items: []
+sectionVisibility:
+  aboutMe: true
+  skills: true
+  languages: true
+  socialMedia: true
+  experience: true
+  education: true
+  courses: true
+  projects: true
+  hobbies: true

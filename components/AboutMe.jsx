@@ -1,9 +1,14 @@
 import { getLocale } from "next-intl/server";
-import { getResume } from "@/lib/content";
+import { getPitch, getProfile } from "@/lib/content";
 
-export const AboutMe = async () => {
+export const AboutMe = async ({ focus }) => {
   const locale = await getLocale();
-  const { aboutMe } = await getResume(locale);
+  const [{ sectionVisibility }, { aboutMe }] = await Promise.all([
+    getProfile(locale),
+    getPitch(locale, focus),
+  ]);
+
+  if (!sectionVisibility.aboutMe) return null;
 
   return (
     <section className="profile section" id="profile">

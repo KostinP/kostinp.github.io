@@ -1,11 +1,12 @@
 import Image from "next/image";
 import { getLocale } from "next-intl/server";
-import { getResume } from "@/lib/content";
+import { getProfile, getPitch } from "@/lib/content";
 import { ThemeOptions } from "./ThemeOptions";
+import { FocusSwitcher } from "./FocusSwitcher";
 
-export const Profile = async ({ showControls = true }) => {
+export const Profile = async ({ focus, showControls = true }) => {
   const locale = await getLocale();
-  const { profile } = await getResume(locale);
+  const [{ profile }, pitch] = await Promise.all([getProfile(locale), getPitch(locale, focus)]);
 
   return (
     <section className="home" id="home">
@@ -21,7 +22,8 @@ export const Profile = async ({ showControls = true }) => {
           <h1 className="home__title">
             <strong>{profile.name}</strong>
           </h1>
-          <h3 className="home__profession">{profile.ocupation}</h3>
+          <h3 className="home__profession">{pitch.ocupation}</h3>
+          {showControls && <FocusSwitcher focus={focus} />}
         </div>
 
         <div className="home__address bd-grid">

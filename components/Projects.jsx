@@ -1,6 +1,6 @@
 import { getLocale } from "next-intl/server";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { getResume, getProjects } from "@/lib/content";
+import { getProfile, getProjects } from "@/lib/content";
 import { bulletListComponents } from "@/lib/mdx-components";
 
 const Project = ({ name, company, period, description }) => (
@@ -19,9 +19,14 @@ const Project = ({ name, company, period, description }) => (
   </div>
 );
 
-export const Projects = async () => {
+export const Projects = async ({ focus }) => {
   const locale = await getLocale();
-  const [{ sections }, projects] = await Promise.all([getResume(locale), getProjects(locale)]);
+  const [{ sections, sectionVisibility }, projects] = await Promise.all([
+    getProfile(locale),
+    getProjects(locale, focus),
+  ]);
+
+  if (!sectionVisibility.projects || projects.length === 0) return null;
 
   return (
     <section className="projects-experience section" id="projects">

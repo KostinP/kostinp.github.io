@@ -1,9 +1,9 @@
 import { getLocale } from "next-intl/server";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { getResume, getAcademic } from "@/lib/content";
+import { getProfile, getAcademic } from "@/lib/content";
 import { proseSpanComponents } from "@/lib/mdx-components";
 
-const Academy = ({ career, date, institution }) => (
+const Academy = ({ career, date, institution, degree }) => (
   <div className="education__content">
     <div className="education__time">
       <span className="education__rounder"></span>
@@ -13,13 +13,19 @@ const Academy = ({ career, date, institution }) => (
       <h3 className="education__title">{career}</h3>
       <span className="education__year">{date}</span>
       <MDXRemote source={institution} components={proseSpanComponents} />
+      {degree && <span className="education__degree">{degree}</span>}
     </div>
   </div>
 );
 
 export const Academic = async () => {
   const locale = await getLocale();
-  const [{ sections }, academic] = await Promise.all([getResume(locale), getAcademic(locale)]);
+  const [{ sections, sectionVisibility }, academic] = await Promise.all([
+    getProfile(locale),
+    getAcademic(locale),
+  ]);
+
+  if (!sectionVisibility.education) return null;
 
   return (
     <section className="academic-experience section" id="education">

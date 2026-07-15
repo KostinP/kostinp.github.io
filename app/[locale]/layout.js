@@ -3,17 +3,19 @@ import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/src/i18n/routing";
 import { SetHtmlLang } from "@/components/SetHtmlLang";
-import { getResume } from "@/lib/content";
+import { getPitch } from "@/lib/content";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+// Fallback metadata (the "fullstack" pitch); /[locale]/[focus] overrides
+// this with its own generateMetadata for backend/frontend.
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
 
-  const { meta } = await getResume(locale);
+  const { meta } = await getPitch(locale, "fullstack");
 
   return {
     title: meta.title,

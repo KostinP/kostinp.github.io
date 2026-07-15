@@ -18,5 +18,12 @@
     "switchTo": "Switch to {lang}",
     "en": "English",
     "ru": "Russian"
+  },
+  "focus": {
+    "ariaLabel": "Resume focus",
+    "fullstack": "Fullstack",
+    "backend": "Backend",
+    "frontend": "Frontend",
+    "teacher": "Teacher"
   }
 }

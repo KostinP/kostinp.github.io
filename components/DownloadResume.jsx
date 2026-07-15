@@ -1,14 +1,15 @@
 import { getLocale } from "next-intl/server";
-import { getResume } from "@/lib/content";
+import { getProfile } from "@/lib/content";
 
-export const DownloadResume = async () => {
+export const DownloadResume = async ({ focus }) => {
   const locale = await getLocale();
-  const { profile } = await getResume(locale);
+  const { profile } = await getProfile(locale);
+  const suffix = focus === "fullstack" ? "" : `-${focus}`;
 
   return (
     <a
       className="badge-btn"
-      href={`/pavel-kostin-cv-${locale}.pdf`}
+      href={`/pavel-kostin-cv-${locale}${suffix}.pdf`}
       download
       title={profile.downloadCta}
       aria-label={profile.downloadCta}

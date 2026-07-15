@@ -342,6 +342,26 @@ body.dark-theme {
   margin-bottom: var(--mb-1);
 }
 
+.focus-select {
+  display: inline-block;
+  margin-bottom: var(--mb-1);
+  font-family: var(--mono-font);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  background-color: var(--container-color);
+  border: 1px solid var(--accent-color);
+  border-radius: 3px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+}
+
+.focus-select:hover {
+  background-color: var(--accent-color);
+  color: var(--container-color);
+}
+
 .home__address {
   gap: 1rem;
 }
@@ -440,8 +460,61 @@ body.dark-theme {
   font-size: var(--smaller-font-size);
 }
 
+.education__degree {
+  font-size: var(--smaller-font-size);
+  color: var(--text-color-light);
+}
+
+.experience__achievements {
+  margin-top: 0.35rem;
+}
+
+.experience__achievements-label {
+  font-family: var(--mono-font);
+  font-size: var(--smaller-font-size);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin-bottom: 0.2rem;
+}
+
 .skills__content {
   grid-template-columns: repeat(1, 1fr);
+}
+
+.skills__category {
+  margin-bottom: var(--mb-1);
+}
+
+.skills__category-summary {
+  cursor: pointer;
+  font-family: var(--mono-font);
+  font-size: var(--small-font-size);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--title-color);
+  padding: 0.3rem 0;
+  list-style: none;
+}
+
+.skills__category-summary::-webkit-details-marker {
+  display: none;
+}
+
+.skills__category-summary::before {
+  content: "+";
+  display: inline-block;
+  width: 1rem;
+  color: var(--accent-color);
+}
+
+.skills__category[open] > .skills__category-summary::before {
+  content: "\2212";
+}
+
+.skills__category .skills__data {
+  padding-left: 1rem;
+  margin-top: 0.25rem;
 }
 
 .skills__name {
@@ -457,6 +530,47 @@ body.dark-theme {
   background-color: var(--accent-color);
   border-radius: 1px;
   margin-right: 0.75rem;
+}
+
+/*========== Languages (dot rating) ==========*/
+.languages__data {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.languages__item {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.languages__name-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.languages__level {
+  font-family: var(--mono-font);
+  font-size: var(--smaller-font-size);
+  color: var(--text-color-light);
+}
+
+.languages__dots {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.languages__dot {
+  width: 9px;
+  height: 9px;
+  box-sizing: border-box;
+  border: 1px solid var(--accent-color);
+  border-radius: 50%;
+}
+
+.languages__dot--filled {
+  background-color: var(--accent-color);
 }
 
 /*========== Snow effect ==========*/

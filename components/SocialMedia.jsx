@@ -1,5 +1,5 @@
 import { getLocale } from "next-intl/server";
-import { getResume } from "@/lib/content";
+import { getProfile } from "@/lib/content";
 
 const Social = ({ label, url, icon }) => (
   <a href={url} target="_blank" rel="noreferrer" className="social__link">
@@ -9,7 +9,9 @@ const Social = ({ label, url, icon }) => (
 
 export const SocialMedia = async () => {
   const locale = await getLocale();
-  const { socialMedia } = await getResume(locale);
+  const { socialMedia, sectionVisibility } = await getProfile(locale);
+
+  if (!sectionVisibility.socialMedia) return null;
 
   return (
     <section className="social section">
