@@ -1,0 +1,746 @@
+profile:
+  name:
+    en: Pavel Kostin
+    ru: Павел Костин
+  location:
+    en: Russia, St. Petersburg
+    ru: Россия, Санкт-Петербург
+  email: kopavalex@yandex.ru
+  telephone: +7 (981) 761-76-46
+  showPhoto:
+    en: false
+    ru: true
+  image: /images/profile/image.png
+  downloadCta:
+    en: Download CV
+    ru: Скачать резюме
+skills:
+  eyebrowHard:
+    en: $ stack --hard
+    ru: $ stack --hard
+  eyebrowSoft:
+    en: $ stack --soft
+    ru: $ stack --soft
+  technicalLabel:
+    en: Hard skills
+    ru: Hard skills
+  softLabel:
+    en: Soft skills
+    ru: Soft skills
+  categoryLabels:
+    design:
+      en: Design
+      ru: Дизайнерские
+    programming:
+      en: Programming
+      ru: Программистские
+    teaching:
+      en: Teaching
+      ru: Преподавательские
+  subcategoryLabels:
+    languagesFrameworks:
+      en: Languages & Frameworks
+      ru: Языки и Фреймворки
+    gameDevelopment:
+      en: Game Development
+      ru: Разработка игр
+    toolsPlatforms:
+      en: Tools & Platforms
+      ru: Инструменты и Платформы
+    databasesDevops:
+      en: Databases & DevOps
+      ru: Базы данных и DevOps
+    graphicDesign:
+      en: Graphic Design
+      ru: Графический дизайн
+    uxUiDesign:
+      en: UX/UI Design
+      ru: UX/UI Дизайн
+    threeDAnimation:
+      en: 3D & Animation
+      ru: 3D и Анимация
+    curriculumInstruction:
+      en: Curriculum & Instruction
+      ru: Учебные программы
+    studentEngagement:
+      en: Student Engagement
+      ru: Работа со студентами
+  technicalSkills:
+    - name:
+        en: C#
+        ru: C#
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: Unity
+        ru: Unity
+      category: programming
+      subcategory: game-development
+      focuses:
+        - fullstack
+        - teacher
+    - name:
+        en: EntityFramework
+        ru: EntityFramework
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: LINQ
+        ru: LINQ
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: RabbitMQ
+        ru: RabbitMQ
+      category: programming
+      subcategory: tools-platforms
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: NUnit
+        ru: NUnit
+      category: programming
+      subcategory: tools-platforms
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: Swagger
+        ru: Swagger
+      category: programming
+      subcategory: tools-platforms
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: Postman
+        ru: Postman
+      category: programming
+      subcategory: tools-platforms
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: React
+        ru: React
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: React-native
+        ru: React-native
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: Blender
+        ru: Blender
+      category: design
+      subcategory: 3d-animation
+      focuses:
+        - fullstack
+        - teacher
+    - name:
+        en: Photoshop
+        ru: Photoshop
+      category: design
+      subcategory: graphic-design
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: Illustrator
+        ru: Illustrator
+      category: design
+      subcategory: graphic-design
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: InDesign
+        ru: InDesign
+      category: design
+      subcategory: graphic-design
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: SQL
+        ru: SQL
+      category: programming
+      subcategory: databases-devops
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: Docker
+        ru: Docker
+      category: programming
+      subcategory: databases-devops
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: Linux
+        ru: Linux
+      category: programming
+      subcategory: databases-devops
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: Git
+        ru: Git
+      category: programming
+      subcategory: tools-platforms
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+    - name:
+        en: Unreal Engine
+        ru: Unreal Engine
+      category: programming
+      subcategory: game-development
+      focuses:
+        - teacher
+    - name:
+        en: Scratch
+        ru: Scratch
+      category: programming
+      subcategory: game-development
+      focuses:
+        - teacher
+    - name:
+        en: Kodu Game Lab
+        ru: Kodu Game Lab
+      category: programming
+      subcategory: game-development
+      focuses:
+        - teacher
+    - name:
+        en: Figma
+        ru: Figma
+      category: design
+      subcategory: ux-ui-design
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: Infographics
+        ru: Инфографика
+      category: design
+      subcategory: graphic-design
+      focuses:
+        - fullstack
+    - name:
+        en: Typography
+        ru: Типографика
+      category: design
+      subcategory: graphic-design
+      focuses:
+        - fullstack
+    - name:
+        en: Composition
+        ru: Композиция
+      category: design
+      subcategory: graphic-design
+      focuses:
+        - fullstack
+    - name:
+        en: AI tools
+        ru: Нейросети
+      category: design
+      subcategory: ux-ui-design
+      focuses:
+        - fullstack
+    - name:
+        en: After Effects
+        ru: After Effects
+      category: design
+      subcategory: 3d-animation
+      focuses:
+        - fullstack
+    - name:
+        en: SEO Basics
+        ru: Основы SEO
+      category: design
+      subcategory: ux-ui-design
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: HTML
+        ru: HTML
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: CSS
+        ru: CSS
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: JavaScript
+        ru: JavaScript
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: Go
+        ru: Go
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: .NET
+        ru: .NET
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: Next.js
+        ru: Next.js
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: Tailwind
+        ru: Tailwind
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: TypeScript
+        ru: TypeScript
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: Responsive Layout
+        ru: Адаптивная верстка
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: Cross-browser Layout
+        ru: Кроссбраузерная верстка
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: GitLab
+        ru: GitLab
+      category: programming
+      subcategory: tools-platforms
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+    - name:
+        en: GitHub
+        ru: GitHub
+      category: programming
+      subcategory: tools-platforms
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+    - name:
+        en: Kubernetes
+        ru: Kubernetes
+      category: programming
+      subcategory: databases-devops
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: nginx
+        ru: nginx
+      category: programming
+      subcategory: databases-devops
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: REST
+        ru: REST
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: CI/CD
+        ru: CI/CD
+      category: programming
+      subcategory: databases-devops
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: SOLID
+        ru: SOLID
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: KISS
+        ru: KISS
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+    - name:
+        en: DRY
+        ru: DRY
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+    - name:
+        en: Normalization
+        ru: Нормализация
+      category: programming
+      subcategory: databases-devops
+      focuses:
+        - fullstack
+        - backend
+    - name:
+        en: Flexbox
+        ru: Flexbox
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: Grid
+        ru: Grid
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name:
+        en: Assessment Materials Design
+        ru: Разработка ФОС
+      category: teaching
+      subcategory: curriculum-instruction
+      focuses:
+        - teacher
+    - name:
+        en: Thesis Supervision
+        ru: Руководство ВКР
+      category: teaching
+      subcategory: curriculum-instruction
+      focuses:
+        - teacher
+    - name:
+        en: Public Speaking
+        ru: Публичные выступления
+      category: teaching
+      subcategory: student-engagement
+      focuses:
+        - teacher
+    - name:
+        en: Student Mentoring
+        ru: Менторинг студентов
+      category: teaching
+      subcategory: student-engagement
+      focuses:
+        - teacher
+    - name:
+        en: Curriculum Design
+        ru: Рабочие программы
+      category: teaching
+      subcategory: curriculum-instruction
+      focuses:
+        - teacher
+    - name:
+        en: Moodle
+        ru: Moodle
+      category: teaching
+      subcategory: tools-platforms
+      focuses:
+        - teacher
+  softSkills:
+    - name:
+        en: Communicable
+        ru: Коммуникабельный
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name:
+        en: Systems approach
+        ru: Системное мышление
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name:
+        en: Proactive
+        ru: Проактивный
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name:
+        en: Creative
+        ru: Креативный
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name:
+        en: Mentoring
+        ru: Готов обучать других людей
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+socialMedia:
+  eyebrow:
+    en: $ contact --all
+    ru: $ contact --all
+  label:
+    en: Contacts
+    ru: Контакты
+  social:
+    - label:
+        en: Pavel Kostin
+        ru: Павел Костин
+      name: linkedin
+      url: https://www.linkedin.com/in/pavel-kostin
+      icon: bxl-linkedin-square
+    - label:
+        en: KostinP
+        ru: KostinP
+      name: github
+      url: https://github.com/KostinP
+      icon: bxl-github
+    - label:
+        en: Pavel Kostin
+        ru: Павел Костин
+      name: telegram
+      url: https://t.me/PashaKostin
+      icon: bxl-telegram
+sections:
+  experience:
+    en: Experience
+    ru: Опыт работы
+  experienceEyebrow:
+    en: GET /experience
+    ru: GET /experience
+  achievementsLabel:
+    en: Achievements
+    ru: Достижения
+  education:
+    en: Education
+    ru: Образование
+  educationEyebrow:
+    en: GET /education
+    ru: GET /education
+  courses:
+    en: Courses
+    ru: Курсы
+  coursesEyebrow:
+    en: GET /courses
+    ru: GET /courses
+  projects:
+    en: Projects
+    ru: Проекты
+  projectsEyebrow:
+    en: GET /projects
+    ru: GET /projects
+  hobbies:
+    en: Hobbies
+    ru: Хобби
+  hobbiesEyebrow:
+    en: // hobbies
+    ru: // hobbies
+languages:
+  eyebrow:
+    en: $ lang --list
+    ru: $ lang --list
+  label:
+    en: Languages
+    ru: Языки
+  items:
+    - name:
+        en: Russian
+        ru: Русский
+      level:
+        en: Native
+        ru: Native
+      dots: 7
+      totalDots: 7
+    - name:
+        en: English
+        ru: Английский
+      level:
+        en: B1 Intermediate
+        ru: B1 Intermediate
+      dots: 4
+      totalDots: 7
+hobbies:
+  items:
+    - en: Guitar
+      ru: Гитара
+    - en: Singing
+      ru: Пение
+    - en: Growing flowers
+      ru: Выращивание цветов
+courses:
+  items: []
+sectionVisibility:
+  aboutMe: true
+  skills: true
+  languages: true
+  socialMedia: true
+  experience: true
+  education: true
+  courses: true
+  projects: true
+  hobbies: true
+pitchFullstack:
+  meta:
+    title:
+      en: Pavel Kostin - FullStack Software Developer
+      ru: Павел Костин - FullStack Software Developer
+    description:
+      en: Fullstack programmer and designer proficient in many development tools.
+      ru: Разработал и запустил десяток полнофункциональных веб-приложений с нуля, используя React, Next.js и серверные технологии (.NET, Go, Node.js). Активно использую в своей работе разнообразные технологии, такие как Docker, Kubernetes, RabbitMQ, PostgreSQL, Three.js и так далее.
+  ocupation:
+    en: FullStack Software Developer
+    ru: FullStack Software Developer
+  aboutMe:
+    eyebrow:
+      en: // about
+      ru: // about
+    label:
+      en: About me
+      ru: Обо мне
+    description:
+      en: Fullstack programmer and designer proficient in many development tools.
+      ru: Разработал и запустил десяток полнофункциональных веб-приложений с нуля, используя React, Next.js и серверные технологии (.NET, Go, Node.js). Активно использую в своей работе разнообразные технологии, такие как Docker, Kubernetes, RabbitMQ, PostgreSQL, Three.js и так далее.
+pitchBackend:
+  meta:
+    title:
+      en: Pavel Kostin - Backend Developer
+      ru: Павел Костин - Backend Developer
+    description:
+      en: Backend developer building APIs, services and the infrastructure around them.
+      ru: "Backend-разработчик: API, сервисы и инфраструктура вокруг них."
+  ocupation:
+    en: Backend Software Developer
+    ru: Backend Software Developer
+  aboutMe:
+    eyebrow:
+      en: // about
+      ru: // about
+    label:
+      en: About me
+      ru: Обо мне
+    description:
+      en: "Backend-focused engineer building reliable APIs and services: C#, Entity Framework, SQL Server, message queues, and the infrastructure around them."
+      ru: Пишу надёжные API и сервисы, быстро обучаюсь, поработал с различными библиотеками и фреймворками. вокруг них.
+pitchFrontend:
+  meta:
+    title:
+      en: Pavel Kostin - Frontend Developer
+      ru: Павел Костин - Frontend Developer
+    description:
+      en: Frontend developer building interfaces with React, backed by a design background.
+      ru: "Frontend-разработчик: интерфейсы на React и дизайнерский бэкграунд."
+  ocupation:
+    en: Frontend Software Developer
+    ru: Frontend Software Developer
+  aboutMe:
+    eyebrow:
+      en: // about
+      ru: // about
+    label:
+      en: About me
+      ru: Обо мне
+    description:
+      en: Frontend-focused engineer building interfaces with React, from component libraries to 3D visualizations — plus a design background that keeps the details tight.
+      ru: Собираю интерфейсы на React и Next.js — от библиотек компонентов до 3D-визуализаций, — а дизайнерский бэкграунд помогает не терять детали.
+pitchTeacher:
+  meta:
+    title:
+      en: Pavel Kostin - Programming Teacher
+      ru: Павел Костин - преподаватель программирования
+    description:
+      en: "Programming teacher for kids: Unity, Blender, Unreal Engine, Scratch, and real code."
+      ru: "Преподаватель программирования: Web, игры, 3d-моделлирование."
+  ocupation:
+    en: Programming Teacher
+    ru: Преподаватель программирования
+  aboutMe:
+    eyebrow:
+      en: // about
+      ru: // about
+    label:
+      en: About me
+      ru: Обо мне
+    description:
+      en: I teach kids to program and build games — Unity, Blender, Unreal Engine, Scratch, and real code — turning complex tools into approachable, fun challenges.
+      ru: Учу программировать и создавать игры и веб-приложения — Unity, Blender, Unreal Engine, React. От основ до профессионализма. Обучил за пять лет более 200 детей и 100 студентов.

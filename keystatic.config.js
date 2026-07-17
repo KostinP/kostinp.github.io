@@ -10,22 +10,32 @@ const focusMultiselect = (label) =>
     defaultValue: FOCUSES,
   });
 
+// Wraps a single-locale field factory into an { en, ru } pair, so every
+// translatable value lives on the same entry instead of a separate EN/RU
+// collection — order/focuses/etc. can then only ever be defined once.
+const bilingual = (fieldFactory, label) =>
+  fields.object(
+    { en: fieldFactory(`${label} (EN)`), ru: fieldFactory(`${label} (RU)`) },
+    { label }
+  );
+const bilingualText = (label, opts) => bilingual((l) => fields.text({ label: l, ...opts }), label);
+
 const makePitchSchema = (label) =>
   fields.object(
     {
       meta: fields.object(
         {
-          title: fields.text({ label: "Page title" }),
-          description: fields.text({ label: "Meta description", multiline: true }),
+          title: bilingualText("Page title"),
+          description: bilingualText("Meta description", { multiline: true }),
         },
         { label: "Meta / SEO" }
       ),
-      ocupation: fields.text({ label: "Occupation" }),
+      ocupation: bilingualText("Occupation"),
       aboutMe: fields.object(
         {
-          eyebrow: fields.text({ label: "Eyebrow" }),
-          label: fields.text({ label: "Heading" }),
-          description: fields.text({ label: "Description", multiline: true }),
+          eyebrow: bilingualText("Eyebrow"),
+          label: bilingualText("Heading"),
+          description: bilingualText("Description", { multiline: true }),
         },
         { label: "About me" }
       ),
@@ -34,7 +44,7 @@ const makePitchSchema = (label) =>
   );
 
 const skillSchema = fields.object({
-  name: fields.text({ label: "Skill" }),
+  name: bilingualText("Skill"),
   category: fields.select({
     label: "Category",
     options: SKILL_CATEGORIES.map((value) => ({ label: value, value })),
@@ -60,17 +70,13 @@ const sectionVisibilitySchema = fields.object(
     projects: fields.checkbox({ label: "Projects", defaultValue: true }),
     hobbies: fields.checkbox({ label: "Hobbies", defaultValue: true }),
   },
-  { label: "Section visibility" }
+  { label: "Section visibility (shared — not locale-specific)" }
 );
 
 const subcategoryLabelsSchema = () => {
   const obj = {};
-  SKILL_SUBCATEGORIES.forEach(({ value }) => {
-    const key = SUBCATEGORY_KEYS[value];
-    obj[key] = fields.text({ 
-      label: SKILL_SUBCATEGORIES.find(s => s.value === value).label,
-      defaultValue: SKILL_SUBCATEGORIES.find(s => s.value === value).label,
-    });
+  SKILL_SUBCATEGORIES.forEach(({ value, label }) => {
+    obj[SUBCATEGORY_KEYS[value]] = bilingualText(label, { defaultValue: label });
   });
   return obj;
 };
@@ -78,35 +84,34 @@ const subcategoryLabelsSchema = () => {
 const resumeSchema = {
   profile: fields.object(
     {
-      name: fields.text({ label: "Name" }),
-      location: fields.text({ label: "Location" }),
+      name: bilingualText("Name"),
+      location: bilingualText("Location"),
       email: fields.text({ label: "Email" }),
       telephone: fields.text({ label: "Telephone" }),
-      showPhoto: fields.checkbox({
-        label: "Show photo",
-        description: "Display profile photo in the resume",
-        defaultValue: true,
-      }),
+      showPhoto: bilingual(
+        (l) => fields.checkbox({ label: l, description: "Display profile photo in the resume", defaultValue: true }),
+        "Show photo"
+      ),
       image: fields.image({
         label: "Photo",
         directory: "public/images",
         publicPath: "/images/",
       }),
-      downloadCta: fields.text({ label: "Download CV button label" }),
+      downloadCta: bilingualText("Download CV button label"),
     },
-    { label: "Profile (shared across focuses)" }
+    { label: "Profile" }
   ),
   skills: fields.object(
     {
-      eyebrowHard: fields.text({ label: "Hard skills eyebrow" }),
-      eyebrowSoft: fields.text({ label: "Soft skills eyebrow" }),
-      technicalLabel: fields.text({ label: "Hard skills heading" }),
-      softLabel: fields.text({ label: "Soft skills heading" }),
+      eyebrowHard: bilingualText("Hard skills eyebrow"),
+      eyebrowSoft: bilingualText("Soft skills eyebrow"),
+      technicalLabel: bilingualText("Hard skills heading"),
+      softLabel: bilingualText("Soft skills heading"),
       categoryLabels: fields.object(
         {
-          design: fields.text({ label: "Design category label" }),
-          programming: fields.text({ label: "Programming category label" }),
-          teaching: fields.text({ label: "Teaching category label" }),
+          design: bilingualText("Design category label"),
+          programming: bilingualText("Programming category label"),
+          teaching: bilingualText("Teaching category label"),
         },
         { label: "Category labels" }
       ),
@@ -116,87 +121,87 @@ const resumeSchema = {
       ),
       technicalSkills: fields.array(skillSchema, {
         label: "Hard skills",
-        itemLabel: (props) => props.fields.name.value || "Skill",
+        itemLabel: (props) => props.fields.name.fields.en.value || "Skill",
       }),
       softSkills: fields.array(skillSchema, {
         label: "Soft skills",
-        itemLabel: (props) => props.fields.name.value || "Skill",
+        itemLabel: (props) => props.fields.name.fields.en.value || "Skill",
       }),
     },
-    { label: "Skills (shared list, tagged per focus)" }
+    { label: "Skills (one tagged list, names per locale)" }
   ),
   socialMedia: fields.object(
     {
-      eyebrow: fields.text({ label: "Eyebrow" }),
-      label: fields.text({ label: "Heading" }),
+      eyebrow: bilingualText("Eyebrow"),
+      label: bilingualText("Heading"),
       social: fields.array(
         fields.object({
-          label: fields.text({ label: "Display label" }),
+          label: bilingualText("Display label"),
           name: fields.text({ label: "Key (e.g. linkedin)" }),
           url: fields.url({ label: "URL" }),
           icon: fields.text({ label: "Boxicons class" }),
         }),
         {
           label: "Links",
-          itemLabel: (props) => props.fields.label.value || "Link",
+          itemLabel: (props) => props.fields.label.fields.en.value || "Link",
         }
       ),
     },
-    { label: "Social / contacts (shared)" }
+    { label: "Social / contacts" }
   ),
   sections: fields.object(
     {
-      experience: fields.text({ label: "Experience heading" }),
-      experienceEyebrow: fields.text({ label: "Experience eyebrow" }),
-      achievementsLabel: fields.text({ label: "Achievements sub-label" }),
-      education: fields.text({ label: "Education heading" }),
-      educationEyebrow: fields.text({ label: "Education eyebrow" }),
-      courses: fields.text({ label: "Courses heading" }),
-      coursesEyebrow: fields.text({ label: "Courses eyebrow" }),
-      projects: fields.text({ label: "Projects heading" }),
-      projectsEyebrow: fields.text({ label: "Projects eyebrow" }),
-      hobbies: fields.text({ label: "Hobbies heading" }),
-      hobbiesEyebrow: fields.text({ label: "Hobbies eyebrow" }),
+      experience: bilingualText("Experience heading"),
+      experienceEyebrow: bilingualText("Experience eyebrow"),
+      achievementsLabel: bilingualText("Achievements sub-label"),
+      education: bilingualText("Education heading"),
+      educationEyebrow: bilingualText("Education eyebrow"),
+      courses: bilingualText("Courses heading"),
+      coursesEyebrow: bilingualText("Courses eyebrow"),
+      projects: bilingualText("Projects heading"),
+      projectsEyebrow: bilingualText("Projects eyebrow"),
+      hobbies: bilingualText("Hobbies heading"),
+      hobbiesEyebrow: bilingualText("Hobbies eyebrow"),
     },
-    { label: "Section headings (shared)" }
+    { label: "Section headings" }
   ),
   languages: fields.object(
     {
-      eyebrow: fields.text({ label: "Eyebrow" }),
-      label: fields.text({ label: "Heading" }),
+      eyebrow: bilingualText("Eyebrow"),
+      label: bilingualText("Heading"),
       items: fields.array(
         fields.object({
-          name: fields.text({ label: "Language" }),
-          level: fields.text({ label: "Level label (e.g. B1 Intermediate)" }),
+          name: bilingualText("Language"),
+          level: bilingualText("Level label (e.g. B1 Intermediate)"),
           dots: fields.integer({ label: "Filled dots" }),
           totalDots: fields.integer({ label: "Total dots", defaultValue: 7 }),
         }),
-        { label: "Languages", itemLabel: (props) => props.fields.name.value || "Language" }
+        { label: "Languages", itemLabel: (props) => props.fields.name.fields.en.value || "Language" }
       ),
     },
-    { label: "Languages (shared)" }
+    { label: "Languages" }
   ),
   hobbies: fields.object(
     {
-      items: fields.array(fields.text({ label: "Hobby" }), {
+      items: fields.array(bilingualText("Hobby"), {
         label: "Hobbies",
-        itemLabel: (props) => props.value || "Hobby",
+        itemLabel: (props) => props.fields.en.value || "Hobby",
       }),
     },
-    { label: "Hobbies (shared)" }
+    { label: "Hobbies" }
   ),
   courses: fields.object(
     {
       items: fields.array(
         fields.object({
-          name: fields.text({ label: "Course name" }),
+          name: bilingualText("Course name"),
           provider: fields.text({ label: "Provider" }),
           date: fields.text({ label: "Date" }),
         }),
-        { label: "Courses", itemLabel: (props) => props.fields.name.value || "Course" }
+        { label: "Courses", itemLabel: (props) => props.fields.name.fields.en.value || "Course" }
       ),
     },
-    { label: "Courses (shared)" }
+    { label: "Courses" }
   ),
   sectionVisibility: sectionVisibilitySchema,
   pitchFullstack: makePitchSchema("Pitch — Fullstack"),
@@ -205,108 +210,85 @@ const resumeSchema = {
   pitchTeacher: makePitchSchema("Pitch — Teacher"),
 };
 
+// Filename/slug is decoupled from the (now bilingual) display title, so
+// renaming a title in either language doesn't move the file.
+const keyField = (label) => fields.slug({ name: { label: `${label} (used for filename, not shown)` } });
+
+// One default-locale MDX body (RU, the site's defaultLocale) plus the other
+// locale and all focus overrides as inline MDX siblings in frontmatter —
+// same mechanism the focus overrides already used, just on another axis.
+const descriptionFields = () => ({
+  descriptionRu: fields.mdx({ label: "Description — RU (default / fullstack)" }),
+  descriptionEn: fields.mdx.inline({ label: "Description — EN (default / fullstack)" }),
+  descriptionRuBackend: fields.mdx.inline({ label: "Description override — Backend, RU (optional)" }),
+  descriptionRuFrontend: fields.mdx.inline({ label: "Description override — Frontend, RU (optional)" }),
+  descriptionRuTeacher: fields.mdx.inline({ label: "Description override — Teacher, RU (optional)" }),
+  descriptionEnBackend: fields.mdx.inline({ label: "Description override — Backend, EN (optional)" }),
+  descriptionEnFrontend: fields.mdx.inline({ label: "Description override — Frontend, EN (optional)" }),
+  descriptionEnTeacher: fields.mdx.inline({ label: "Description override — Teacher, EN (optional)" }),
+});
+
 const workSchema = {
-  title: fields.slug({ name: { label: "Job title" } }),
+  key: keyField("Key"),
+  title: bilingualText("Job title"),
   order: fields.integer({ label: "Sort order (lower = higher up)" }),
-  period: fields.text({ label: "Period" }),
-  company: fields.text({ label: "Company" }),
+  period: bilingualText("Period"),
+  company: bilingualText("Company"),
   focuses: focusMultiselect("Show on"),
-  description: fields.mdx({ label: "Description (default / fullstack)" }),
-  descriptionBackend: fields.mdx.inline({
-    label: "Description override — Backend (optional, falls back to default)",
-  }),
-  descriptionFrontend: fields.mdx.inline({
-    label: "Description override — Frontend (optional, falls back to default)",
-  }),
-  descriptionTeacher: fields.mdx.inline({
-    label: "Description override — Teacher (optional, falls back to default)",
-  }),
-  achievements: fields.mdx.inline({
-    label: "Achievements (optional, hidden if empty)",
-  }),
+  ...descriptionFields(),
+  achievementsRu: fields.mdx.inline({ label: "Achievements — RU (optional, hidden if empty)" }),
+  achievementsEn: fields.mdx.inline({ label: "Achievements — EN (optional, hidden if empty)" }),
 };
 
 const academicSchema = {
-  career: fields.slug({ name: { label: "Institution / program" } }),
+  key: keyField("Key"),
+  career: bilingualText("Institution / program"),
   order: fields.integer({ label: "Sort order (lower = higher up)" }),
-  date: fields.text({ label: "Date range" }),
-  institution: fields.mdx({ label: "Institution detail" }),
-  degree: fields.text({ label: "Degree / program (optional)" }),
+  date: bilingualText("Date range"),
+  institutionRu: fields.mdx({ label: "Institution detail — RU" }),
+  institutionEn: fields.mdx.inline({ label: "Institution detail — EN" }),
+  degree: bilingualText("Degree / program (optional)"),
 };
 
 const projectSchema = {
-  name: fields.slug({ name: { label: "Project name" } }),
+  key: keyField("Key"),
+  name: bilingualText("Project name"),
   order: fields.integer({ label: "Sort order (lower = higher up)" }),
-  company: fields.text({ label: "Company / context" }),
-  period: fields.text({ label: "Period" }),
+  company: bilingualText("Company / context"),
+  period: bilingualText("Period"),
   focuses: focusMultiselect("Show on"),
-  description: fields.mdx({ label: "Description (default / fullstack)" }),
-  descriptionBackend: fields.mdx.inline({
-    label: "Description override — Backend (optional, falls back to default)",
-  }),
-  descriptionFrontend: fields.mdx.inline({
-    label: "Description override — Frontend (optional, falls back to default)",
-  }),
-  descriptionTeacher: fields.mdx.inline({
-    label: "Description override — Teacher (optional, falls back to default)",
-  }),
+  ...descriptionFields(),
 };
 
 export default config({
   storage: { kind: "local" },
   singletons: {
-    resumeEn: singleton({
-      label: "Resume (EN)",
-      path: "content/resume/en",
-      schema: resumeSchema,
-    }),
-    resumeRu: singleton({
-      label: "Resume (RU)",
-      path: "content/resume/ru",
+    resume: singleton({
+      label: "Resume",
+      path: "content/resume",
       schema: resumeSchema,
     }),
   },
   collections: {
-    worksEn: collection({
-      label: "Experience (EN)",
-      path: "content/works/en/*",
-      slugField: "title",
-      format: { contentField: "description" },
+    works: collection({
+      label: "Experience",
+      path: "content/works/*",
+      slugField: "key",
+      format: { contentField: "descriptionRu" },
       schema: workSchema,
     }),
-    worksRu: collection({
-      label: "Experience (RU)",
-      path: "content/works/ru/*",
-      slugField: "title",
-      format: { contentField: "description" },
-      schema: workSchema,
-    }),
-    academicEn: collection({
-      label: "Education (EN)",
-      path: "content/academic/en/*",
-      slugField: "career",
-      format: { contentField: "institution" },
+    academic: collection({
+      label: "Education",
+      path: "content/academic/*",
+      slugField: "key",
+      format: { contentField: "institutionRu" },
       schema: academicSchema,
     }),
-    academicRu: collection({
-      label: "Education (RU)",
-      path: "content/academic/ru/*",
-      slugField: "career",
-      format: { contentField: "institution" },
-      schema: academicSchema,
-    }),
-    projectsEn: collection({
-      label: "Projects (EN)",
-      path: "content/projects/en/*",
-      slugField: "name",
-      format: { contentField: "description" },
-      schema: projectSchema,
-    }),
-    projectsRu: collection({
-      label: "Projects (RU)",
-      path: "content/projects/ru/*",
-      slugField: "name",
-      format: { contentField: "description" },
+    projects: collection({
+      label: "Projects",
+      path: "content/projects/*",
+      slugField: "key",
+      format: { contentField: "descriptionRu" },
       schema: projectSchema,
     }),
   },
