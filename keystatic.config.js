@@ -1,6 +1,7 @@
 import { config, fields, collection, singleton } from "@keystatic/core";
 import { FOCUSES } from "./lib/focuses.js";
 import { SKILL_CATEGORIES } from "./lib/skill-categories.js";
+import { SKILL_SUBCATEGORIES, SUBCATEGORY_KEYS } from "./lib/skill-subcategories.js";
 
 const focusMultiselect = (label) =>
   fields.multiselect({
@@ -39,6 +40,11 @@ const skillSchema = fields.object({
     options: SKILL_CATEGORIES.map((value) => ({ label: value, value })),
     defaultValue: "programming",
   }),
+  subcategory: fields.select({
+    label: "Subcategory",
+    options: SKILL_SUBCATEGORIES.map(({ value, label }) => ({ label, value })),
+    defaultValue: "languages-frameworks",
+  }),
   focuses: focusMultiselect("Show on"),
 });
 
@@ -57,6 +63,18 @@ const sectionVisibilitySchema = fields.object(
   { label: "Section visibility" }
 );
 
+const subcategoryLabelsSchema = () => {
+  const obj = {};
+  SKILL_SUBCATEGORIES.forEach(({ value }) => {
+    const key = SUBCATEGORY_KEYS[value];
+    obj[key] = fields.text({ 
+      label: SKILL_SUBCATEGORIES.find(s => s.value === value).label,
+      defaultValue: SKILL_SUBCATEGORIES.find(s => s.value === value).label,
+    });
+  });
+  return obj;
+};
+
 const resumeSchema = {
   profile: fields.object(
     {
@@ -64,6 +82,11 @@ const resumeSchema = {
       location: fields.text({ label: "Location" }),
       email: fields.text({ label: "Email" }),
       telephone: fields.text({ label: "Telephone" }),
+      showPhoto: fields.checkbox({
+        label: "Show photo",
+        description: "Display profile photo in the resume",
+        defaultValue: true,
+      }),
       image: fields.image({
         label: "Photo",
         directory: "public/images",
@@ -86,6 +109,10 @@ const resumeSchema = {
           teaching: fields.text({ label: "Teaching category label" }),
         },
         { label: "Category labels" }
+      ),
+      subcategoryLabels: fields.object(
+        subcategoryLabelsSchema(),
+        { label: "Subcategory labels" }
       ),
       technicalSkills: fields.array(skillSchema, {
         label: "Hard skills",

@@ -8,11 +8,24 @@ const Skill = ({ skill }) => (
   </li>
 );
 
-const groupByCategory = (skills) =>
-  SKILL_CATEGORIES.map((category) => ({
-    category,
-    skills: skills.filter((skill) => skill.category === category).map((skill) => skill.name),
-  })).filter((group) => group.skills.length > 0);
+const groupByCategoryAndSubcategory = (skills) => {
+  const result = {};
+  
+  skills.forEach(skill => {
+    const category = skill.category || 'programming';
+    const subcategory = skill.subcategory || 'Other';
+    
+    if (!result[category]) {
+      result[category] = {};
+    }
+    if (!result[category][subcategory]) {
+      result[category][subcategory] = [];
+    }
+    result[category][subcategory].push(skill.name);
+  });
+  
+  return result;
+};
 
 export const Skills = async ({ focus }) => {
   const locale = await getLocale();
@@ -23,7 +36,9 @@ export const Skills = async ({ focus }) => {
 
   if (!sectionVisibility.skills) return null;
 
-  const categoryGroups = groupByCategory(skills.technicalSkills);
+  const groupedSkills = groupByCategoryAndSubcategory(skills.technicalSkills);
+  const categoryKeys = Object.keys(groupedSkills);
+  const subcategoryLabels = skills.subcategoryLabels || {};
 
   return (
     <>
@@ -31,31 +46,47 @@ export const Skills = async ({ focus }) => {
         <p className="eyebrow">{skills.eyebrowHard}</p>
         <h2 className="section-title">{skills.technicalLabel}</h2>
         <div className="skills__content bd-grid">
-          {categoryGroups.map((group, i) => (
-            <details key={group.category} className="skills__category" open={i === 0}>
-              <summary className="skills__category-summary">
-                {skills.categoryLabels[group.category]}
-              </summary>
-              <ul className="skills__data">
-                {group.skills.map((skill) => (
-                  <Skill key={skill} skill={skill} />
-                ))}
-              </ul>
-            </details>
-          ))}
+          {categoryKeys.map((category) => {
+            const subcategories = groupedSkills[category];
+            const subcategoryKeys = Object.keys(subcategories).sort();
+            
+            return (
+              <details key={category} className="skills__category" open>
+                <summary className="skills__category-summary">
+                  {skills.categoryLabels[category] || category}
+                </summary>
+                {subcategoryKeys.map((subcategory) => {
+                  const displayName = subcategoryLabels[subcategory] || subcategory;
+                  return (
+                    <div key={subcategory} className="skills__subcategory">
+                      <div className="skills__subcategory-title">{displayName}</div>
+                      <ul className="skills__data">
+                        {subcategories[subcategory].map((skill) => (
+                          <Skill key={skill} skill={skill} />
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })}
+              </details>
+            );
+          })}
         </div>
       </section>
-      <section className="soft-skills section">
-        <p className="eyebrow">{skills.eyebrowSoft}</p>
-        <h2 className="section-title">{skills.softLabel}</h2>
-        <div className="skills__content bd-grid">
-          <ul className="skills__data">
-            {skills.softSkills.map((skill) => (
-              <Skill key={skill} skill={skill} />
-            ))}
-          </ul>
-        </div>
-      </section>
+      
+      {skills.softSkills.length > 0 && (
+        <section className="soft-skills section">
+          <p className="eyebrow">{skills.eyebrowSoft}</p>
+          <h2 className="section-title">{skills.softLabel}</h2>
+          <div className="skills__content bd-grid">
+            <ul className="skills__data">
+              {skills.softSkills.map((skill) => (
+                <Skill key={skill} skill={skill} />
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
     </>
   );
 };

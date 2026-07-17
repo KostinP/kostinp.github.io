@@ -1,0 +1,3444 @@
+
+============================================================
+ФАЙЛ: keystatic.config.js
+============================================================
+
+import { config, fields, collection, singleton } from "@keystatic/core";
+import { FOCUSES } from "./lib/focuses.js";
+import { SKILL_CATEGORIES } from "./lib/skill-categories.js";
+import { SKILL_SUBCATEGORIES, SUBCATEGORY_KEYS } from "./lib/skill-subcategories.js";
+
+const focusMultiselect = (label) =>
+  fields.multiselect({
+    label,
+    options: FOCUSES.map((value) => ({ label: value, value })),
+    defaultValue: FOCUSES,
+  });
+
+const makePitchSchema = (label) =>
+  fields.object(
+    {
+      meta: fields.object(
+        {
+          title: fields.text({ label: "Page title" }),
+          description: fields.text({ label: "Meta description", multiline: true }),
+        },
+        { label: "Meta / SEO" }
+      ),
+      ocupation: fields.text({ label: "Occupation" }),
+      aboutMe: fields.object(
+        {
+          eyebrow: fields.text({ label: "Eyebrow" }),
+          label: fields.text({ label: "Heading" }),
+          description: fields.text({ label: "Description", multiline: true }),
+        },
+        { label: "About me" }
+      ),
+    },
+    { label }
+  );
+
+const skillSchema = fields.object({
+  name: fields.text({ label: "Skill" }),
+  category: fields.select({
+    label: "Category",
+    options: SKILL_CATEGORIES.map((value) => ({ label: value, value })),
+    defaultValue: "programming",
+  }),
+  subcategory: fields.select({
+    label: "Subcategory",
+    options: SKILL_SUBCATEGORIES.map(({ value, label }) => ({ label, value })),
+    defaultValue: "languages-frameworks",
+  }),
+  focuses: focusMultiselect("Show on"),
+});
+
+const sectionVisibilitySchema = fields.object(
+  {
+    aboutMe: fields.checkbox({ label: "About me", defaultValue: true }),
+    skills: fields.checkbox({ label: "Skills", defaultValue: true }),
+    languages: fields.checkbox({ label: "Languages", defaultValue: true }),
+    socialMedia: fields.checkbox({ label: "Social / contacts", defaultValue: true }),
+    experience: fields.checkbox({ label: "Experience", defaultValue: true }),
+    education: fields.checkbox({ label: "Education", defaultValue: true }),
+    courses: fields.checkbox({ label: "Courses", defaultValue: true }),
+    projects: fields.checkbox({ label: "Projects", defaultValue: true }),
+    hobbies: fields.checkbox({ label: "Hobbies", defaultValue: true }),
+  },
+  { label: "Section visibility" }
+);
+
+const subcategoryLabelsSchema = () => {
+  const obj = {};
+  SKILL_SUBCATEGORIES.forEach(({ value }) => {
+    const key = SUBCATEGORY_KEYS[value];
+    obj[key] = fields.text({ 
+      label: SKILL_SUBCATEGORIES.find(s => s.value === value).label,
+      defaultValue: SKILL_SUBCATEGORIES.find(s => s.value === value).label,
+    });
+  });
+  return obj;
+};
+
+const resumeSchema = {
+  profile: fields.object(
+    {
+      name: fields.text({ label: "Name" }),
+      location: fields.text({ label: "Location" }),
+      email: fields.text({ label: "Email" }),
+      telephone: fields.text({ label: "Telephone" }),
+      showPhoto: fields.checkbox({
+        label: "Show photo",
+        description: "Display profile photo in the resume",
+        defaultValue: true,
+      }),
+      image: fields.image({
+        label: "Photo",
+        directory: "public/images",
+        publicPath: "/images/",
+      }),
+      downloadCta: fields.text({ label: "Download CV button label" }),
+    },
+    { label: "Profile (shared across focuses)" }
+  ),
+  skills: fields.object(
+    {
+      eyebrowHard: fields.text({ label: "Hard skills eyebrow" }),
+      eyebrowSoft: fields.text({ label: "Soft skills eyebrow" }),
+      technicalLabel: fields.text({ label: "Hard skills heading" }),
+      softLabel: fields.text({ label: "Soft skills heading" }),
+      categoryLabels: fields.object(
+        {
+          design: fields.text({ label: "Design category label" }),
+          programming: fields.text({ label: "Programming category label" }),
+          teaching: fields.text({ label: "Teaching category label" }),
+        },
+        { label: "Category labels" }
+      ),
+      subcategoryLabels: fields.object(
+        subcategoryLabelsSchema(),
+        { label: "Subcategory labels" }
+      ),
+      technicalSkills: fields.array(skillSchema, {
+        label: "Hard skills",
+        itemLabel: (props) => props.fields.name.value || "Skill",
+      }),
+      softSkills: fields.array(skillSchema, {
+        label: "Soft skills",
+        itemLabel: (props) => props.fields.name.value || "Skill",
+      }),
+    },
+    { label: "Skills (shared list, tagged per focus)" }
+  ),
+  socialMedia: fields.object(
+    {
+      eyebrow: fields.text({ label: "Eyebrow" }),
+      label: fields.text({ label: "Heading" }),
+      social: fields.array(
+        fields.object({
+          label: fields.text({ label: "Display label" }),
+          name: fields.text({ label: "Key (e.g. linkedin)" }),
+          url: fields.url({ label: "URL" }),
+          icon: fields.text({ label: "Boxicons class" }),
+        }),
+        {
+          label: "Links",
+          itemLabel: (props) => props.fields.label.value || "Link",
+        }
+      ),
+    },
+    { label: "Social / contacts (shared)" }
+  ),
+  sections: fields.object(
+    {
+      experience: fields.text({ label: "Experience heading" }),
+      experienceEyebrow: fields.text({ label: "Experience eyebrow" }),
+      achievementsLabel: fields.text({ label: "Achievements sub-label" }),
+      education: fields.text({ label: "Education heading" }),
+      educationEyebrow: fields.text({ label: "Education eyebrow" }),
+      courses: fields.text({ label: "Courses heading" }),
+      coursesEyebrow: fields.text({ label: "Courses eyebrow" }),
+      projects: fields.text({ label: "Projects heading" }),
+      projectsEyebrow: fields.text({ label: "Projects eyebrow" }),
+      hobbies: fields.text({ label: "Hobbies heading" }),
+      hobbiesEyebrow: fields.text({ label: "Hobbies eyebrow" }),
+    },
+    { label: "Section headings (shared)" }
+  ),
+  languages: fields.object(
+    {
+      eyebrow: fields.text({ label: "Eyebrow" }),
+      label: fields.text({ label: "Heading" }),
+      items: fields.array(
+        fields.object({
+          name: fields.text({ label: "Language" }),
+          level: fields.text({ label: "Level label (e.g. B1 Intermediate)" }),
+          dots: fields.integer({ label: "Filled dots" }),
+          totalDots: fields.integer({ label: "Total dots", defaultValue: 7 }),
+        }),
+        { label: "Languages", itemLabel: (props) => props.fields.name.value || "Language" }
+      ),
+    },
+    { label: "Languages (shared)" }
+  ),
+  hobbies: fields.object(
+    {
+      items: fields.array(fields.text({ label: "Hobby" }), {
+        label: "Hobbies",
+        itemLabel: (props) => props.value || "Hobby",
+      }),
+    },
+    { label: "Hobbies (shared)" }
+  ),
+  courses: fields.object(
+    {
+      items: fields.array(
+        fields.object({
+          name: fields.text({ label: "Course name" }),
+          provider: fields.text({ label: "Provider" }),
+          date: fields.text({ label: "Date" }),
+        }),
+        { label: "Courses", itemLabel: (props) => props.fields.name.value || "Course" }
+      ),
+    },
+    { label: "Courses (shared)" }
+  ),
+  sectionVisibility: sectionVisibilitySchema,
+  pitchFullstack: makePitchSchema("Pitch — Fullstack"),
+  pitchBackend: makePitchSchema("Pitch — Backend"),
+  pitchFrontend: makePitchSchema("Pitch — Frontend"),
+  pitchTeacher: makePitchSchema("Pitch — Teacher"),
+};
+
+const workSchema = {
+  title: fields.slug({ name: { label: "Job title" } }),
+  order: fields.integer({ label: "Sort order (lower = higher up)" }),
+  period: fields.text({ label: "Period" }),
+  company: fields.text({ label: "Company" }),
+  focuses: focusMultiselect("Show on"),
+  description: fields.mdx({ label: "Description (default / fullstack)" }),
+  descriptionBackend: fields.mdx.inline({
+    label: "Description override — Backend (optional, falls back to default)",
+  }),
+  descriptionFrontend: fields.mdx.inline({
+    label: "Description override — Frontend (optional, falls back to default)",
+  }),
+  descriptionTeacher: fields.mdx.inline({
+    label: "Description override — Teacher (optional, falls back to default)",
+  }),
+  achievements: fields.mdx.inline({
+    label: "Achievements (optional, hidden if empty)",
+  }),
+};
+
+const academicSchema = {
+  career: fields.slug({ name: { label: "Institution / program" } }),
+  order: fields.integer({ label: "Sort order (lower = higher up)" }),
+  date: fields.text({ label: "Date range" }),
+  institution: fields.mdx({ label: "Institution detail" }),
+  degree: fields.text({ label: "Degree / program (optional)" }),
+};
+
+const projectSchema = {
+  name: fields.slug({ name: { label: "Project name" } }),
+  order: fields.integer({ label: "Sort order (lower = higher up)" }),
+  company: fields.text({ label: "Company / context" }),
+  period: fields.text({ label: "Period" }),
+  focuses: focusMultiselect("Show on"),
+  description: fields.mdx({ label: "Description (default / fullstack)" }),
+  descriptionBackend: fields.mdx.inline({
+    label: "Description override — Backend (optional, falls back to default)",
+  }),
+  descriptionFrontend: fields.mdx.inline({
+    label: "Description override — Frontend (optional, falls back to default)",
+  }),
+  descriptionTeacher: fields.mdx.inline({
+    label: "Description override — Teacher (optional, falls back to default)",
+  }),
+};
+
+export default config({
+  storage: { kind: "local" },
+  singletons: {
+    resumeEn: singleton({
+      label: "Resume (EN)",
+      path: "content/resume/en",
+      schema: resumeSchema,
+    }),
+    resumeRu: singleton({
+      label: "Resume (RU)",
+      path: "content/resume/ru",
+      schema: resumeSchema,
+    }),
+  },
+  collections: {
+    worksEn: collection({
+      label: "Experience (EN)",
+      path: "content/works/en/*",
+      slugField: "title",
+      format: { contentField: "description" },
+      schema: workSchema,
+    }),
+    worksRu: collection({
+      label: "Experience (RU)",
+      path: "content/works/ru/*",
+      slugField: "title",
+      format: { contentField: "description" },
+      schema: workSchema,
+    }),
+    academicEn: collection({
+      label: "Education (EN)",
+      path: "content/academic/en/*",
+      slugField: "career",
+      format: { contentField: "institution" },
+      schema: academicSchema,
+    }),
+    academicRu: collection({
+      label: "Education (RU)",
+      path: "content/academic/ru/*",
+      slugField: "career",
+      format: { contentField: "institution" },
+      schema: academicSchema,
+    }),
+    projectsEn: collection({
+      label: "Projects (EN)",
+      path: "content/projects/en/*",
+      slugField: "name",
+      format: { contentField: "description" },
+      schema: projectSchema,
+    }),
+    projectsRu: collection({
+      label: "Projects (RU)",
+      path: "content/projects/ru/*",
+      slugField: "name",
+      format: { contentField: "description" },
+      schema: projectSchema,
+    }),
+  },
+});
+
+============================================================
+ФАЙЛ: jsconfig.json
+============================================================
+
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}
+
+============================================================
+ФАЙЛ: next.config.js
+============================================================
+
+import createNextIntlPlugin from "next-intl/plugin";
+
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.js");
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // Only static-export during the real production build: "next dev" also
+  // enforces output:'export' constraints (no dynamic routes), which would
+  // break the Keystatic admin route used for local content editing.
+  ...(process.env.NODE_ENV === "production" ? { output: "export" } : {}),
+  trailingSlash: true,
+  images: { unoptimized: true },
+};
+
+export default withNextIntl(nextConfig);
+
+============================================================
+ФАЙЛ: package.json
+============================================================
+
+{
+  "name": "kostinp-portfolio",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predev": "node scripts/keystatic-link.mjs",
+    "dev": "next dev",
+    "prebuild": "node scripts/keystatic-unlink.mjs",
+    "build": "next build",
+    "postbuild": "node scripts/generate-pdfs.mjs",
+    "start": "npx serve out",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@keystatic/core": "^0.5.51",
+    "@keystatic/next": "^5.0.4",
+    "next": "^16.2.10",
+    "next-intl": "^4.13.1",
+    "next-mdx-remote": "^6.0.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^16.2.10",
+    "playwright": "^1.61.1",
+    "serve": "^14.2.6",
+    "typescript": "^5.7.0",
+    "yaml": "^2.9.0"
+  }
+}
+
+============================================================
+ФАЙЛ: messages/ru.json
+============================================================
+
+{
+  "menu": [
+    { "label": "Главная", "section": "#home", "icon": "bx-home" },
+    { "label": "Обо мне", "section": "#profile", "icon": "bx-user" },
+    { "label": "Навыки", "section": "#skills", "icon": "bx-receipt" },
+    { "label": "Опыт работы", "section": "#experience", "icon": "bx-briefcase-alt" },
+    { "label": "Образование", "section": "#education", "icon": "bx-book" },
+    { "label": "Проекты", "section": "#projects", "icon": "bx-award" }
+  ],
+  "options": {
+    "toggleTheme": "Сменить тему",
+    "enableSnow": "Включить снег"
+  },
+  "nav": {
+    "logo": "Меню"
+  },
+  "language": {
+    "switchTo": "Переключить на {lang}",
+    "en": "английский",
+    "ru": "русский"
+  },
+  "focus": {
+    "ariaLabel": "Фокус резюме",
+    "fullstack": "Fullstack",
+    "backend": "Backend",
+    "frontend": "Frontend",
+    "teacher": "Преподаватель"
+  }
+}
+
+============================================================
+ФАЙЛ: messages/en.json
+============================================================
+
+{
+  "menu": [
+    { "label": "Home", "section": "#home", "icon": "bx-home" },
+    { "label": "About", "section": "#profile", "icon": "bx-user" },
+    { "label": "Skills", "section": "#skills", "icon": "bx-receipt" },
+    { "label": "Experience", "section": "#experience", "icon": "bx-briefcase-alt" },
+    { "label": "Education", "section": "#education", "icon": "bx-book" },
+    { "label": "Projects", "section": "#projects", "icon": "bx-award" }
+  ],
+  "options": {
+    "toggleTheme": "Toggle theme",
+    "enableSnow": "Activate snow"
+  },
+  "nav": {
+    "logo": "Menu"
+  },
+  "language": {
+    "switchTo": "Switch to {lang}",
+    "en": "English",
+    "ru": "Russian"
+  },
+  "focus": {
+    "ariaLabel": "Resume focus",
+    "fullstack": "Fullstack",
+    "backend": "Backend",
+    "frontend": "Frontend",
+    "teacher": "Teacher"
+  }
+}
+
+============================================================
+ФАЙЛ: app/layout.js
+============================================================
+
+import "./globals.css";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="ru">
+      <head>
+        <link
+          rel="preload"
+          as="style"
+          href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+        />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+
+============================================================
+ФАЙЛ: app/page.js
+============================================================
+
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { routing } from "@/src/i18n/routing";
+
+const pickLocale = () => {
+  const stored = localStorage.getItem("locale");
+  if (routing.locales.includes(stored)) return stored;
+
+  const preferred = navigator.language?.slice(0, 2);
+  return routing.locales.includes(preferred) ? preferred : routing.defaultLocale;
+};
+
+export default function RootPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace(`/${pickLocale()}/`);
+  }, [router]);
+
+  return (
+    <noscript>
+      <meta httpEquiv="refresh" content={`0; url=/${routing.defaultLocale}/`} />
+    </noscript>
+  );
+}
+
+============================================================
+ФАЙЛ: app/globals.css
+============================================================
+
+/*===== GOOGLE FONTS =====*/
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
+/*===== VARIABLES CSS =====*/
+:root {
+  --header-height: 3rem;
+
+  /*========== Colors ==========*/
+  /* Cool "blueprint paper" palette: schema/ER-diagram identity for a
+     backend engineer, deliberately not warm-cream/serif or near-black/neon. */
+  --title-color: #12181b;
+  --text-color: #3b4652;
+  --text-color-light: #7c8a90;
+  --container-color: #ffffff;
+  --container-color-alt: #e9edeb;
+  --body-color: #eef1ef;
+  --accent-color: #2a5cdb;
+  --grid-dot: rgba(18, 24, 27, 0.09);
+
+  /*========== Font and typography ==========*/
+  --body-font: "IBM Plex Sans", sans-serif;
+  --display-font: "IBM Plex Sans Condensed", sans-serif;
+  --mono-font: "IBM Plex Mono", monospace;
+  --h1-font-size: 1.5rem;
+  --h2-font-size: 1.25rem;
+  --h3-font-size: 1rem;
+  --normal-font-size: 0.938rem;
+  --small-font-size: 0.875rem;
+  --smaller-font-size: 0.813rem;
+
+  /*========== Font weight ==========*/
+  --font-medium: 500;
+  --font-semi-bold: 600;
+
+  /*========== Margenes ==========*/
+  --mb-1: 0.5rem;
+  --mb-2: 1rem;
+  --mb-3: 1.5rem;
+
+  /*========== z index ==========*/
+  --z-tooltip: 10;
+  --z-fixed: 100;
+}
+
+/*========== BASE ==========*/
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0 0 var(--header-height) 0;
+  padding: 0;
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  background-color: var(--body-color);
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+  background-size: 22px 22px;
+  color: var(--text-color);
+}
+
+h1,
+h2,
+h3,
+ul,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--title-color);
+  font-family: var(--display-font);
+  font-weight: var(--font-semi-bold);
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/*========== Variables Dark theme ==========*/
+body.dark-theme {
+  --title-color: #e7ecea;
+  --text-color: #b7c2c6;
+  --text-color-light: #7e8c91;
+  --container-color: #171f24;
+  --container-color-alt: #121a1e;
+  --body-color: #0e1417;
+  --accent-color: #6c93ff;
+  --grid-dot: rgba(231, 236, 234, 0.06);
+}
+
+/*========== header action badges (language, download) ==========*/
+.header-actions {
+  position: absolute;
+  right: 0;
+  top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.badge-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  height: 1.6rem;
+  box-sizing: border-box;
+  font-family: var(--mono-font);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-color);
+  border: 1px solid var(--text-color-light);
+  border-radius: 3px;
+  padding: 0 0.4rem;
+  cursor: pointer;
+}
+
+.badge-btn i {
+  font-size: 0.95rem;
+}
+
+.badge-btn:hover {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+/*========== Options button ==========*/
+.change-theme {
+  position: absolute;
+  right: 0;
+  top: 2.2rem;
+  display: flex;
+  color: var(--text-color);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.change-theme:hover {
+  color: var(--accent-color);
+}
+
+.enable-snow {
+  position: absolute;
+  top: 2.2rem;
+  left: 0;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.enable-snow:hover {
+  color: var(--accent-color);
+}
+
+/*========== eyebrow (section route label) ==========*/
+.eyebrow {
+  display: block;
+  font-family: var(--mono-font);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--accent-color);
+  margin-bottom: 0.35rem;
+  text-align: center;
+  break-after: avoid;
+}
+
+/*========== CSS CLASS ==========*/
+.section {
+  padding: 1.5rem 0;
+}
+
+.section-title {
+  font-size: var(--h2-font-size);
+  color: var(--title-color);
+  font-weight: var(--font-semi-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  text-align: center;
+  margin-bottom: var(--mb-3);
+  break-after: avoid;
+}
+
+.bd-container {
+  max-width: 968px;
+  width: calc(100% - 3rem);
+  margin-left: var(--mb-3);
+  margin-right: var(--mb-3);
+}
+
+.bd-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.l-header {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-fixed);
+  background-color: var(--body-color);
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.nav {
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 968px) {
+  .nav__menu {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    padding: 2rem 1.5rem;
+    background-color: var(--body-color);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem 1rem 0 0;
+    z-index: var(--z-fixed);
+    transition: 0.3s;
+  }
+}
+
+.nav__logo {
+  font-family: var(--mono-font);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-color-light);
+}
+
+.nav__toggle {
+  color: var(--title-color);
+  font-weight: var(--font-medium);
+}
+
+.nav__toggle {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.nav__item {
+  text-align: center;
+}
+
+.nav__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.nav__link {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--smaller-font-size);
+  color: var(--text-color-light);
+  font-weight: var(--font-medium);
+}
+
+.nav__link:hover {
+  color: var(--accent-color);
+}
+
+.nav__icon {
+  font-size: 1.2rem;
+  margin-bottom: var(--mb-1);
+  z-index: -1;
+}
+
+.show-menu {
+  bottom: var(--header-height);
+}
+
+.active-link {
+  color: var(--accent-color);
+}
+
+.work {
+  position: relative;
+}
+
+.home {
+  position: relative;
+}
+
+.home__container {
+  gap: 3rem;
+  break-inside: avoid;
+}
+
+.home__data {
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.home__img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-color);
+  box-sizing: border-box;
+  justify-self: center;
+  margin-bottom: var(--mb-1);
+  object-fit: cover;
+}
+
+.home__title {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.home__profession {
+  font-family: var(--mono-font);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin-bottom: var(--mb-1);
+}
+
+.focus-select {
+  display: inline-block;
+  margin-bottom: var(--mb-1);
+  font-family: var(--mono-font);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  background-color: var(--container-color);
+  border: 1px solid var(--accent-color);
+  border-radius: 3px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+}
+
+.focus-select:hover {
+  background-color: var(--accent-color);
+  color: var(--container-color);
+}
+
+.home__address {
+  gap: 1rem;
+}
+
+.home__information {
+  display: flex;
+  align-items: center;
+  font-size: var(--small-font-size);
+}
+
+.home__icon {
+  font-size: 1.2rem;
+  margin-right: 0.25rem;
+}
+
+.social__container {
+  grid-template-columns: max-content;
+  gap: 1rem;
+}
+
+.social__link {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+}
+
+.social__link:hover {
+  color: var(--title-color);
+}
+
+.social__icon {
+  font-size: 1.2rem;
+  margin-right: 0.25rem;
+}
+
+.profile__description {
+  text-align: center;
+}
+
+.education__content,
+.experience__content {
+  display: flex;
+  break-inside: avoid;
+}
+
+.education__time,
+.experience__time {
+  padding-right: 1rem;
+}
+
+.education__rounder,
+.experience__rounder {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-color: var(--accent-color);
+  border-radius: 3px;
+  margin-top: 0.25rem;
+}
+
+.education__line,
+.experience__line {
+  display: block;
+  width: 2px;
+  height: 110%;
+  background-color: var(--text-color-light);
+  transform: translate(7px, 0);
+}
+
+.education__data,
+.experience__data {
+  gap: 0.5rem;
+}
+
+.education__title,
+.experience__title {
+  font-size: var(--h3-font-size);
+}
+
+.education__studies,
+.experience__company,
+.experience__project {
+  font-size: var(--small-font-size);
+  color: var(--title-color);
+}
+
+.education__year,
+.experience__company,
+.experience__project {
+  font-family: var(--mono-font);
+}
+
+.education__year {
+  font-size: var(--smaller-font-size);
+}
+
+.education__degree {
+  font-size: var(--smaller-font-size);
+  color: var(--text-color-light);
+}
+
+.experience__achievements {
+  margin-top: 0.35rem;
+}
+
+.experience__achievements-label {
+  font-family: var(--mono-font);
+  font-size: var(--smaller-font-size);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin-bottom: 0.2rem;
+}
+
+.skills__content {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.skills__category {
+  margin-bottom: var(--mb-1);
+}
+
+.skills__category-summary {
+  cursor: pointer;
+  font-family: var(--mono-font);
+  font-size: var(--small-font-size);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--title-color);
+  padding: 0.3rem 0;
+  list-style: none;
+}
+
+.skills__category-summary::-webkit-details-marker {
+  display: none;
+}
+
+.skills__category-summary::before {
+  content: "+";
+  display: inline-block;
+  width: 1rem;
+  color: var(--accent-color);
+}
+
+.skills__category[open] > .skills__category-summary::before {
+  content: "\2212";
+}
+
+.skills__category .skills__data {
+  padding-left: 1rem;
+  margin-top: 0.25rem;
+}
+
+.skills__name {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--mb-1);
+}
+
+.skills__circle {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent-color);
+  border-radius: 1px;
+  margin-right: 0.75rem;
+}
+
+/*========== Languages (dot rating) ==========*/
+.languages__data {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.languages__item {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.languages__name-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.languages__level {
+  font-family: var(--mono-font);
+  font-size: var(--smaller-font-size);
+  color: var(--text-color-light);
+}
+
+.languages__dots {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.languages__dot {
+  width: 9px;
+  height: 9px;
+  box-sizing: border-box;
+  border: 1px solid var(--accent-color);
+  border-radius: 50%;
+}
+
+.languages__dot--filled {
+  background-color: var(--accent-color);
+}
+
+/*========== Snow effect ==========*/
+.snow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.snow__flake {
+  position: absolute;
+  top: -10px;
+  color: #fff;
+  opacity: 0.8;
+  user-select: none;
+  animation-name: snow-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes snow-fall {
+  from {
+    transform: translateY(-10px) translateX(0);
+  }
+  to {
+    transform: translateY(105vh) translateX(20px);
+  }
+}
+
+/*========== MEDIA QUERIES ==========*/
+
+@media screen and (max-width: 320px) {
+  .nav__list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 0.5rem;
+  }
+}
+
+@media screen and (min-width: 968px) {
+  body {
+    margin: 3rem 0;
+  }
+
+  .bd-container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .l-header,
+  .scrolltop {
+    display: none;
+  }
+
+  .resume {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    background-color: var(--container-color);
+    box-shadow: 0 0 8px rgba(13, 12, 12, 0.15);
+  }
+
+  .resume__left {
+    background-color: var(--container-color-alt);
+  }
+
+  .resume__left,
+  .resume__right {
+    padding: 0 1.5rem;
+  }
+
+  .enable-snow {
+    display: inline-block;
+  }
+
+  .section-title,
+  .eyebrow,
+  .profile__description {
+    text-align: initial;
+  }
+
+  .home__container {
+    gap: 1.5rem;
+  }
+}
+
+/*========== /pdf export: force the desktop two-column layout ==========
+   Chromium's PDF pagination lays out CSS against the paper size (A4 is
+   narrower than 968px), not the emulated viewport, so the min-width media
+   query above never matches during PDF generation. These rules mirror it
+   unconditionally, scoped to the /pdf route only. */
+.pdf-layout.bd-container {
+  max-width: none;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.pdf-layout .resume {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+  background-color: var(--container-color);
+  box-shadow: none;
+  min-height: 100vh;
+}
+
+.pdf-layout .resume__left {
+  background-color: var(--container-color-alt);
+}
+
+.pdf-layout .resume__left,
+.pdf-layout .resume__right {
+  padding: 0 1.5rem;
+}
+
+.pdf-layout .section-title,
+.pdf-layout .eyebrow,
+.pdf-layout .profile__description {
+  text-align: initial;
+}
+
+.pdf-layout .home__container {
+  gap: 1.5rem;
+}
+
+============================================================
+ФАЙЛ: app/[locale]/layout.js
+============================================================
+
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { routing } from "@/src/i18n/routing";
+import { SetHtmlLang } from "@/components/SetHtmlLang";
+import { getPitch } from "@/lib/content";
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+// Fallback metadata (the "fullstack" pitch); /[locale]/[focus] overrides
+// this with its own generateMetadata for backend/frontend.
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+
+  const { meta } = await getPitch(locale, "fullstack");
+
+  return {
+    title: meta.title,
+    description: meta.description,
+    icons: { icon: "/favicon.png" },
+  };
+}
+
+export default async function LocaleLayout({ children, params }) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+
+  setRequestLocale(locale);
+
+  return (
+    <NextIntlClientProvider locale={locale}>
+      <SetHtmlLang locale={locale} />
+      {children}
+    </NextIntlClientProvider>
+  );
+}
+
+============================================================
+ФАЙЛ: app/[locale]/page.js
+============================================================
+
+import { setRequestLocale } from "next-intl/server";
+import { Resume } from "@/components/Resume";
+
+export default async function ResumePage({ params }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  return <Resume focus="fullstack" />;
+}
+
+============================================================
+ФАЙЛ: app/[locale]/pdf/page.js
+============================================================
+
+import { setRequestLocale } from "next-intl/server";
+import { Resume } from "@/components/Resume";
+
+export default async function ResumePdfPage({ params }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  return <Resume focus="fullstack" interactive={false} />;
+}
+
+============================================================
+ФАЙЛ: app/[locale]/[focus]/page.js
+============================================================
+
+import { notFound } from "next/navigation";
+import { setRequestLocale } from "next-intl/server";
+import { Resume } from "@/components/Resume";
+import { FOCUSES, getPitch } from "@/lib/content";
+
+// "fullstack" is served at the plain /[locale]/ root; this route only
+// covers the other, more specific focuses.
+const ROUTED_FOCUSES = FOCUSES.filter((focus) => focus !== "fullstack");
+
+export function generateStaticParams() {
+  return ROUTED_FOCUSES.map((focus) => ({ focus }));
+}
+
+export async function generateMetadata({ params }) {
+  const { locale, focus } = await params;
+  if (!ROUTED_FOCUSES.includes(focus)) notFound();
+
+  const { meta } = await getPitch(locale, focus);
+  return { title: meta.title, description: meta.description };
+}
+
+export default async function ResumeFocusPage({ params }) {
+  const { locale, focus } = await params;
+  if (!ROUTED_FOCUSES.includes(focus)) notFound();
+  setRequestLocale(locale);
+
+  return <Resume focus={focus} />;
+}
+
+============================================================
+ФАЙЛ: app/[locale]/[focus]/pdf/page.js
+============================================================
+
+import { notFound } from "next/navigation";
+import { setRequestLocale } from "next-intl/server";
+import { Resume } from "@/components/Resume";
+import { FOCUSES } from "@/lib/content";
+
+const ROUTED_FOCUSES = FOCUSES.filter((focus) => focus !== "fullstack");
+
+export function generateStaticParams() {
+  return ROUTED_FOCUSES.map((focus) => ({ focus }));
+}
+
+export default async function ResumeFocusPdfPage({ params }) {
+  const { locale, focus } = await params;
+  if (!ROUTED_FOCUSES.includes(focus)) notFound();
+  setRequestLocale(locale);
+
+  return <Resume focus={focus} interactive={false} />;
+}
+
+============================================================
+ФАЙЛ: app/keystatic/layout.jsx
+============================================================
+
+import KeystaticApp from "./keystatic";
+
+export default function Layout() {
+  return <KeystaticApp />;
+}
+
+============================================================
+ФАЙЛ: app/keystatic/keystatic.jsx
+============================================================
+
+"use client";
+
+import { makePage } from "@keystatic/next/ui/app";
+import keystaticConfig from "@/keystatic.config";
+
+export default makePage(keystaticConfig);
+
+============================================================
+ФАЙЛ: app/keystatic/[[...params]]/page.jsx
+============================================================
+
+export default function Page() {
+  return null;
+}
+
+============================================================
+ФАЙЛ: app/api/keystatic/[...params]/route.js
+============================================================
+
+import { makeRouteHandler } from "@keystatic/next/route-handler";
+import keystaticConfig from "@/keystatic.config";
+
+export const { POST, GET } = makeRouteHandler({ config: keystaticConfig });
+
+============================================================
+ФАЙЛ: content/resume/en.yaml
+============================================================
+
+profile:
+  name: Pavel Kostin
+  location: Russia, St. Petersburg
+  email: kopavalex@yandex.ru
+  telephone: +7 (981) 761-76-46
+  showPhoto: false
+  image: /images/profile/image.png
+  downloadCta: Download CV
+skills:
+  eyebrowHard: $ stack --hard
+  eyebrowSoft: $ stack --soft
+  technicalLabel: Hard skills
+  softLabel: Soft skills
+  categoryLabels:
+    design: Design
+    programming: Programming
+    teaching: Teaching
+  subcategoryLabels:
+    languagesFrameworks: Languages & Frameworks
+    gameDevelopment: Game Development
+    toolsPlatforms: Tools & Platforms
+    databasesDevops: Databases & DevOps
+    graphicDesign: Graphic Design
+    uxUiDesign: UX/UI Design
+    threeDAnimation: 3D & Animation
+    curriculumInstruction: Curriculum & Instruction
+    studentEngagement: Student Engagement
+  technicalSkills:
+    - name: C#
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+    - name: Unity
+      category: programming
+      subcategory: game-development
+      focuses:
+        - fullstack
+        - teacher
+    - name: EntityFramework
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+    - name: LINQ
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+    - name: RabbitMQ
+      category: programming
+      subcategory: tools-platforms
+      focuses:
+        - fullstack
+        - backend
+    - name: NUnit
+      category: programming
+      subcategory: tools-platforms
+      focuses:
+        - fullstack
+        - backend
+    - name: Swagger
+      category: programming
+      subcategory: tools-platforms
+      focuses:
+        - fullstack
+        - backend
+    - name: Postman
+      category: programming
+      subcategory: tools-platforms
+      focuses:
+        - fullstack
+        - backend
+    - name: React
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name: React-native
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name: Blender
+      category: design
+      subcategory: 3d-animation
+      focuses:
+        - fullstack
+        - teacher
+    - name: Photoshop
+      category: design
+      subcategory: graphic-design
+      focuses:
+        - fullstack
+        - frontend
+    - name: Illustrator
+      category: design
+      subcategory: graphic-design
+      focuses:
+        - fullstack
+        - frontend
+    - name: InDesign
+      category: design
+      subcategory: graphic-design
+      focuses:
+        - fullstack
+        - frontend
+    - name: SQL
+      category: programming
+      subcategory: databases-devops
+      focuses:
+        - fullstack
+        - backend
+    - name: Docker
+      category: programming
+      subcategory: databases-devops
+      focuses:
+        - fullstack
+        - backend
+    - name: Linux
+      category: programming
+      subcategory: databases-devops
+      focuses:
+        - fullstack
+        - backend
+    - name: Git
+      category: programming
+      subcategory: tools-platforms
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+    - name: Unreal Engine
+      category: programming
+      subcategory: game-development
+      focuses:
+        - teacher
+    - name: Scratch
+      category: programming
+      subcategory: game-development
+      focuses:
+        - teacher
+    - name: Kodu Game Lab
+      category: programming
+      subcategory: game-development
+      focuses:
+        - teacher
+    - name: Figma
+      category: design
+      subcategory: ux-ui-design
+      focuses:
+        - fullstack
+        - frontend
+    - name: Infographics
+      category: design
+      subcategory: graphic-design
+      focuses:
+        - fullstack
+    - name: Typography
+      category: design
+      subcategory: graphic-design
+      focuses:
+        - fullstack
+    - name: Composition
+      category: design
+      subcategory: graphic-design
+      focuses:
+        - fullstack
+    - name: AI tools
+      category: design
+      subcategory: ux-ui-design
+      focuses:
+        - fullstack
+    - name: After Effects
+      category: design
+      subcategory: 3d-animation
+      focuses:
+        - fullstack
+    - name: SEO Basics
+      category: design
+      subcategory: ux-ui-design
+      focuses:
+        - fullstack
+        - frontend
+    - name: HTML
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name: CSS
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name: JavaScript
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name: Go
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+    - name: .NET
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+    - name: Next.js
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name: Tailwind
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name: TypeScript
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name: Responsive Layout
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name: Cross-browser Layout
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name: GitLab
+      category: programming
+      subcategory: tools-platforms
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+    - name: GitHub
+      category: programming
+      subcategory: tools-platforms
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+    - name: Kubernetes
+      category: programming
+      subcategory: databases-devops
+      focuses:
+        - fullstack
+        - backend
+    - name: nginx
+      category: programming
+      subcategory: databases-devops
+      focuses:
+        - fullstack
+        - backend
+    - name: REST
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+    - name: CI/CD
+      category: programming
+      subcategory: databases-devops
+      focuses:
+        - fullstack
+        - backend
+    - name: SOLID
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+    - name: KISS
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+    - name: DRY
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+    - name: Normalization
+      category: programming
+      subcategory: databases-devops
+      focuses:
+        - fullstack
+        - backend
+    - name: Flexbox
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name: Grid
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - frontend
+    - name: Assessment Materials Design
+      category: teaching
+      subcategory: curriculum-instruction
+      focuses:
+        - teacher
+    - name: Thesis Supervision
+      category: teaching
+      subcategory: curriculum-instruction
+      focuses:
+        - teacher
+    - name: Public Speaking
+      category: teaching
+      subcategory: student-engagement
+      focuses:
+        - teacher
+    - name: Student Mentoring
+      category: teaching
+      subcategory: student-engagement
+      focuses:
+        - teacher
+    - name: Curriculum Design
+      category: teaching
+      subcategory: curriculum-instruction
+      focuses:
+        - teacher
+    - name: Moodle
+      category: teaching
+      subcategory: tools-platforms
+      focuses:
+        - teacher
+  softSkills:
+    - name: Communicable
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name: Systems approach
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name: Proactive
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name: Creative
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name: Mentoring
+      category: programming
+      subcategory: languages-frameworks
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+socialMedia:
+  eyebrow: $ contact --all
+  label: Contacts
+  social:
+    - label: Pavel Kostin
+      name: linkedin
+      url: https://www.linkedin.com/in/pavel-kostin
+      icon: bxl-linkedin-square
+    - label: KostinP
+      name: github
+      url: https://github.com/KostinP
+      icon: bxl-github
+    - label: Pavel Kostin
+      name: telegram
+      url: https://t.me/PashaKostin
+      icon: bxl-telegram
+sections:
+  experience: Experience
+  experienceEyebrow: GET /experience
+  achievementsLabel: Achievements
+  education: Education
+  educationEyebrow: GET /education
+  courses: Courses
+  coursesEyebrow: GET /courses
+  projects: Projects
+  projectsEyebrow: GET /projects
+  hobbies: Hobbies
+  hobbiesEyebrow: // hobbies
+languages:
+  eyebrow: $ lang --list
+  label: Languages
+  items:
+    - name: Russian
+      level: Native
+      dots: 7
+      totalDots: 7
+    - name: English
+      level: B1 Intermediate
+      dots: 4
+      totalDots: 7
+hobbies:
+  items:
+    - Guitar
+    - Singing
+    - Growing flowers
+courses:
+  items: []
+sectionVisibility:
+  aboutMe: true
+  skills: true
+  languages: true
+  socialMedia: true
+  experience: true
+  education: true
+  courses: true
+  projects: true
+  hobbies: true
+pitchFullstack:
+  meta:
+    title: Pavel Kostin - FullStack Software Developer
+    description: Fullstack programmer and designer proficient in many development tools.
+  ocupation: FullStack Software Developer
+  aboutMe:
+    eyebrow: // about
+    label: About me
+    description: Fullstack programmer and designer proficient in many development tools.
+pitchBackend:
+  meta:
+    title: Pavel Kostin - Backend Developer
+    description: >-
+      Backend developer building APIs, services and the infrastructure around
+      them.
+  ocupation: Backend Software Developer
+  aboutMe:
+    eyebrow: // about
+    label: About me
+    description: >-
+      Backend-focused engineer building reliable APIs and services: C#, Entity
+      Framework, SQL Server, message queues, and the infrastructure around them.
+pitchFrontend:
+  meta:
+    title: Pavel Kostin - Frontend Developer
+    description: >-
+      Frontend developer building interfaces with React, backed by a design
+      background.
+  ocupation: Frontend Software Developer
+  aboutMe:
+    eyebrow: // about
+    label: About me
+    description: >-
+      Frontend-focused engineer building interfaces with React, from component
+      libraries to 3D visualizations — plus a design background that keeps the
+      details tight.
+pitchTeacher:
+  meta:
+    title: Pavel Kostin - Programming Teacher
+    description: >-
+      Programming teacher for kids: Unity, Blender, Unreal Engine, Scratch, and
+      real code.
+  ocupation: Programming Teacher
+  aboutMe:
+    eyebrow: // about
+    label: About me
+    description: >-
+      I teach kids to program and build games — Unity, Blender, Unreal Engine,
+      Scratch, and real code — turning complex tools into approachable, fun
+      challenges.
+
+============================================================
+ФАЙЛ: content/resume/ru.yaml
+============================================================
+
+profile:
+  name: Павел Костин
+  showPhoto: true
+  location: Россия, Санкт-Петербург
+  email: kopavalex@yandex.ru
+  telephone: +7 (981) 761-76-46
+  image: /images/profile/image.png
+  downloadCta: Скачать резюме
+skills:
+  eyebrowHard: $ stack --hard
+  eyebrowSoft: $ stack --soft
+  technicalLabel: Hard skills
+  softLabel: Soft skills
+  technicalSkills:
+    - name: C#
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+      subcategory: languages-frameworks
+    - name: Unity
+      focuses:
+        - fullstack
+        - teacher
+      category: programming
+      subcategory: game-development
+    - name: EntityFramework
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+      subcategory: languages-frameworks
+    - name: LINQ
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+      subcategory: languages-frameworks
+    - name: RabbitMQ
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+      subcategory: tools-platforms
+    - name: NUnit
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+      subcategory: tools-platforms
+    - name: Swagger
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+      subcategory: tools-platforms
+    - name: Postman
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+      subcategory: tools-platforms
+    - name: React
+      focuses:
+        - fullstack
+        - frontend
+      category: programming
+      subcategory: languages-frameworks
+    - name: React-native
+      focuses:
+        - fullstack
+        - frontend
+      category: programming
+      subcategory: languages-frameworks
+    - name: Blender
+      focuses:
+        - fullstack
+        - teacher
+      category: design
+      subcategory: 3d-animation
+    - name: Photoshop
+      focuses:
+        - fullstack
+        - frontend
+      category: design
+      subcategory: graphic-design
+    - name: Illustrator
+      focuses:
+        - fullstack
+        - frontend
+      category: design
+      subcategory: graphic-design
+    - name: InDesign
+      focuses:
+        - fullstack
+        - frontend
+      category: design
+      subcategory: graphic-design
+    - name: SQL
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+      subcategory: databases-devops
+    - name: Docker
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+      subcategory: databases-devops
+    - name: Linux
+      focuses:
+        - fullstack
+        - backend
+      category: programming
+      subcategory: databases-devops
+    - name: Git
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+      category: programming
+      subcategory: tools-platforms
+    - name: Unreal Engine
+      focuses:
+        - teacher
+      category: programming
+      subcategory: game-development
+    - name: Scratch
+      focuses:
+        - teacher
+      category: programming
+      subcategory: game-development
+    - name: Kodu Game Lab
+      focuses:
+        - teacher
+      category: programming
+      subcategory: game-development
+    - name: Figma
+      category: design
+      focuses:
+        - fullstack
+        - frontend
+      subcategory: ux-ui-design
+    - name: Инфографика
+      category: design
+      focuses:
+        - fullstack
+      subcategory: graphic-design
+    - name: Типографика
+      category: design
+      focuses:
+        - fullstack
+      subcategory: graphic-design
+    - name: Композиция
+      category: design
+      focuses:
+        - fullstack
+      subcategory: graphic-design
+    - name: Нейросети
+      category: design
+      focuses:
+        - fullstack
+      subcategory: ux-ui-design
+    - name: After Effects
+      category: design
+      focuses:
+        - fullstack
+      subcategory: 3d-animation
+    - name: Основы SEO
+      category: design
+      focuses:
+        - fullstack
+        - frontend
+      subcategory: ux-ui-design
+    - name: HTML
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+      subcategory: languages-frameworks
+    - name: CSS
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+      subcategory: languages-frameworks
+    - name: JavaScript
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+      subcategory: languages-frameworks
+    - name: Go
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+      subcategory: languages-frameworks
+    - name: .NET
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+      subcategory: languages-frameworks
+    - name: Next.js
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+      subcategory: languages-frameworks
+    - name: Tailwind
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+      subcategory: languages-frameworks
+    - name: TypeScript
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+      subcategory: languages-frameworks
+    - name: Адаптивная верстка
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+      subcategory: languages-frameworks
+    - name: Кроссбраузерная верстка
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+      subcategory: languages-frameworks
+    - name: GitLab
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+      subcategory: tools-platforms
+    - name: GitHub
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+      subcategory: tools-platforms
+    - name: Kubernetes
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+      subcategory: databases-devops
+    - name: nginx
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+      subcategory: databases-devops
+    - name: REST
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+      subcategory: languages-frameworks
+    - name: CI/CD
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+      subcategory: databases-devops
+    - name: SOLID
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+      subcategory: languages-frameworks
+    - name: KISS
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+      subcategory: languages-frameworks
+    - name: DRY
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+      subcategory: languages-frameworks
+    - name: Нормализация
+      category: programming
+      focuses:
+        - fullstack
+        - backend
+      subcategory: databases-devops
+    - name: Flexbox
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+      subcategory: languages-frameworks
+    - name: Grid
+      category: programming
+      focuses:
+        - fullstack
+        - frontend
+      subcategory: languages-frameworks
+    - name: Разработка ФОС
+      category: teaching
+      focuses:
+        - teacher
+      subcategory: curriculum-instruction
+    - name: Руководство ВКР
+      category: teaching
+      focuses:
+        - teacher
+      subcategory: curriculum-instruction
+    - name: Публичные выступления
+      category: teaching
+      focuses:
+        - teacher
+      subcategory: student-engagement
+    - name: Менторинг студентов
+      category: teaching
+      focuses:
+        - teacher
+      subcategory: student-engagement
+    - name: Рабочие программы
+      category: teaching
+      focuses:
+        - teacher
+      subcategory: curriculum-instruction
+    - name: Moodle
+      category: teaching
+      focuses:
+        - teacher
+      subcategory: tools-platforms
+  softSkills:
+    - name: Коммуникабельный
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name: Системное мышление
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name: Проактивный
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name: Креативный
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+    - name: Готов обучать других людей
+      focuses:
+        - fullstack
+        - backend
+        - frontend
+        - teacher
+  categoryLabels:
+    design: Дизайнерские
+    programming: Программистские
+    teaching: Преподавательские
+  subcategoryLabels:
+    languagesFrameworks: Языки и Фреймворки
+    gameDevelopment: Разработка игр
+    toolsPlatforms: Инструменты и Платформы
+    databasesDevops: Базы данных и DevOps
+    graphicDesign: Графический дизайн
+    uxUiDesign: UX/UI Дизайн
+    threeDAnimation: 3D и Анимация
+    curriculumInstruction: Учебные программы
+    studentEngagement: Работа со студентами
+socialMedia:
+  eyebrow: $ contact --all
+  label: Контакты
+  social:
+    - label: Павел Костин
+      name: linkedin
+      url: https://www.linkedin.com/in/pavel-kostin
+      icon: bxl-linkedin-square
+    - label: KostinP
+      name: github
+      url: https://github.com/KostinP
+      icon: bxl-github
+    - label: Павел Костин
+      name: telegram
+      url: https://t.me/PashaKostin
+      icon: bxl-telegram
+sections:
+  experience: Опыт работы
+  experienceEyebrow: GET /experience
+  education: Образование
+  educationEyebrow: GET /education
+  projects: Проекты
+  projectsEyebrow: GET /projects
+  courses: Курсы
+  coursesEyebrow: GET /courses
+  hobbies: Хобби
+  hobbiesEyebrow: // hobbies
+  achievementsLabel: Достижения
+pitchFullstack:
+  meta:
+    title: Павел Костин - FullStack Software Developer
+    description: Получил смешанное образование, поэтому могу и программировать и
+      заниматься дизайном интерфейсов.
+  ocupation: FullStack Software Developer
+  aboutMe:
+    eyebrow: // about
+    label: Обо мне
+    description: Получил смешанное образование, поэтому могу и программировать и
+      заниматься дизайном интерфейсов.
+pitchBackend:
+  meta:
+    title: Павел Костин - Backend Developer
+    description: "Backend-разработчик: API, сервисы и инфраструктура вокруг них."
+  ocupation: Backend Software Developer
+  aboutMe:
+    eyebrow: // about
+    label: Обо мне
+    description: "Бэкенд-разработчик: пишу надёжные API и сервисы на C#, Entity
+      Framework, SQL Server, работаю с очередями сообщений и инфраструктурой
+      вокруг них."
+pitchFrontend:
+  meta:
+    title: Павел Костин - Frontend Developer
+    description: "Frontend-разработчик: интерфейсы на React и дизайнерский бэкграунд."
+  ocupation: Frontend Software Developer
+  aboutMe:
+    eyebrow: // about
+    label: Обо мне
+    description: "Frontend-разработчик: собираю интерфейсы на React — от библиотек
+      компонентов до 3D-визуализаций, — а дизайнерский бэкграунд помогает не
+      терять детали."
+pitchTeacher:
+  meta:
+    title: Павел Костин - Учитель программирования
+    description: "Учитель программирования для детей: Unity, Blender, Unreal Engine,
+      Scratch и настоящий код."
+  ocupation: Учитель программирования
+  aboutMe:
+    eyebrow: // about
+    label: Обо мне
+    description: Учу детей программировать и создавать игры — Unity, Blender, Unreal
+      Engine, Scratch и настоящий код, — превращая сложные инструменты в
+      понятные и увлекательные задачи.
+languages:
+  eyebrow: $ lang --list
+  label: Языки
+  items:
+    - name: Русский
+      level: Native
+      dots: 7
+      totalDots: 7
+    - name: Английский
+      level: B1 Intermediate
+      dots: 4
+      totalDots: 7
+hobbies:
+  items:
+    - Гитара
+    - Пение
+    - Выращивание цветов
+courses:
+  items: []
+sectionVisibility:
+  aboutMe: true
+  skills: true
+  languages: true
+  socialMedia: true
+  experience: true
+  education: true
+  courses: true
+  projects: true
+  hobbies: true
+
+============================================================
+ФАЙЛ: keystatic-admin/route.js
+============================================================
+
+import { makeRouteHandler } from "@keystatic/next/route-handler";
+import keystaticConfig from "@/keystatic.config";
+
+export const { POST, GET } = makeRouteHandler({ config: keystaticConfig });
+
+============================================================
+ФАЙЛ: keystatic-admin/layout.jsx
+============================================================
+
+import KeystaticApp from "./keystatic";
+
+export default function Layout() {
+  return <KeystaticApp />;
+}
+
+============================================================
+ФАЙЛ: keystatic-admin/page.jsx
+============================================================
+
+export default function Page() {
+  return null;
+}
+
+============================================================
+ФАЙЛ: keystatic-admin/keystatic.jsx
+============================================================
+
+"use client";
+
+import { makePage } from "@keystatic/next/ui/app";
+import keystaticConfig from "@/keystatic.config";
+
+export default makePage(keystaticConfig);
+
+============================================================
+ФАЙЛ: components/Menu.jsx
+============================================================
+
+"use client";
+
+import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
+
+export const Menu = ({ menu }) => {
+  const t = useTranslations("nav");
+  const [show, setShow] = useState(false);
+  const [activeSection, setActiveSection] = useState(menu[0]?.section.slice(1));
+
+  useEffect(() => {
+    const sections = menu
+      .map(({ section }) => document.getElementById(section.slice(1)))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.find((entry) => entry.isIntersecting);
+        if (visible) setActiveSection(visible.target.id);
+      },
+      { rootMargin: "-40% 0px -40% 0px" }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [menu]);
+
+  return (
+    <header className="l-header" id="header">
+      <nav className="nav bd-container">
+        <span className="nav__logo">{t("logo")}</span>
+        <div className={show ? "nav__menu show-menu" : "nav__menu"} id="nav-menu">
+          <ul className="nav__list">
+            {menu.map(({ label, section, icon }) => (
+              <li className="nav__item" key={label}>
+                <a
+                  className={
+                    activeSection === section.slice(1)
+                      ? "nav__link active-link"
+                      : "nav__link"
+                  }
+                  href={section}
+                  onClick={() => setShow(false)}
+                >
+                  <i className={`bx ${icon} nav__icon`} /> {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="nav__toggle" id="nav-toggle" onClick={() => setShow((prev) => !prev)}>
+          <i className="bx bx-grid-alt" />
+        </div>
+      </nav>
+    </header>
+  );
+};
+
+============================================================
+ФАЙЛ: components/ThemeOptions.jsx
+============================================================
+
+"use client";
+
+import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
+import { Snow } from "./Snow";
+
+export const ThemeOptions = () => {
+  const t = useTranslations("options");
+  const [theme, setTheme] = useState("light");
+  const [snow, setSnow] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // Reads localStorage after mount so server and first client render match;
+    // the resulting extra render is the standard SSR-safe hydration pattern.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setTheme(localStorage.getItem("theme") || "light");
+    setSnow(localStorage.getItem("snow") === "true");
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    localStorage.setItem("theme", theme);
+    localStorage.setItem("snow", String(snow));
+    document.body.classList.toggle("dark-theme", theme === "dark");
+  }, [theme, snow, mounted]);
+
+  const toggleTheme = () => setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  const toggleSnow = () => setSnow((prev) => !prev);
+
+  return (
+    <div className="home__options">
+      {theme === "dark" && (
+        <i
+          className="bx bx-cloud-snow enable-snow"
+          title={t("enableSnow")}
+          id="snow-button"
+          onClick={toggleSnow}
+        />
+      )}
+      {mounted && snow && theme === "dark" && <Snow />}
+      <i
+        className={`bx ${theme === "dark" ? "bx-sun" : "bx-moon"} change-theme`}
+        title={t("toggleTheme")}
+        id="theme-button"
+        onClick={toggleTheme}
+      />
+    </div>
+  );
+};
+
+============================================================
+ФАЙЛ: components/DownloadResume.jsx
+============================================================
+
+import { getLocale } from "next-intl/server";
+import { getProfile } from "@/lib/content";
+
+export const DownloadResume = async ({ focus }) => {
+  const locale = await getLocale();
+  const { profile } = await getProfile(locale);
+  const suffix = focus === "fullstack" ? "" : `-${focus}`;
+
+  return (
+    <a
+      className="badge-btn"
+      href={`/pavel-kostin-cv-${locale}${suffix}.pdf`}
+      download
+      title={profile.downloadCta}
+      aria-label={profile.downloadCta}
+    >
+      <i className="bx bx-download" />
+    </a>
+  );
+};
+
+============================================================
+ФАЙЛ: components/SetHtmlLang.jsx
+============================================================
+
+"use client";
+
+import { useEffect } from "react";
+
+export const SetHtmlLang = ({ locale }) => {
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    localStorage.setItem("locale", locale);
+  }, [locale]);
+
+  return null;
+};
+
+============================================================
+ФАЙЛ: components/Profile.jsx
+============================================================
+
+import Image from "next/image";
+import { getLocale } from "next-intl/server";
+import { getProfile, getPitch } from "@/lib/content";
+import { ThemeOptions } from "./ThemeOptions";
+import { FocusSwitcher } from "./FocusSwitcher";
+
+export const Profile = async ({ focus, showControls = true }) => {
+  const locale = await getLocale();
+  const [{ profile }, pitch] = await Promise.all([getProfile(locale), getPitch(locale, focus)]);
+
+  // Явно проверяем showPhoto, по умолчанию true
+  const shouldShowPhoto = profile.showPhoto !== false;
+
+  return (
+    <section className="home" id="home">
+      <div className="home__container section bd-grid">
+        <div className="home__data bd-grid">
+          {shouldShowPhoto && profile.image && (
+            <Image
+              src={profile.image}
+              alt={profile.name}
+              className="home__img"
+              width={120}
+              height={120}
+              priority
+            />
+          )}
+          <h1 className="home__title">
+            <strong>{profile.name}</strong>
+          </h1>
+          <h3 className="home__profession">{pitch.ocupation}</h3>
+          {showControls && <FocusSwitcher focus={focus} />}
+        </div>
+
+        <div className="home__address bd-grid">
+          <span className="home__information">
+            <i className="bx bx-map home__icon" /> {profile.location}
+          </span>
+          <span className="home__information">
+            <i className="bx bx-envelope home__icon" /> {profile.email}
+          </span>
+          <span className="home__information">
+            <i className="bx bx-phone home__icon" /> {profile.telephone}
+          </span>
+        </div>
+      </div>
+      {showControls && <ThemeOptions />}
+    </section>
+  );
+};
+
+============================================================
+ФАЙЛ: components/FocusSwitcher.jsx
+============================================================
+
+"use client";
+
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/src/i18n/navigation";
+import { FOCUSES } from "@/lib/focuses";
+
+const hrefFor = (focus) => (focus === "fullstack" ? "/" : `/${focus}`);
+
+export const FocusSwitcher = ({ focus }) => {
+  const t = useTranslations("focus");
+  const router = useRouter();
+
+  return (
+    <select
+      className="focus-select"
+      value={focus}
+      onChange={(event) => router.push(hrefFor(event.target.value))}
+      aria-label={t("ariaLabel")}
+    >
+      {FOCUSES.map((f) => (
+        <option key={f} value={f}>
+          {t(f)}
+        </option>
+      ))}
+    </select>
+  );
+};
+
+============================================================
+ФАЙЛ: components/Academic.jsx
+============================================================
+
+import { getLocale } from "next-intl/server";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { getProfile, getAcademic } from "@/lib/content";
+import { proseSpanComponents } from "@/lib/mdx-components";
+
+const Academy = ({ career, date, institution, degree }) => (
+  <div className="education__content">
+    <div className="education__time">
+      <span className="education__rounder"></span>
+      <span className="education__line"></span>
+    </div>
+    <div className="education__data bd-grid">
+      <h3 className="education__title">{career}</h3>
+      <span className="education__year">{date}</span>
+      <MDXRemote source={institution} components={proseSpanComponents} />
+      {degree && <span className="education__degree">{degree}</span>}
+    </div>
+  </div>
+);
+
+export const Academic = async () => {
+  const locale = await getLocale();
+  const [{ sections, sectionVisibility }, academic] = await Promise.all([
+    getProfile(locale),
+    getAcademic(locale),
+  ]);
+
+  if (!sectionVisibility.education) return null;
+
+  return (
+    <section className="academic-experience section" id="education">
+      <p className="eyebrow">{sections.educationEyebrow}</p>
+      <h2 className="section-title">{sections.education}</h2>
+      <div className="education__container bd-grid">
+        {academic.map((academy) => (
+          <Academy key={academy.career} {...academy} />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+============================================================
+ФАЙЛ: components/LanguageSwitcher.jsx
+============================================================
+
+"use client";
+
+import { useLocale, useTranslations } from "next-intl";
+import { Link, usePathname } from "@/src/i18n/navigation";
+import { routing } from "@/src/i18n/routing";
+
+export const LanguageSwitcher = () => {
+  const locale = useLocale();
+  const t = useTranslations("language");
+  const pathname = usePathname();
+  const otherLocale = routing.locales.find((l) => l !== locale);
+
+  return (
+    <Link
+      className="badge-btn"
+      href={pathname}
+      locale={otherLocale}
+      id="language-button"
+      title={t("switchTo", { lang: t(otherLocale) })}
+    >
+      {locale.toUpperCase()}
+    </Link>
+  );
+};
+
+============================================================
+ФАЙЛ: components/Skills.jsx
+============================================================
+
+import { getLocale } from "next-intl/server";
+import { getSkills, getProfile } from "@/lib/content";
+import { SKILL_CATEGORIES } from "@/lib/skill-categories";
+
+const Skill = ({ skill }) => (
+  <li className="skills__name">
+    <span className="skills__circle" /> {skill}
+  </li>
+);
+
+const groupByCategoryAndSubcategory = (skills) => {
+  const result = {};
+  
+  skills.forEach(skill => {
+    const category = skill.category || 'programming';
+    const subcategory = skill.subcategory || 'Other';
+    
+    if (!result[category]) {
+      result[category] = {};
+    }
+    if (!result[category][subcategory]) {
+      result[category][subcategory] = [];
+    }
+    result[category][subcategory].push(skill.name);
+  });
+  
+  return result;
+};
+
+export const Skills = async ({ focus }) => {
+  const locale = await getLocale();
+  const [{ sectionVisibility }, skills] = await Promise.all([
+    getProfile(locale),
+    getSkills(locale, focus),
+  ]);
+
+  if (!sectionVisibility.skills) return null;
+
+  const groupedSkills = groupByCategoryAndSubcategory(skills.technicalSkills);
+  const categoryKeys = Object.keys(groupedSkills);
+  const subcategoryLabels = skills.subcategoryLabels || {};
+
+  return (
+    <>
+      <section className="technical-skills section" id="skills">
+        <p className="eyebrow">{skills.eyebrowHard}</p>
+        <h2 className="section-title">{skills.technicalLabel}</h2>
+        <div className="skills__content bd-grid">
+          {categoryKeys.map((category) => {
+            const subcategories = groupedSkills[category];
+            const subcategoryKeys = Object.keys(subcategories).sort();
+            
+            return (
+              <details key={category} className="skills__category" open>
+                <summary className="skills__category-summary">
+                  {skills.categoryLabels[category] || category}
+                </summary>
+                {subcategoryKeys.map((subcategory) => {
+                  const displayName = subcategoryLabels[subcategory] || subcategory;
+                  return (
+                    <div key={subcategory} className="skills__subcategory">
+                      <div className="skills__subcategory-title">{displayName}</div>
+                      <ul className="skills__data">
+                        {subcategories[subcategory].map((skill) => (
+                          <Skill key={skill} skill={skill} />
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })}
+              </details>
+            );
+          })}
+        </div>
+      </section>
+      
+      {skills.softSkills.length > 0 && (
+        <section className="soft-skills section">
+          <p className="eyebrow">{skills.eyebrowSoft}</p>
+          <h2 className="section-title">{skills.softLabel}</h2>
+          <div className="skills__content bd-grid">
+            <ul className="skills__data">
+              {skills.softSkills.map((skill) => (
+                <Skill key={skill} skill={skill} />
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+    </>
+  );
+};
+
+============================================================
+ФАЙЛ: components/SocialMedia.jsx
+============================================================
+
+import { getLocale } from "next-intl/server";
+import { getProfile } from "@/lib/content";
+
+const Social = ({ label, url, icon }) => (
+  <a href={url} target="_blank" rel="noreferrer" className="social__link">
+    <i className={`bx ${icon} social__icon`}></i> {label}
+  </a>
+);
+
+export const SocialMedia = async () => {
+  const locale = await getLocale();
+  const { socialMedia, sectionVisibility } = await getProfile(locale);
+
+  if (!sectionVisibility.socialMedia) return null;
+
+  return (
+    <section className="social section">
+      <p className="eyebrow">{socialMedia.eyebrow}</p>
+      <h2 className="section-title">{socialMedia.label}</h2>
+      <div className="social__container bd-grid">
+        {socialMedia.social.map((item) => (
+          <Social key={item.name} {...item} />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+============================================================
+ФАЙЛ: components/AboutMe.jsx
+============================================================
+
+import { getLocale } from "next-intl/server";
+import { getPitch, getProfile } from "@/lib/content";
+
+export const AboutMe = async ({ focus }) => {
+  const locale = await getLocale();
+  const [{ sectionVisibility }, { aboutMe }] = await Promise.all([
+    getProfile(locale),
+    getPitch(locale, focus),
+  ]);
+
+  if (!sectionVisibility.aboutMe) return null;
+
+  return (
+    <section className="profile section" id="profile">
+      <p className="eyebrow">{aboutMe.eyebrow}</p>
+      <h2 className="section-title">{aboutMe.label}</h2>
+      <p className="profile__description">{aboutMe.description}</p>
+    </section>
+  );
+};
+
+============================================================
+ФАЙЛ: components/Languages.jsx
+============================================================
+
+import { getLocale } from "next-intl/server";
+import { getProfile } from "@/lib/content";
+
+const Language = ({ name, level, dots, totalDots }) => (
+  <li className="languages__item">
+    <div className="languages__name-row">
+      <span>{name}</span>
+      <span className="languages__level">{level}</span>
+    </div>
+    <div className="languages__dots">
+      {Array.from({ length: totalDots }, (_, i) => (
+        <span
+          key={i}
+          className={i < dots ? "languages__dot languages__dot--filled" : "languages__dot"}
+        />
+      ))}
+    </div>
+  </li>
+);
+
+export const Languages = async () => {
+  const locale = await getLocale();
+  const { languages, sectionVisibility } = await getProfile(locale);
+
+  if (!sectionVisibility.languages || languages.items.length === 0) return null;
+
+  return (
+    <section className="languages section">
+      <p className="eyebrow">{languages.eyebrow}</p>
+      <h2 className="section-title">{languages.label}</h2>
+      <ul className="languages__data">
+        {languages.items.map((lang) => (
+          <Language key={lang.name} {...lang} />
+        ))}
+      </ul>
+    </section>
+  );
+};
+
+============================================================
+ФАЙЛ: components/Hobbies.jsx
+============================================================
+
+import { getLocale } from "next-intl/server";
+import { getProfile } from "@/lib/content";
+
+export const Hobbies = async () => {
+  const locale = await getLocale();
+  const { hobbies, sections, sectionVisibility } = await getProfile(locale);
+
+  if (!sectionVisibility.hobbies || hobbies.items.length === 0) return null;
+
+  return (
+    <section className="hobbies section">
+      <p className="eyebrow">{sections.hobbiesEyebrow}</p>
+      <h2 className="section-title">{sections.hobbies}</h2>
+      <ul className="skills__data">
+        {hobbies.items.map((hobby) => (
+          <li key={hobby} className="skills__name">
+            <span className="skills__circle" /> {hobby}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+};
+
+============================================================
+ФАЙЛ: components/Projects.jsx
+============================================================
+
+import { getLocale } from "next-intl/server";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { getProfile, getProjects } from "@/lib/content";
+import { bulletListComponents } from "@/lib/mdx-components";
+
+const Project = ({ name, company, period, description }) => (
+  <div className="experience__content">
+    <div className="experience__time">
+      <span className="experience__rounder"></span>
+      <span className="experience__line"></span>
+    </div>
+    <div className="experience__data bd-grid">
+      <h3 className="experience__title">
+        {name} - {company}
+      </h3>
+      <span className="experience__project">{period}</span>
+      <MDXRemote source={description} components={bulletListComponents} />
+    </div>
+  </div>
+);
+
+export const Projects = async ({ focus }) => {
+  const locale = await getLocale();
+  const [{ sections, sectionVisibility }, projects] = await Promise.all([
+    getProfile(locale),
+    getProjects(locale, focus),
+  ]);
+
+  if (!sectionVisibility.projects || projects.length === 0) return null;
+
+  return (
+    <section className="projects-experience section" id="projects">
+      <p className="eyebrow">{sections.projectsEyebrow}</p>
+      <h2 className="section-title">{sections.projects}</h2>
+      <div className="experience__container bd-grid">
+        {projects.map((project) => (
+          <Project key={project.name} {...project} />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+============================================================
+ФАЙЛ: components/Courses.jsx
+============================================================
+
+import { getLocale } from "next-intl/server";
+import { getProfile } from "@/lib/content";
+
+const Course = ({ name, provider, date }) => (
+  <div className="education__content">
+    <div className="education__time">
+      <span className="education__rounder"></span>
+      <span className="education__line"></span>
+    </div>
+    <div className="education__data bd-grid">
+      <h3 className="education__title">{name}</h3>
+      <span className="education__year">{date}</span>
+      <span className="education__studies">{provider}</span>
+    </div>
+  </div>
+);
+
+export const Courses = async () => {
+  const locale = await getLocale();
+  const { courses, sections, sectionVisibility } = await getProfile(locale);
+
+  if (!sectionVisibility.courses || courses.items.length === 0) return null;
+
+  return (
+    <section className="courses-experience section" id="courses">
+      <p className="eyebrow">{sections.coursesEyebrow}</p>
+      <h2 className="section-title">{sections.courses}</h2>
+      <div className="education__container bd-grid">
+        {courses.items.map((course) => (
+          <Course key={course.name} {...course} />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+============================================================
+ФАЙЛ: components/Resume.jsx
+============================================================
+
+import { getTranslations } from "next-intl/server";
+import { Menu } from "./Menu";
+import { Profile } from "./Profile";
+import { AboutMe } from "./AboutMe";
+import { Skills } from "./Skills";
+import { Languages } from "./Languages";
+import { SocialMedia } from "./SocialMedia";
+import { Works } from "./Works";
+import { Academic } from "./Academic";
+import { Courses } from "./Courses";
+import { Projects } from "./Projects";
+import { Hobbies } from "./Hobbies";
+
+export const Resume = async ({ focus, interactive = true }) => {
+  const t = await getTranslations();
+  const menu = t.raw("menu");
+
+  return (
+    <>
+      {interactive && <Menu menu={menu} />}
+      <main
+        className={interactive ? "l-main bd-container" : "l-main bd-container pdf-layout"}
+        id="bd-container"
+      >
+        <div className="resume" id="area-cv">
+          <div className="resume__left">
+            <Profile focus={focus} showControls={interactive} />
+            <AboutMe focus={focus} />
+            <Skills focus={focus} />
+            <Languages />
+            <SocialMedia />
+          </div>
+          <div className="resume__right">
+            <Works focus={focus} showControls={interactive} />
+            <Academic />
+            <Courses />
+            <Projects focus={focus} />
+            <Hobbies />
+          </div>
+        </div>
+      </main>
+    </>
+  );
+};
+
+============================================================
+ФАЙЛ: components/Snow.jsx
+============================================================
+
+"use client";
+
+import { useEffect, useState } from "react";
+
+const FLAKE_COUNT = 60;
+
+const generateFlakes = () =>
+  Array.from({ length: FLAKE_COUNT }, (_, i) => ({
+    id: i,
+    left: Math.random() * 100,
+    size: 0.4 + Math.random() * 0.8,
+    duration: 6 + Math.random() * 8,
+    delay: Math.random() * -14,
+  }));
+
+export const Snow = () => {
+  const [flakes, setFlakes] = useState([]);
+
+  useEffect(() => {
+    // Randomized positions must be generated client-side only, after mount,
+    // to avoid a server/client markup mismatch.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setFlakes(generateFlakes());
+  }, []);
+
+  return (
+    <div className="snow" aria-hidden="true">
+      {flakes.map((flake) => (
+        <span
+          key={flake.id}
+          className="snow__flake"
+          style={{
+            left: `${flake.left}%`,
+            fontSize: `${flake.size}rem`,
+            animationDuration: `${flake.duration}s`,
+            animationDelay: `${flake.delay}s`,
+          }}
+        >
+          ❄
+        </span>
+      ))}
+    </div>
+  );
+};
+
+============================================================
+ФАЙЛ: components/Works.jsx
+============================================================
+
+import { getLocale } from "next-intl/server";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { getProfile, getWorks } from "@/lib/content";
+import { bulletListComponents } from "@/lib/mdx-components";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { DownloadResume } from "./DownloadResume";
+
+const Work = ({ title, period, company, description, achievements, achievementsLabel }) => (
+  <div className="experience__content">
+    <div className="experience__time">
+      <span className="experience__rounder"></span>
+      <span className="experience__line"></span>
+    </div>
+    <div className="experience__data bd-grid">
+      <h3 className="experience__title">{title}</h3>
+      <span className="experience__company">
+        {period} | {company}
+      </span>
+      <MDXRemote source={description} components={bulletListComponents} />
+      {achievements && achievements.trim() && (
+        <div className="experience__achievements">
+          <p className="experience__achievements-label">{achievementsLabel}</p>
+          <MDXRemote source={achievements} components={bulletListComponents} />
+        </div>
+      )}
+    </div>
+  </div>
+);
+
+export const Works = async ({ focus, showControls = true }) => {
+  const locale = await getLocale();
+  const [{ sections, sectionVisibility }, works] = await Promise.all([
+    getProfile(locale),
+    getWorks(locale, focus),
+  ]);
+
+  return (
+    <div className="work">
+      {sectionVisibility.experience && works.length > 0 && (
+        <section className="work-experience section" id="experience">
+          <p className="eyebrow">{sections.experienceEyebrow}</p>
+          <h2 className="section-title">{sections.experience}</h2>
+          <div className="experience__container bd-grid">
+            {works.map((work) => (
+              <Work key={work.title} {...work} achievementsLabel={sections.achievementsLabel} />
+            ))}
+          </div>
+        </section>
+      )}
+      {showControls && (
+        <div className="header-actions">
+          <DownloadResume focus={focus} />
+          <LanguageSwitcher />
+        </div>
+      )}
+    </div>
+  );
+};
+
+============================================================
+ФАЙЛ: lib/focuses.js
+============================================================
+
+// Plain constant, no server-only deps: safe to import from client
+// components (FocusSwitcher) as well as server code and keystatic.config.js.
+export const FOCUSES = ["fullstack", "backend", "frontend", "teacher"];
+
+============================================================
+ФАЙЛ: lib/skill-categories.js
+============================================================
+
+export const SKILL_CATEGORIES = ["design", "programming", "teaching"];
+
+============================================================
+ФАЙЛ: lib/skill-subcategories.js
+============================================================
+
+// Общие подкатегории для всех локалей
+export const SKILL_SUBCATEGORIES = [
+  { value: "languages-frameworks", label: "Languages & Frameworks" },
+  { value: "game-development", label: "Game Development" },
+  { value: "tools-platforms", label: "Tools & Platforms" },
+  { value: "databases-devops", label: "Databases & DevOps" },
+  { value: "graphic-design", label: "Graphic Design" },
+  { value: "ux-ui-design", label: "UX/UI Design" },
+  { value: "3d-animation", label: "3D & Animation" },
+  { value: "curriculum-instruction", label: "Curriculum & Instruction" },
+  { value: "student-engagement", label: "Student Engagement" },
+];
+
+// Маппинг value -> ключ для labels в YAML
+export const SUBCATEGORY_KEYS = {
+  "languages-frameworks": "languagesFrameworks",
+  "game-development": "gameDevelopment",
+  "tools-platforms": "toolsPlatforms",
+  "databases-devops": "databasesDevops",
+  "graphic-design": "graphicDesign",
+  "ux-ui-design": "uxUiDesign",
+  "3d-animation": "threeDAnimation",
+  "curriculum-instruction": "curriculumInstruction",
+  "student-engagement": "studentEngagement",
+};
+
+// Маппинг value -> отображаемое имя для использования в коде
+export const getSubcategoryLabel = (value, locale = 'en') => {
+  const subcat = SKILL_SUBCATEGORIES.find(s => s.value === value);
+  if (!subcat) return value;
+  return subcat.label;
+};
+
+============================================================
+ФАЙЛ: lib/content.js
+============================================================
+
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "@/keystatic.config";
+import { FOCUSES } from "./focuses.js";
+import { SUBCATEGORY_KEYS } from "./skill-subcategories.js";
+
+export { FOCUSES };
+
+const reader = createReader(process.cwd(), keystaticConfig);
+
+const resumeSingletons = { en: reader.singletons.resumeEn, ru: reader.singletons.resumeRu };
+const worksCollections = { en: reader.collections.worksEn, ru: reader.collections.worksRu };
+const academicCollections = { en: reader.collections.academicEn, ru: reader.collections.academicRu };
+const projectsCollections = { en: reader.collections.projectsEn, ru: reader.collections.projectsRu };
+
+const pitchKey = {
+  fullstack: "pitchFullstack",
+  backend: "pitchBackend",
+  frontend: "pitchFrontend",
+  teacher: "pitchTeacher",
+};
+const overrideKey = {
+  backend: "descriptionBackend",
+  frontend: "descriptionFrontend",
+  teacher: "descriptionTeacher",
+};
+
+function readResume(locale) {
+  return resumeSingletons[locale].readOrThrow();
+}
+
+export async function getProfile(locale) {
+  const resume = await readResume(locale);
+  return {
+    profile: {
+      ...resume.profile,
+      showPhoto: resume.profile.showPhoto !== false, // по умолчанию true
+    },
+    socialMedia: resume.socialMedia,
+    sections: resume.sections,
+    languages: resume.languages,
+    hobbies: resume.hobbies,
+    courses: resume.courses,
+    sectionVisibility: resume.sectionVisibility,
+  };
+}
+
+export async function getPitch(locale, focus) {
+  const resume = await readResume(locale);
+  return resume[pitchKey[focus]];
+}
+
+export async function getSkills(locale, focus) {
+  const resume = await readResume(locale);
+  const inFocus = (list) => list.filter((skill) => skill.focuses.includes(focus));
+
+  const subcategoryLabels = resume.skills.subcategoryLabels || {};
+  const subcategoryLabelMap = {};
+  Object.keys(subcategoryLabels).forEach(key => {
+    const value = Object.keys(SUBCATEGORY_KEYS).find(v => SUBCATEGORY_KEYS[v] === key);
+    if (value) {
+      subcategoryLabelMap[value] = subcategoryLabels[key];
+    }
+  });
+
+  return {
+    eyebrowHard: resume.skills.eyebrowHard,
+    eyebrowSoft: resume.skills.eyebrowSoft,
+    technicalLabel: resume.skills.technicalLabel,
+    softLabel: resume.skills.softLabel,
+    categoryLabels: resume.skills.categoryLabels,
+    subcategoryLabels: subcategoryLabelMap,
+    technicalSkills: inFocus(resume.skills.technicalSkills).map((skill) => ({
+      name: skill.name,
+      category: skill.category,
+      subcategory: skill.subcategory || 'languages-frameworks',
+    })),
+    softSkills: inFocus(resume.skills.softSkills).map((skill) => skill.name),
+  };
+}
+
+// Backend/frontend focuses use their override text when set, otherwise fall
+// back to the default (fullstack) description.
+async function resolveDescription(entry, focus) {
+  if (focus !== "fullstack") {
+    const override = entry[overrideKey[focus]];
+    if (override && override.trim()) return override;
+  }
+  return entry.description();
+}
+
+async function readAllForFocus(collectionMap, locale, focus) {
+  const all = await collectionMap[locale].all();
+  const inFocus = all.map(({ entry }) => entry).filter((entry) => entry.focuses.includes(focus));
+  const withBody = await Promise.all(
+    inFocus.map(async (entry) => ({ ...entry, description: await resolveDescription(entry, focus) }))
+  );
+  return withBody.sort((a, b) => a.order - b.order);
+}
+
+export function getWorks(locale, focus) {
+  return readAllForFocus(worksCollections, locale, focus);
+}
+
+export function getProjects(locale, focus) {
+  return readAllForFocus(projectsCollections, locale, focus);
+}
+
+export async function getAcademic(locale) {
+  const all = await academicCollections[locale].all();
+  const withBody = await Promise.all(
+    all.map(async ({ entry }) => ({ ...entry, institution: await entry.institution() }))
+  );
+  return withBody.sort((a, b) => a.order - b.order);
+}
+
+============================================================
+ФАЙЛ: lib/mdx-components.jsx
+============================================================
+
+// Reproduces the exact markup the site used before content moved to MDX:
+// every bullet becomes its own bare <p class="experience__description">,
+// no visible list marker, no wrapping <ul>.
+export const bulletListComponents = {
+  ul: (props) => props.children,
+  li: (props) => <p className="experience__description">{props.children}</p>,
+  p: (props) => <p className="experience__description">{props.children}</p>,
+};
+
+// A single line of prose rendered as the inline <span> the education
+// section has always used (Academic.jsx's institution field).
+export const proseSpanComponents = {
+  p: (props) => <span className="education__studies">{props.children}</span>,
+};
+
+============================================================
+ФАЙЛ: src/i18n/request.js
+============================================================
+
+import { hasLocale } from "next-intl";
+import { getRequestConfig } from "next-intl/server";
+import { routing } from "./routing";
+
+export default getRequestConfig(async ({ requestLocale }) => {
+  const requested = await requestLocale;
+  const locale = hasLocale(routing.locales, requested)
+    ? requested
+    : routing.defaultLocale;
+
+  return {
+    locale,
+    messages: (await import(`../../messages/${locale}.json`)).default,
+  };
+});
+
+============================================================
+ФАЙЛ: src/i18n/navigation.js
+============================================================
+
+import { createNavigation } from "next-intl/navigation";
+import { routing } from "./routing";
+
+export const { Link, redirect, usePathname, useRouter, getPathname } =
+  createNavigation(routing);
+
+============================================================
+ФАЙЛ: src/i18n/routing.js
+============================================================
+
+import { defineRouting } from "next-intl/routing";
+
+export const routing = defineRouting({
+  locales: ["ru", "en"],
+  defaultLocale: "ru",
+});

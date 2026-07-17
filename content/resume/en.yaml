@@ -3,320 +3,397 @@ profile:
   location: Russia, St. Petersburg
   email: kopavalex@yandex.ru
   telephone: +7 (981) 761-76-46
-  image: /images/IMG_5023.png
+  showPhoto: false
+  image: /images/profile/image.png
   downloadCta: Download CV
 skills:
   eyebrowHard: $ stack --hard
   eyebrowSoft: $ stack --soft
   technicalLabel: Hard skills
   softLabel: Soft skills
+  categoryLabels:
+    design: Design
+    programming: Programming
+    teaching: Teaching
+  subcategoryLabels:
+    languagesFrameworks: Languages & Frameworks
+    gameDevelopment: Game Development
+    toolsPlatforms: Tools & Platforms
+    databasesDevops: Databases & DevOps
+    graphicDesign: Graphic Design
+    uxUiDesign: UX/UI Design
+    threeDAnimation: 3D & Animation
+    curriculumInstruction: Curriculum & Instruction
+    studentEngagement: Student Engagement
   technicalSkills:
     - name: C#
+      category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - backend
-      category: programming
     - name: Unity
+      category: programming
+      subcategory: game-development
       focuses:
         - fullstack
         - teacher
-      category: programming
     - name: EntityFramework
+      category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - backend
-      category: programming
     - name: LINQ
+      category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - backend
-      category: programming
     - name: RabbitMQ
+      category: programming
+      subcategory: tools-platforms
       focuses:
         - fullstack
         - backend
-      category: programming
     - name: NUnit
+      category: programming
+      subcategory: tools-platforms
       focuses:
         - fullstack
         - backend
-      category: programming
     - name: Swagger
+      category: programming
+      subcategory: tools-platforms
       focuses:
         - fullstack
         - backend
-      category: programming
     - name: Postman
+      category: programming
+      subcategory: tools-platforms
       focuses:
         - fullstack
         - backend
-      category: programming
     - name: React
+      category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - frontend
-      category: programming
     - name: React-native
+      category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - frontend
-      category: programming
     - name: Blender
+      category: design
+      subcategory: 3d-animation
       focuses:
         - fullstack
         - teacher
-      category: design
     - name: Photoshop
+      category: design
+      subcategory: graphic-design
       focuses:
         - fullstack
         - frontend
-      category: design
     - name: Illustrator
+      category: design
+      subcategory: graphic-design
       focuses:
         - fullstack
         - frontend
-      category: design
     - name: InDesign
-      focuses:
-        - fullstack
-        - frontend
       category: design
+      subcategory: graphic-design
+      focuses:
+        - fullstack
+        - frontend
     - name: SQL
+      category: programming
+      subcategory: databases-devops
       focuses:
         - fullstack
         - backend
-      category: programming
     - name: Docker
+      category: programming
+      subcategory: databases-devops
       focuses:
         - fullstack
         - backend
-      category: programming
     - name: Linux
+      category: programming
+      subcategory: databases-devops
       focuses:
         - fullstack
         - backend
-      category: programming
     - name: Git
+      category: programming
+      subcategory: tools-platforms
       focuses:
         - fullstack
         - backend
         - frontend
-      category: programming
     - name: Unreal Engine
+      category: programming
+      subcategory: game-development
       focuses:
         - teacher
-      category: programming
     - name: Scratch
+      category: programming
+      subcategory: game-development
       focuses:
         - teacher
-      category: programming
     - name: Kodu Game Lab
+      category: programming
+      subcategory: game-development
       focuses:
         - teacher
-      category: programming
     - name: Figma
       category: design
+      subcategory: ux-ui-design
       focuses:
         - fullstack
         - frontend
     - name: Infographics
       category: design
+      subcategory: graphic-design
       focuses:
         - fullstack
     - name: Typography
       category: design
+      subcategory: graphic-design
       focuses:
         - fullstack
     - name: Composition
       category: design
+      subcategory: graphic-design
       focuses:
         - fullstack
     - name: AI tools
       category: design
+      subcategory: ux-ui-design
       focuses:
         - fullstack
     - name: After Effects
       category: design
+      subcategory: 3d-animation
       focuses:
         - fullstack
     - name: SEO Basics
       category: design
+      subcategory: ux-ui-design
       focuses:
         - fullstack
         - frontend
     - name: HTML
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - frontend
     - name: CSS
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - frontend
     - name: JavaScript
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - frontend
     - name: Go
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - backend
     - name: .NET
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - backend
     - name: Next.js
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - frontend
     - name: Tailwind
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - frontend
     - name: TypeScript
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - frontend
     - name: Responsive Layout
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - frontend
     - name: Cross-browser Layout
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - frontend
     - name: GitLab
       category: programming
+      subcategory: tools-platforms
       focuses:
         - fullstack
         - backend
         - frontend
     - name: GitHub
       category: programming
+      subcategory: tools-platforms
       focuses:
         - fullstack
         - backend
         - frontend
     - name: Kubernetes
       category: programming
+      subcategory: databases-devops
       focuses:
         - fullstack
         - backend
     - name: nginx
       category: programming
+      subcategory: databases-devops
       focuses:
         - fullstack
         - backend
     - name: REST
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - backend
     - name: CI/CD
       category: programming
+      subcategory: databases-devops
       focuses:
         - fullstack
         - backend
     - name: SOLID
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - backend
     - name: KISS
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - backend
         - frontend
     - name: DRY
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - backend
         - frontend
     - name: Normalization
       category: programming
+      subcategory: databases-devops
       focuses:
         - fullstack
         - backend
     - name: Flexbox
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - frontend
     - name: Grid
       category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - frontend
     - name: Assessment Materials Design
       category: teaching
+      subcategory: curriculum-instruction
       focuses:
         - teacher
     - name: Thesis Supervision
       category: teaching
+      subcategory: curriculum-instruction
       focuses:
         - teacher
     - name: Public Speaking
       category: teaching
+      subcategory: student-engagement
       focuses:
         - teacher
     - name: Student Mentoring
       category: teaching
+      subcategory: student-engagement
       focuses:
         - teacher
     - name: Curriculum Design
       category: teaching
+      subcategory: curriculum-instruction
       focuses:
         - teacher
     - name: Moodle
       category: teaching
+      subcategory: tools-platforms
       focuses:
         - teacher
   softSkills:
     - name: Communicable
+      category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - backend
         - frontend
         - teacher
     - name: Systems approach
+      category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - backend
         - frontend
         - teacher
     - name: Proactive
+      category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - backend
         - frontend
         - teacher
     - name: Creative
+      category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - backend
         - frontend
         - teacher
     - name: Mentoring
+      category: programming
+      subcategory: languages-frameworks
       focuses:
         - fullstack
         - backend
         - frontend
         - teacher
-  categoryLabels:
-    design: Design
-    programming: Programming
-    teaching: Teaching
 socialMedia:
   eyebrow: $ contact --all
   label: Contacts
@@ -336,60 +413,15 @@ socialMedia:
 sections:
   experience: Experience
   experienceEyebrow: GET /experience
+  achievementsLabel: Achievements
   education: Education
   educationEyebrow: GET /education
-  projects: Projects
-  projectsEyebrow: GET /projects
   courses: Courses
   coursesEyebrow: GET /courses
+  projects: Projects
+  projectsEyebrow: GET /projects
   hobbies: Hobbies
   hobbiesEyebrow: // hobbies
-  achievementsLabel: Achievements
-pitchFullstack:
-  meta:
-    title: Pavel Kostin - FullStack Software Developer
-    description: Fullstack programmer and designer proficient in many development tools.
-  ocupation: FullStack Software Developer
-  aboutMe:
-    eyebrow: // about
-    label: About me
-    description: Fullstack programmer and designer proficient in many development tools.
-pitchBackend:
-  meta:
-    title: Pavel Kostin - Backend Developer
-    description: Backend developer building APIs, services and the infrastructure
-      around them.
-  ocupation: Backend Software Developer
-  aboutMe:
-    eyebrow: // about
-    label: About me
-    description: "Backend-focused engineer building reliable APIs and services: C#,
-      Entity Framework, SQL Server, message queues, and the infrastructure
-      around them."
-pitchFrontend:
-  meta:
-    title: Pavel Kostin - Frontend Developer
-    description: Frontend developer building interfaces with React, backed by a
-      design background.
-  ocupation: Frontend Software Developer
-  aboutMe:
-    eyebrow: // about
-    label: About me
-    description: Frontend-focused engineer building interfaces with React, from
-      component libraries to 3D visualizations — plus a design background that
-      keeps the details tight.
-pitchTeacher:
-  meta:
-    title: Pavel Kostin - Programming Teacher
-    description: "Programming teacher for kids: Unity, Blender, Unreal Engine,
-      Scratch, and real code."
-  ocupation: Programming Teacher
-  aboutMe:
-    eyebrow: // about
-    label: About me
-    description: I teach kids to program and build games — Unity, Blender, Unreal
-      Engine, Scratch, and real code — turning complex tools into approachable,
-      fun challenges.
 languages:
   eyebrow: $ lang --list
   label: Languages
@@ -419,3 +451,53 @@ sectionVisibility:
   courses: true
   projects: true
   hobbies: true
+pitchFullstack:
+  meta:
+    title: Pavel Kostin - FullStack Software Developer
+    description: Fullstack programmer and designer proficient in many development tools.
+  ocupation: FullStack Software Developer
+  aboutMe:
+    eyebrow: // about
+    label: About me
+    description: Fullstack programmer and designer proficient in many development tools.
+pitchBackend:
+  meta:
+    title: Pavel Kostin - Backend Developer
+    description: >-
+      Backend developer building APIs, services and the infrastructure around
+      them.
+  ocupation: Backend Software Developer
+  aboutMe:
+    eyebrow: // about
+    label: About me
+    description: >-
+      Backend-focused engineer building reliable APIs and services: C#, Entity
+      Framework, SQL Server, message queues, and the infrastructure around them.
+pitchFrontend:
+  meta:
+    title: Pavel Kostin - Frontend Developer
+    description: >-
+      Frontend developer building interfaces with React, backed by a design
+      background.
+  ocupation: Frontend Software Developer
+  aboutMe:
+    eyebrow: // about
+    label: About me
+    description: >-
+      Frontend-focused engineer building interfaces with React, from component
+      libraries to 3D visualizations — plus a design background that keeps the
+      details tight.
+pitchTeacher:
+  meta:
+    title: Pavel Kostin - Programming Teacher
+    description: >-
+      Programming teacher for kids: Unity, Blender, Unreal Engine, Scratch, and
+      real code.
+  ocupation: Programming Teacher
+  aboutMe:
+    eyebrow: // about
+    label: About me
+    description: >-
+      I teach kids to program and build games — Unity, Blender, Unreal Engine,
+      Scratch, and real code — turning complex tools into approachable, fun
+      challenges.

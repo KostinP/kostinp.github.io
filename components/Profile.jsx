@@ -8,17 +8,23 @@ export const Profile = async ({ focus, showControls = true }) => {
   const locale = await getLocale();
   const [{ profile }, pitch] = await Promise.all([getProfile(locale), getPitch(locale, focus)]);
 
+  // Явно проверяем showPhoto, по умолчанию true
+  const shouldShowPhoto = profile.showPhoto !== false;
+
   return (
     <section className="home" id="home">
       <div className="home__container section bd-grid">
         <div className="home__data bd-grid">
-          <Image
-            src={profile.image}
-            alt={profile.name}
-            className="home__img"
-            width={120}
-            height={120}
-          />
+          {shouldShowPhoto && profile.image && (
+            <Image
+              src={profile.image}
+              alt={profile.name}
+              className="home__img"
+              width={120}
+              height={120}
+              priority
+            />
+          )}
           <h1 className="home__title">
             <strong>{profile.name}</strong>
           </h1>
