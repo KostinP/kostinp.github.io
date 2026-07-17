@@ -1,8 +1,0 @@
-jsconfig.json
-package.json
-messages/ru.json
-messages/en.json
-app/globals.css
-out/_next/static/chunks/3toctkeuisx07.css
-content/resume/en.yaml
-content/resume/ru.yaml

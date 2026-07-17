@@ -4,6 +4,9 @@ out/
 *.local
 .vercel
 
+# Output of combined.py (repo-to-text dump utility)
+output/
+
 # Generated at build time by scripts/generate-pdfs.mjs (kept in public/
 # only so "next dev" has something real to serve; not committed)
 public/pavel-kostin-cv-*.pdf
