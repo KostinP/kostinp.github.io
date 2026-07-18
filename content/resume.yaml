@@ -659,7 +659,7 @@ sectionVisibility:
   education: true
   courses: true
   projects: true
-  hobbies: true
+  hobbies: false
 pitchFullstack:
   meta:
     title:
@@ -667,7 +667,11 @@ pitchFullstack:
       ru: Павел Костин - FullStack Software Developer
     description:
       en: Fullstack programmer and designer proficient in many development tools.
-      ru: Разработал и запустил десяток полнофункциональных веб-приложений с нуля, используя React, Next.js и серверные технологии (.NET, Go, Node.js). Активно использую в своей работе разнообразные технологии, такие как Docker, Kubernetes, RabbitMQ, PostgreSQL, Three.js и так далее.
+      ru: >-
+        Разработал и запустил десяток полнофункциональных веб-приложений с нуля,
+        используя React, Next.js и серверные технологии (.NET, Go, Node.js).
+        Активно использую в своей работе разнообразные технологии, такие как
+        Docker, Kubernetes, RabbitMQ, PostgreSQL, Three.js и так далее.
   ocupation:
     en: FullStack Software Developer
     ru: FullStack Software Developer
@@ -680,15 +684,21 @@ pitchFullstack:
       ru: Обо мне
     description:
       en: Fullstack programmer and designer proficient in many development tools.
-      ru: Разработал и запустил десяток полнофункциональных веб-приложений с нуля, используя React, Next.js и серверные технологии (.NET, Go, Node.js). Активно использую в своей работе разнообразные технологии, такие как Docker, Kubernetes, RabbitMQ, PostgreSQL, Three.js и так далее.
+      ru: >-
+        Разработал и запустил десяток полнофункциональных веб-приложений с нуля,
+        используя React, Next.js и серверные технологии (.NET, Go, Node.js).
+        Активно использую в своей работе разнообразные технологии, такие как
+        Docker, Kubernetes, RabbitMQ, PostgreSQL, Three.js и так далее.
 pitchBackend:
   meta:
     title:
       en: Pavel Kostin - Backend Developer
       ru: Павел Костин - Backend Developer
     description:
-      en: Backend developer building APIs, services and the infrastructure around them.
-      ru: "Backend-разработчик: API, сервисы и инфраструктура вокруг них."
+      en: >-
+        Backend developer building APIs, services and the infrastructure around
+        them.
+      ru: 'Backend-разработчик: API, сервисы и инфраструктура вокруг них.'
   ocupation:
     en: Backend Software Developer
     ru: Backend Software Developer
@@ -700,16 +710,23 @@ pitchBackend:
       en: About me
       ru: Обо мне
     description:
-      en: "Backend-focused engineer building reliable APIs and services: C#, Entity Framework, SQL Server, message queues, and the infrastructure around them."
-      ru: Пишу надёжные API и сервисы, быстро обучаюсь, поработал с различными библиотеками и фреймворками. вокруг них.
+      en: >-
+        Backend-focused engineer building reliable APIs and services: C#, Entity
+        Framework, SQL Server, message queues, and the infrastructure around
+        them.
+      ru: >-
+        Пишу надёжные API и сервисы, быстро обучаюсь, поработал с различными
+        библиотеками и фреймворками. вокруг них.
 pitchFrontend:
   meta:
     title:
       en: Pavel Kostin - Frontend Developer
       ru: Павел Костин - Frontend Developer
     description:
-      en: Frontend developer building interfaces with React, backed by a design background.
-      ru: "Frontend-разработчик: интерфейсы на React и дизайнерский бэкграунд."
+      en: >-
+        Frontend developer building interfaces with React, backed by a design
+        background.
+      ru: 'Frontend-разработчик: интерфейсы на React и дизайнерский бэкграунд.'
   ocupation:
     en: Frontend Software Developer
     ru: Frontend Software Developer
@@ -721,16 +738,23 @@ pitchFrontend:
       en: About me
       ru: Обо мне
     description:
-      en: Frontend-focused engineer building interfaces with React, from component libraries to 3D visualizations — plus a design background that keeps the details tight.
-      ru: Собираю интерфейсы на React и Next.js — от библиотек компонентов до 3D-визуализаций, — а дизайнерский бэкграунд помогает не терять детали.
+      en: >-
+        Frontend-focused engineer building interfaces with React, from component
+        libraries to 3D visualizations — plus a design background that keeps the
+        details tight.
+      ru: >-
+        Собираю интерфейсы на React и Next.js — от библиотек компонентов до
+        3D-визуализаций, — а дизайнерский бэкграунд помогает не терять детали.
 pitchTeacher:
   meta:
     title:
       en: Pavel Kostin - Programming Teacher
       ru: Павел Костин - преподаватель программирования
     description:
-      en: "Programming teacher for kids: Unity, Blender, Unreal Engine, Scratch, and real code."
-      ru: "Преподаватель программирования: Web, игры, 3d-моделлирование."
+      en: >-
+        Programming teacher for kids: Unity, Blender, Unreal Engine, Scratch,
+        and real code.
+      ru: 'Преподаватель программирования: Web, игры, 3d-моделлирование.'
   ocupation:
     en: Programming Teacher
     ru: Преподаватель программирования
@@ -742,5 +766,11 @@ pitchTeacher:
       en: About me
       ru: Обо мне
     description:
-      en: I teach kids to program and build games — Unity, Blender, Unreal Engine, Scratch, and real code — turning complex tools into approachable, fun challenges.
-      ru: Учу программировать и создавать игры и веб-приложения — Unity, Blender, Unreal Engine, React. От основ до профессионализма. Обучил за пять лет более 200 детей и 100 студентов.
+      en: >-
+        I teach kids to program and build games — Unity, Blender, Unreal Engine,
+        Scratch, and real code — turning complex tools into approachable, fun
+        challenges.
+      ru: >-
+        Учу программировать и создавать игры и веб-приложения — Unity, Blender,
+        Unreal Engine, React. От основ до профессионализма. Обучил за пять лет
+        более 200 детей и 100 студентов.
