@@ -34,7 +34,7 @@ export const Resume = async ({ focus, interactive = true }) => {
             <Works focus={focus} showControls={interactive} />
             <Academic />
             <Courses />
-            <Projects focus={focus} />
+            <Projects focus={focus} interactive={interactive} />
             <Hobbies />
           </div>
         </div>

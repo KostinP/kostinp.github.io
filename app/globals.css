@@ -441,6 +441,15 @@ body.dark-theme {
   transform: translate(7px, 0);
 }
 
+/* The last card in a list has nothing to bridge to — the +1.5rem
+   overshoot above relies on a section's padding (or the next section's)
+   to absorb it, which isn't there when that section is the last visible
+   one on the page (e.g. hobbies hidden after projects). */
+.education__container > .education__content:last-child .education__line,
+.experience__container > .experience__content:last-child .experience__line {
+  height: 100%;
+}
+
 .education__data,
 .experience__data {
   gap: 0.5rem;

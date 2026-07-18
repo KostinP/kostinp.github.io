@@ -15,41 +15,59 @@ const Project = ({
   description,
   achievements,
   achievementsLabel,
-}) => (
-  <div className="experience__content" id={anchor}>
-    <div className="experience__time">
-      <span className="experience__rounder"></span>
-      <span className="experience__line"></span>
-    </div>
-    <div className="experience__data bd-grid">
-      <h3 className="experience__title">
-        {year && <span className="experience__year-badge">{year}</span>}
-        {name} - {company}
-        {link && (
-          <a
-            href={link}
-            target="_blank"
-            rel="noreferrer"
-            className="experience__link"
-            aria-label={link}
-          >
-            <i className="bx bx-link-external" />
-          </a>
+  interactive,
+}) => {
+  // Hover only makes sense on screen — the PDF export has no cursor, so
+  // there'd be no way to ever see the description/achievements. There,
+  // show the text upfront and the image last instead.
+  const hoverCard = Boolean(image) && interactive;
+
+  return (
+    <div className="experience__content" id={anchor}>
+      <div className="experience__time">
+        <span className="experience__rounder"></span>
+        <span className="experience__line"></span>
+      </div>
+      <div className="experience__data bd-grid">
+        <h3 className="experience__title">
+          {year && <span className="experience__year-badge">{year}</span>}
+          {name} - {company}
+          {link && (
+            <a
+              href={link}
+              target="_blank"
+              rel="noreferrer"
+              className="experience__link"
+              aria-label={link}
+            >
+              <i className="bx bx-link-external" />
+            </a>
+          )}
+        </h3>
+        {period && <span className="experience__project">{period}</span>}
+        {skills.length > 0 && (
+          <ul className="skill-tag-list experience__skills">
+            {skills.map((skill) => (
+              <li key={skill} className="skill-tag project-tag">{skill}</li>
+            ))}
+          </ul>
         )}
-      </h3>
-      {period && <span className="experience__project">{period}</span>}
-      {skills.length > 0 && (
-        <ul className="skill-tag-list experience__skills">
-          {skills.map((skill) => (
-            <li key={skill} className="skill-tag project-tag">{skill}</li>
-          ))}
-        </ul>
-      )}
-      {image ? (
-        <div className="project-media" tabIndex={0}>
-          {/* eslint-disable-next-line @next/next/no-img-element -- unoptimized static export; natural aspect ratio, full width */}
-          <img src={image} alt={name} className="project-media__image" />
-          <div className="project-media__reveal">
+        {hoverCard ? (
+          <div className="project-media" tabIndex={0}>
+            {/* eslint-disable-next-line @next/next/no-img-element -- unoptimized static export; natural aspect ratio, full width */}
+            <img src={image} alt={name} className="project-media__image" />
+            <div className="project-media__reveal">
+              <MDXRemote source={description} components={bulletListComponents} />
+              {achievements && achievements.trim() && (
+                <div className="experience__achievements">
+                  <p className="experience__achievements-label">{achievementsLabel}</p>
+                  <MDXRemote source={achievements} components={achievementListComponents} />
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          <>
             <MDXRemote source={description} components={bulletListComponents} />
             {achievements && achievements.trim() && (
               <div className="experience__achievements">
@@ -57,24 +75,20 @@ const Project = ({
                 <MDXRemote source={achievements} components={achievementListComponents} />
               </div>
             )}
-          </div>
-        </div>
-      ) : (
-        <>
-          <MDXRemote source={description} components={bulletListComponents} />
-          {achievements && achievements.trim() && (
-            <div className="experience__achievements">
-              <p className="experience__achievements-label">{achievementsLabel}</p>
-              <MDXRemote source={achievements} components={achievementListComponents} />
-            </div>
-          )}
-        </>
-      )}
+            {image && (
+              <div className="project-media">
+                {/* eslint-disable-next-line @next/next/no-img-element -- unoptimized static export; natural aspect ratio, full width */}
+                <img src={image} alt={name} className="project-media__image" />
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
-export const Projects = async ({ focus }) => {
+export const Projects = async ({ focus, interactive = true }) => {
   const locale = await getLocale();
   const [{ sections, sectionVisibility }, projects] = await Promise.all([
     getProfile(locale),
@@ -89,7 +103,12 @@ export const Projects = async ({ focus }) => {
       <h2 className="section-title">{sections.projects}</h2>
       <div className="experience__container bd-grid">
         {projects.map((project) => (
-          <Project key={project.slug} {...project} achievementsLabel={sections.achievementsLabel} />
+          <Project
+            key={project.slug}
+            {...project}
+            achievementsLabel={sections.achievementsLabel}
+            interactive={interactive}
+          />
         ))}
       </div>
     </section>
