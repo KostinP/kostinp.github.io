@@ -6,7 +6,10 @@ import { FocusSwitcher } from "./FocusSwitcher";
 
 export const Profile = async ({ focus, showControls = true }) => {
   const locale = await getLocale();
-  const [{ profile }, pitch] = await Promise.all([getProfile(locale), getPitch(locale, focus)]);
+  const [{ profile, socialMedia, sectionVisibility }, pitch] = await Promise.all([
+    getProfile(locale),
+    getPitch(locale, focus),
+  ]);
 
   // Явно проверяем showPhoto, по умолчанию true
   const shouldShowPhoto = profile.showPhoto !== false;
@@ -42,6 +45,18 @@ export const Profile = async ({ focus, showControls = true }) => {
           <span className="home__information">
             <i className="bx bx-phone home__icon" /> {profile.telephone}
           </span>
+          {sectionVisibility.socialMedia &&
+            socialMedia.social.map((item) => (
+              <a
+                key={item.name}
+                href={item.url}
+                target="_blank"
+                rel="noreferrer"
+                className="home__information"
+              >
+                <i className={`bx ${item.icon} home__icon`} /> {item.label}
+              </a>
+            ))}
         </div>
       </div>
       {showControls && <ThemeOptions />}

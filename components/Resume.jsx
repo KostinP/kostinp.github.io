@@ -4,7 +4,6 @@ import { Profile } from "./Profile";
 import { AboutMe } from "./AboutMe";
 import { Skills } from "./Skills";
 import { Languages } from "./Languages";
-import { SocialMedia } from "./SocialMedia";
 import { Works } from "./Works";
 import { Academic } from "./Academic";
 import { Courses } from "./Courses";
@@ -28,7 +27,6 @@ export const Resume = async ({ focus, interactive = true }) => {
             <AboutMe focus={focus} />
             <Skills focus={focus} />
             <Languages />
-            <SocialMedia />
           </div>
           <div className="resume__right">
             <Works focus={focus} showControls={interactive} />

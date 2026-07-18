@@ -367,7 +367,7 @@ body.dark-theme {
 }
 
 .home__address {
-  gap: 1rem;
+  gap: var(--mb-1);
 }
 
 .home__information {
@@ -381,25 +381,12 @@ body.dark-theme {
   margin-right: 0.25rem;
 }
 
-.social__container {
-  grid-template-columns: max-content;
-  gap: 1rem;
+a.home__information {
+  color: inherit;
 }
 
-.social__link {
-  display: inline-flex;
-  align-items: center;
-  font-size: var(--small-font-size);
-  color: var(--text-color);
-}
-
-.social__link:hover {
-  color: var(--title-color);
-}
-
-.social__icon {
-  font-size: 1.2rem;
-  margin-right: 0.25rem;
+a.home__information:hover {
+  color: var(--accent-color);
 }
 
 .profile__description {
