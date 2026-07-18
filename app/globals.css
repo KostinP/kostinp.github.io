@@ -200,6 +200,10 @@ body.dark-theme {
   break-after: avoid;
 }
 
+.resume__left .section-title {
+  margin-bottom: var(--mb-1);
+}
+
 .bd-container {
   max-width: 968px;
   width: calc(100% - 3rem);
@@ -428,7 +432,11 @@ body.dark-theme {
 .experience__line {
   display: block;
   width: 2px;
-  height: 110%;
+  /* Bridges exactly to the next item's dot (the grid gap between
+     .bd-grid items is 1.5rem) — a percentage here would overshoot by
+     more than the section's own padding on tall cards and bleed into
+     the next section's heading. */
+  height: calc(100% + 1.5rem);
   background-color: var(--text-color-light);
   transform: translate(7px, 0);
 }
@@ -476,6 +484,101 @@ body.dark-theme {
   text-transform: uppercase;
   color: var(--accent-color);
   margin-bottom: 0.2rem;
+}
+
+.achievements__list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.achievements__item {
+  font-size: var(--small-font-size);
+  margin-bottom: 0.2rem;
+}
+
+.achievements__list .achievements__item {
+  list-style: disc;
+}
+
+.experience__year-badge {
+  display: inline-block;
+  font-family: var(--mono-font);
+  font-size: var(--smaller-font-size);
+  color: var(--text-color-light);
+  margin-right: 0.5rem;
+}
+
+.experience__link {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 0.4rem;
+  color: var(--text-color-light);
+}
+
+.experience__link:hover {
+  color: var(--accent-color);
+}
+
+/*========== Project media (full-width image, description/achievements on hover) ==========*/
+.project-media {
+  position: relative;
+  border: 1px solid var(--text-color-light);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.3rem;
+}
+
+.project-media__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.project-media__reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  overflow-y: auto;
+  background-color: var(--container-color);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease;
+}
+
+.project-media:hover .project-media__reveal,
+.project-media:focus-within .project-media__reveal {
+  opacity: 1;
+  visibility: visible;
+}
+
+.experience__related-projects {
+  margin-top: 0.35rem;
+}
+
+.experience__related-projects-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.experience__related-project-link {
+  font-family: var(--mono-font);
+  font-size: var(--smaller-font-size);
+  color: var(--accent-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.experience__related-project-link:hover {
+  color: var(--title-color);
 }
 
 .skills__content {
@@ -530,6 +633,36 @@ body.dark-theme {
   background-color: var(--accent-color);
   border-radius: 1px;
   margin-right: 0.75rem;
+}
+
+/*========== Skill tags (subcategory chips, per-work stack) ==========*/
+.skill-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--mono-font);
+  font-size: var(--smaller-font-size);
+  color: var(--text-color);
+  border: 1px solid var(--text-color-light);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  line-height: 1.5;
+}
+
+.experience__skills {
+  margin-top: 0.35rem;
+}
+
+.project-tag {
+  background-color: var(--container-color);
 }
 
 /*========== Languages (dot rating) ==========*/

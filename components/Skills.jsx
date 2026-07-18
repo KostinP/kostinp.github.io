@@ -2,11 +2,7 @@ import { getLocale } from "next-intl/server";
 import { getSkills, getProfile } from "@/lib/content";
 import { SKILL_CATEGORIES } from "@/lib/skill-categories";
 
-const Skill = ({ skill }) => (
-  <li className="skills__name">
-    <span className="skills__circle" /> {skill}
-  </li>
-);
+const Skill = ({ skill }) => <li className="skill-tag">{skill}</li>;
 
 const groupByCategoryAndSubcategory = (skills) => {
   const result = {};
@@ -60,7 +56,7 @@ export const Skills = async ({ focus }) => {
                   return (
                     <div key={subcategory} className="skills__subcategory">
                       <div className="skills__subcategory-title">{displayName}</div>
-                      <ul className="skills__data">
+                      <ul className="skill-tag-list">
                         {subcategories[subcategory].map((skill) => (
                           <Skill key={skill} skill={skill} />
                         ))}
@@ -79,7 +75,7 @@ export const Skills = async ({ focus }) => {
           <p className="eyebrow">{skills.eyebrowSoft}</p>
           <h2 className="section-title">{skills.softLabel}</h2>
           <div className="skills__content bd-grid">
-            <ul className="skills__data">
+            <ul className="skill-tag-list">
               {skills.softSkills.map((skill) => (
                 <Skill key={skill} skill={skill} />
               ))}

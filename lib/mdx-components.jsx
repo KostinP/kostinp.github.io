@@ -12,3 +12,11 @@ export const bulletListComponents = {
 export const proseSpanComponents = {
   p: (props) => <span className="education__studies">{props.children}</span>,
 };
+
+// Unlike bulletListComponents, achievements keep the real <ul>/<li> markup
+// so they render as a visible bulleted list.
+export const achievementListComponents = {
+  ul: (props) => <ul className="achievements__list">{props.children}</ul>,
+  li: (props) => <li className="achievements__item">{props.children}</li>,
+  p: (props) => <p className="achievements__item">{props.children}</p>,
+};

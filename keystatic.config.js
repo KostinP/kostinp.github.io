@@ -235,6 +235,14 @@ const workSchema = {
   period: bilingualText("Period"),
   company: bilingualText("Company"),
   focuses: focusMultiselect("Show on"),
+  skills: fields.array(bilingualText("Skill"), {
+    label: "Skills / stack (shown as tags)",
+    itemLabel: (props) => props.fields.en.value || "Skill",
+  }),
+  projects: fields.array(
+    fields.relationship({ label: "Related project", collection: "projects" }),
+    { label: "Related projects (shown as in-page links to the Projects section)" }
+  ),
   ...descriptionFields(),
   achievementsRu: fields.mdx.inline({ label: "Achievements — RU (optional, hidden if empty)" }),
   achievementsEn: fields.mdx.inline({ label: "Achievements — EN (optional, hidden if empty)" }),
@@ -254,10 +262,23 @@ const projectSchema = {
   key: keyField("Key"),
   name: bilingualText("Project name"),
   order: fields.integer({ label: "Sort order (lower = higher up)" }),
+  year: fields.text({ label: "Year (shown to the left of the title)" }),
+  link: fields.url({ label: "External link (shown to the right of the title, optional)" }),
+  image: fields.image({
+    label: "Cover image (optional)",
+    directory: "public/images/projects",
+    publicPath: "/images/projects/",
+  }),
   company: bilingualText("Company / context"),
-  period: bilingualText("Period"),
+  period: bilingualText("Period (optional, shown below the title)"),
+  skills: fields.array(bilingualText("Skill"), {
+    label: "Skills / stack (shown as tags)",
+    itemLabel: (props) => props.fields.en.value || "Skill",
+  }),
   focuses: focusMultiselect("Show on"),
   ...descriptionFields(),
+  achievementsRu: fields.mdx.inline({ label: "Achievements — RU (optional, hidden if empty)" }),
+  achievementsEn: fields.mdx.inline({ label: "Achievements — EN (optional, hidden if empty)" }),
 };
 
 export default config({
